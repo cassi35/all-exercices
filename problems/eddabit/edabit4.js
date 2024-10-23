@@ -507,3 +507,37 @@ function findBrokenKeys(wordChoosed,wordpass){
         return new_set
     }
 }
+
+//consecutiveCombo
+function consecutiveCombo(arr1,arr2){
+    let all_arr = arr1.concat(arr2)
+    function mergeSort(arr) {
+        if (arr.length < 2) {
+            return arr;
+        }
+        let mid = Math.floor(arr.length / 2);
+        let left = arr.slice(0, mid);
+        let right = arr.slice(mid);
+        return merge(mergeSort(left), mergeSort(right));
+    }
+
+    function merge(left, right) {
+        let res = [];
+        let leftI = 0;
+        let rightI = 0;
+        while (leftI < left.length && rightI < right.length) {
+            if (left[leftI] < right[rightI]) {
+                res.push(left[leftI]);
+                leftI++;
+            } else {
+                res.push(right[rightI]);
+                rightI++;
+            }
+        }
+        return res.concat(left.slice(leftI)).concat(right.slice(rightI));
+    }
+
+    let sortedArr = mergeSort(all_arr);
+    return sortedArr
+}
+console.log(consecutiveCombo([1,2,3],[1,2,4]))

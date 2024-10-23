@@ -440,3 +440,5 @@ function middleLinkedList(){
 }
 
 middleLinkedList()
+console.clear()
+
