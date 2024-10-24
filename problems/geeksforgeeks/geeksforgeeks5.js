@@ -551,6 +551,9 @@ function binaryTreeProblems(){
                     this.inOrder(root.right)
                 }
             }
+            diameter(root){
+
+            }
         }
         let bst = new Bst()
         bst.insert(1)
