@@ -442,3 +442,122 @@ function middleLinkedList(){
 middleLinkedList()
 console.clear()
 
+function sortProblems(){
+    function issorted(arr){
+        let i = 0
+        let len = arr.length
+        while(i < len){
+            let first = arr[i]
+            let second = arr[i+1]
+            if(first > second){
+                return -1
+            }
+            i++
+        }
+        return 1
+    }
+    // console.log(issorted([4,3,2,4,2,4]))
+
+    function sortStr(str){
+        str = str.split('')
+        function insertionSort(string){
+            for(let i = 1;i < string.length;i++){
+                let stringInsert = string[i]
+                let j = i-1
+                while(j >= 0 && string[j] > stringInsert){
+                    string[j+1] = string[j]
+                    j=j-1
+                } 
+                string[j+1] = stringInsert
+            }
+            return string
+        }
+        return insertionSort(str)
+
+    }
+    //console.log(sortStr('cassiano'))
+
+    function sortMat(mat){
+        let bubbleSort = (row)=>{
+            let swaped 
+            do{
+                swaped = false
+                for(let i = 0;i < row.length-1;i++){
+                    if(row[i] > row[i+1]){
+                        let temp = row[i]
+                        row[i] = row[i+1]
+                        row[i+1] = temp
+                        swaped = true 
+                    }
+                }
+            }while(swaped)
+        }
+        let new_arr = []
+        for(let row of mat){
+            let sort_row = bubbleSort(row)
+            new_arr.push(sort_row)
+        }
+        return new_arr
+    }
+    
+    //sortMat([2,3,4,2,4,3],[,5,3,5,2,6,2])
+
+}
+sortProblems()
+function binaryTreeProblems(){
+    //check bst
+    function checkBST(){
+        class Node{
+            constructor(value){
+                this.value = value
+                this.left = null 
+                this.right = null 
+            }
+        }
+        class Bst{
+            constructor(){
+                this.root = null 
+            }
+            insert(value){
+                if(!this.root){
+                    let newNode = new Node(value)
+                    this.root = newNode
+                }else{
+                    let newNode = new Node(value)
+                    function insertNode(head,new_node){
+                        if(new_node.value < head.value){
+                            if(!head.left){
+                                head.left = new_node
+                            }else{
+                                insertNode(head.left,new_node)
+
+                            }
+                        }else{
+                            if(!head.right){
+                                head.right = new_node
+                            }else{
+                                insertNode(head.right,new_node)
+                            }
+                        }
+                    }
+                    insertNode(this.root,newNode)
+                    return this.root
+                }
+            }
+            inOrder(root){
+                if(root){
+                    this.inOrder(root.left)
+                    console.log(root.value)
+                    this.inOrder(root.right)
+                }
+            }
+        }
+        let bst = new Bst()
+        bst.insert(1)
+        bst.insert(4)
+        bst.insert(3)
+        bst.inOrder(bst.root)
+    }
+    checkBST()
+}
+binaryTreeProblems()

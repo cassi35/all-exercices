@@ -533,11 +533,81 @@ function consecutiveCombo(arr1,arr2){
                 res.push(right[rightI]);
                 rightI++;
             }
-        }
+        } 
         return res.concat(left.slice(leftI)).concat(right.slice(rightI));
     }
 
     let sortedArr = mergeSort(all_arr);
-    return sortedArr
+    let not_duplicate = []
+    for(let i in sortedArr){
+        if(!not_duplicate.includes(sortedArr[i])){
+            not_duplicate.push(sortedArr[i])
+        }
+    }
+    for(let i =0;i < not_duplicate.length-1;i++){
+        let compare = not_duplicate[i]+1
+        let second = not_duplicate[i+1]
+        if(compare != second){
+            return false
+        }
+    }
+    return true
 }
-console.log(consecutiveCombo([1,2,3],[1,2,4]))
+console.log(consecutiveCombo([1,2,3],[4,5,6,1,10]))
+console.clear()
+//value in tree
+function isPresents(tree,target){
+    let swaped
+    do{
+        swaped = false
+        for(var i = 0;i < tree.length-1;i++){
+            if(tree[i] > tree[i+1]){
+                let temp = tree[i]
+                tree[i] = tree[i+1]
+                tree[i+1] = temp 
+            }
+        }
+    }while(swaped)
+  function bs(arr,leftindex,rightindex,target){
+    if(leftindex > rightindex){
+        return -1
+    }else {
+        let mid = Math.floor((leftindex+rightindex)/2)
+        if(target == arr[mid]){
+            return 1
+        }else if(target < arr[mid]){
+            return bs(arr,leftindex,mid-1,target)
+        }else {
+            return bs(arr,mid+1,rightindex,target)
+        }
+    }
+  }
+  return bs(tree,0,tree.length-1,target)
+}function isPresents(tree,target){
+    let swaped
+    do{
+        swaped = false
+        for(var i = 0;i < tree.length-1;i++){
+            if(tree[i] > tree[i+1]){
+                let temp = tree[i]
+                tree[i] = tree[i+1]
+                tree[i+1] = temp 
+            }
+        }
+    }while(swaped)
+  function bs(arr,leftindex,rightindex,target){
+    if(leftindex > rightindex){
+        return -1
+    }else {
+        let mid = Math.floor((leftindex+rightindex)/2)
+        if(target == arr[mid]){
+            return 1
+        }else if(target < arr[mid]){
+            return bs(arr,leftindex,mid-1,target)
+        }else {
+            return bs(arr,mid+1,rightindex,target)
+        }
+    }
+  }
+  return bs(tree,0,tree.length-1,target)
+}
