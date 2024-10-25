@@ -611,3 +611,72 @@ function isPresents(tree,target){
   }
   return bs(tree,0,tree.length-1,target)
 }
+// Return the Most Expensive Piece of Jewellery
+
+function expansive(piece){
+        let piece_map = new Map()
+        for(let pieces of piece){
+            piece_map.set(pieces[0],pieces[1])
+        }
+        let actual_most = 0
+        let most = null 
+        for(let [pieces,value] of piece_map){
+            if(value > actual_most){
+                most = pieces
+                actual_most = value
+            }
+        }
+        return most
+            
+}
+expansive([['dimond ering',980],['gold wiatch',250],['pelr neckel',4650]])
+//Word to Bitstring to Boolean Array
+function bitString(word){
+    let alphabet = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z"]
+    word = word.split('')
+    let res = []
+    for(let letter of word){
+        let temp_letter = alphabet.findIndex(l => l == letter.toUpperCase())
+        if(temp_letter % 2 == 0){
+            res.push(1)
+        }else{
+            res.push(0)
+        }
+    }//o(n)
+    for(let i in res){
+        if(res[i] == 1){
+            res[i] = true
+        }else{
+            res[i] = false
+        }
+    }//o(n)
+    return res
+}
+bitString('deep')
+//Do All Bigrams Exist?
+function canFind(bigram,words){
+    for(let word of words){
+        for(let bi of bigram){
+            if(!word.includes(bi)){
+                return false
+            }
+        }
+    }//o(n²)
+    return true 
+}
+canFind(["at", "be", "th", "au"], ["beautiful", "the", "hat"])
+//Pentagonal Number
+function pentagonal(num){
+    let find = 5
+    let res = 0
+    for(let i = 0;i < num-1;i++){
+        let temp_res = find
+        res =res + temp_res
+        find+=5
+    }   
+
+    let pen = res+1
+    return pen
+
+}
+pentagonal(8)
