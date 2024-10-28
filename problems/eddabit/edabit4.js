@@ -680,3 +680,83 @@ function pentagonal(num){
 
 }
 pentagonal(8)
+//isDisarium
+function isDisarium(num){
+    num = String(num)
+    let arr_num = num.split('')
+    for(let i in arr_num){
+        arr_num[i] = Number(arr_num[i])
+    }
+    let sum = 0
+    let index = 1
+    do{
+        let dis = arr_num.shift()
+        sum = sum+dis**index
+        index++
+
+    }while(arr_num.length != 0)
+        return sum == num?true:false
+}
+// console.log(isDisarium(518))
+
+//Find First Character That Repeats
+function firstCharecter(string){
+    let arr_string = string.split('')
+    do{ 
+        let remove = arr_string.shift()
+        if(arr_string.includes(remove)){
+            return remove
+        }else{
+            continue
+        }
+    }while(arr_string.length != 0)
+    return -1
+}
+// console.log(firstCharecter('Isildur'))
+//Temperature Converter
+function temperate_converter(temp){
+    if(temp.includes('c')){
+        let num = ''
+        for(let i in temp.split('')){
+            let temp_num = Number(temp[i])
+            if(temp_num){
+                num+=temp_num
+            }
+        }
+        let res = (Number(num) * (9/5))+35
+        return res
+    }else{
+        let num = ''
+        for(let i in temp.split('')){
+            let temp_num = Number(temp[i])
+            if(temp_num){
+                num+=temp_num
+            }
+        }
+        let res = (Number(num) -32)*5/9
+        return res
+    }
+}
+temperate_converter('35 c')
+//Two Distinct Elements
+function distinctElents(arr){
+    let exist = []
+    for(let i in arr){  
+        if(arr[i] != null){
+            let compare = arr[i]
+            arr[i] = null
+            let temp = true
+            for(let e in arr){
+                if(compare == arr[e]){
+                    arr[e] = null
+                    temp = false
+                }
+            }
+            if(temp){
+                exist.push(compare)
+            }
+        }
+    }   
+    return exist
+}
+distinctElents([1, 9, 8, 8, 7, 6, 1, 6])

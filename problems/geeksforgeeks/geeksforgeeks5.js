@@ -507,60 +507,149 @@ sortProblems()
 function binaryTreeProblems(){
     //check bst
     function checkBST(){
+        class Node {
+            constructor(value) {
+                this.value = value;
+                this.left = null;
+                this.right = null;
+            }
+        }
+    
+        class Bst {
+            constructor() {
+                this.root = null;
+            }
+    
+            insert(value) {
+                if (!this.root) {
+                    let newNode = new Node(value);
+                    this.root = newNode;
+                } else {
+                    let newNode = new Node(value);
+                    function insertNode(head, new_node) {
+                        if (new_node.value < head.value) {
+                            if (!head.left) {
+                                head.left = new_node;
+                            } else {
+                                insertNode(head.left, new_node);
+                            }
+                        } else {
+                            if (!head.right) {
+                                head.right = new_node;
+                            } else {
+                                insertNode(head.right, new_node);
+                            }
+                        }
+                    }
+                    insertNode(this.root, newNode);
+                }
+            }
+    
+            inOrder(root) {
+                if (root) {
+                    this.inOrder(root.left);
+                    console.log(root.value);
+                    this.inOrder(root.right);
+                }
+            }
+        }
+    
+        function isidentical(r1, r2) {
+            if (r1 === null && r2 === null) {
+                return true; 
+            }
+            if (r2 === null || r1 === null) {
+                return false;
+            }
+            return (r1.value === r2.value && isidentical(r1.left, r2.left) && isidentical(r1.right, r2.right));
+        }
+    
+        let bst = new Bst();
+        bst.insert(1);
+        bst.insert(4);
+        bst.insert(3);
+        
+        let bst2 = new Bst();
+        bst2.insert(1);
+        bst2.insert(11);
+        bst2.insert(8);
+        bst2.insert(7);
+        bst2.insert(12);
+        bst2.insert(4);
+        bst2.inOrder(bst2.root)
+        console.log(isidentical(bst.root, bst2.root)); // Deve retornar true
+    }
+    
+    checkBST();
+    function heightBT(){
         class Node{
             constructor(value){
-                this.value = value
+                this.data = value
                 this.left = null 
-                this.right = null 
+                this.right = null
             }
         }
         class Bst{
             constructor(){
                 this.root = null 
+                this.height = 1
             }
-            insert(value){
+            insert(value)
+            {
+                const newNode = new Node(value)
                 if(!this.root){
-                    let newNode = new Node(value)
                     this.root = newNode
-                }else{
-                    let newNode = new Node(value)
-                    function insertNode(head,new_node){
-                        if(new_node.value < head.value){
-                            if(!head.left){
-                                head.left = new_node
-                            }else{
-                                insertNode(head.left,new_node)
-
-                            }
-                        }else{
-                            if(!head.right){
-                                head.right = new_node
-                            }else{
-                                insertNode(head.right,new_node)
-                            }
-                        }
+                }
+                else{
+                    this.insertNode(this.root,newNode)
+                }
+            }
+            insertNode(root,newNode){
+                if(newNode.value < root.value){
+                    if(root.left == null){
+                        root.left = newNode
+                    }else{
+                        this.insertNode(root.left,newNode)
                     }
-                    insertNode(this.root,newNode)
-                    return this.root
+                }else{
+                    if(root.right == null){
+                        root.right = newNode
+                    }else{
+                        this.insertNode(root.right,newNode)
+                    }
                 }
             }
-            inOrder(root){
-                if(root){
-                    this.inOrder(root.left)
-                    console.log(root.value)
-                    this.inOrder(root.right)
+            maxdeph(node){
+                if(node){
+                    return 0
                 }
-            }
-            diameter(root){
-
+                let leftDeep = this.maxdeph(node.left)
+                let rightdeep = this.maxdeph(node.left)
+                return Math.max(leftDeep,rightdeep)+1
             }
         }
-        let bst = new Bst()
-        bst.insert(1)
-        bst.insert(4)
-        bst.insert(3)
-        bst.inOrder(bst.root)
+        function isidentical(r1,r2){
+            if(!r1 && !r2){
+                return true 
+            }
+            if(!r1 || !r2){
+                return false
+            }
+            return (r1.data == r2.data && isidentical(r1.left,r2.right)&& isidentical(r1.right,r2.right))
+        }
+        let bstdeep = new Bst()
+        bstdeep.insert(1)
+        bstdeep.insert(10)
+        bstdeep.insert(12)
+        bstdeep.insert(4)
+        let bstdeep2 = new Bst()
+        bstdeep.insert(1)
+        bstdeep.insert(10)
+        bstdeep.insert(12)
+        bstdeep.insert(4)
+        let identical = isidentical(bstdeep.root,bstdeep2.root)
+        console.log(identical)
     }
-    checkBST()
+    // heightBT()
 }
 binaryTreeProblems()
