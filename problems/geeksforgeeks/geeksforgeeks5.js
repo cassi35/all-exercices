@@ -653,3 +653,146 @@ function binaryTreeProblems(){
     // heightBT()
 }
 binaryTreeProblems()
+function linkedListProblems(){
+    function findMiddle(){
+        class Node{
+            constructor(value){
+                this.value = value
+                this.next = null 
+            }
+        }
+        class LinkedList{
+            constructor(){
+                this.list = null
+                this.size = 0
+                this.tail = null
+            }
+
+            append(value){
+                if(this.isempy()){
+                    let node = new Node(value)
+                    this.tail = node
+                    this.list = node
+                    this.size++
+                }else{
+                    let node = new Node(value)
+                    let temp = this.list
+                    while(temp.next){
+                        temp = temp.next
+                    }
+                    temp.next = node
+                    this.tail = node
+                    this.size++
+                }
+            }
+            prepend(value){
+                if(this.isempy()){
+                    let node = new Node(value)
+                    this.tail = node
+                    this.list = node
+                    this.size++
+                }else{
+                    let node = new Node(value)
+                    node.next = this.list
+                    this.list = node
+                    this.size++
+                }
+            }
+            middle(){
+                if(this.isempy()){
+                    return null
+                }
+                let temp = this.list
+                for(let i = 0;i < Math.floor(this.size/2);i++){
+                    temp = temp.next
+                }
+                return temp.value
+            }
+            reverseLinkedList(){
+                if(this.isempy()){
+                    return null
+                }else{
+                    let temp = this.list
+                    let curll = temp
+                    let prev = null
+                    let next
+                    while(curll != null){
+                        next = curll.next
+                        curll.next = prev
+                        prev = curll
+                        curll = next
+                    }
+                    return prev
+                }
+            }
+            deleteMiddle(){
+                if(this.isempy()){
+                    return null
+                }else{
+                    let temp = this.list
+                    for(let i = 0;i < Math.floor(this.size/2);i++){
+                        temp = temp.next
+                    }
+                    temp.next = temp.next.next
+                    return
+                }
+            }
+            deleteLastOcurrrence(key){
+                if(this.isempy()){
+                    return null
+                }else{
+                    let temp = this.list
+                    let sum = 1
+                    while(temp){
+                        if(temp.value == key && sum > 1){
+                            temp.next = temp.next.next
+                            return
+                        }else{
+                            temp = temp.next
+                            sum++
+                        }
+                    }
+                    return undefined
+                }
+            }
+            removeDuplicate(){
+                if(this.isempy()){
+                    return null
+                }else{
+                        let temp = this.list
+                        while(temp){
+                            if(temp.next.value == temp.value){
+                                temp = temp.next.next
+                            }else{
+                                temp = temp.next
+                            }
+                        }
+                }
+            }
+            reverseLinkedListGroup(k){
+                if(this.isempy()){
+                    return null
+                }else{
+                    let temp = this.list
+                    let curll = temp
+                    let prev = null
+                    let next
+                    let c = 0
+                    while(c < k){
+                        next = curll.next
+                        curll.next = prev
+                        prev = curll
+                        curll = next
+                        c++
+                    }
+                    return prev
+                }
+            }
+            isempy(){
+                return this.size == 0
+            }
+        }
+    }
+}
+
+linkedListProblems()

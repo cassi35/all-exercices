@@ -760,3 +760,64 @@ function distinctElents(arr){
     return exist
 }
 distinctElents([1, 9, 8, 8, 7, 6, 1, 6])
+//GCD and LCM (Part 2)
+function mmc(n1, n2) {
+    let faturar = [n1, n2];
+    let res_mult = [];
+    let fator = 2;
+
+    while (faturar.some(num => num != 1)) {
+        let divisivel = false;
+        
+        for (let i = 0; i < faturar.length; i++) {
+            if (faturar[i] % fator == 0) {
+                faturar[i] /= fator;
+                divisivel = true;
+            }
+        }
+        
+        if (divisivel) {
+            res_mult.push(fator);
+        } else {
+            fator++;
+        }
+    }
+
+    return res_mult.reduce((a, b) => a * b, 1);
+}
+
+console.log(mmc(14, 28)); // Deve retornar 28
+//Concatenate to Form Target Array
+function camconcatenate(arr){
+    let concatenate = arr.flat()
+    
+    let missing = Math.max(...concatenate)
+    for(let i in concatenate){
+        let remove = concatenate[i]
+        concatenate[i] = null
+        if(concatenate.includes(remove)){
+            return false
+        }
+    }
+    let new_arr = []
+    for(let i = 1;i <= missing;i++){
+        new_arr.push(i)
+    }
+    return new_arr.length == arr.length?true:false
+}
+console.log(camconcatenate([[2, 1, 3], [5, 4, 7, 6, 7]]))
+//Who Left the Array?
+function left_arr(arr1,arr2){
+    let miss 
+    while(true){
+        let element1 = arr1.shift()
+        let element2 = arr2.shift()
+        if(element1 != element2){
+            miss = element1
+            break
+        }
+    }
+    return miss
+}
+// console.log(left_arr(["Jane", "is", "pretty", "ugly"], ["Jane", "is", "pretty"]))
+//Dance for Cash
