@@ -821,3 +821,108 @@ function left_arr(arr1,arr2){
 }
 // console.log(left_arr(["Jane", "is", "pretty", "ugly"], ["Jane", "is", "pretty"]))
 //Dance for Cash
+console.clear()
+
+//Gold Distribution
+function goldDistribuition(gold){
+    let matt = 0
+    let musbair = 0
+    let vez = false
+    while(gold.length != 0){
+        if(gold.length == 1){
+            if(vez){
+                matt+=gold[0]
+                break
+            }else{
+                musbair+=gold[0]
+                break
+            }
+        }else{
+            if(vez){
+                let stack1 = gold.shift()
+                let stack2 = gold.pop()
+                if(stack1 > stack2){
+                    matt+=stack1
+                    musbair+=stack2
+                    vez = false
+                }else if(stack1 < stack2){
+                    matt+=stack2
+                    musbair+=stack1
+                    vez = false
+                }
+            }else{
+                let stack1 = gold.shift()
+                let stack2 = gold.pop()
+                if(stack1 > stack2){
+                    matt+=stack2
+                    musbair+=stack1
+                    vez = true
+                }else if(stack1 < stack2){
+                    matt+=stack1
+                    musbair+=stack2
+                    vez = true
+                }
+            }
+        }
+
+    }
+    return [matt,musbair]
+}
+// console.log(goldDistribuition([10, 9, 1, 2, 8, 4]))
+// First Letter Shift
+function fisrtLetter(string){
+    let words = string.split(' ')
+    if(words.length <= 1){
+        return string
+    }
+    let prev = words[words.length-1][0]
+    for(let i = 0;i < words.length;i++){
+        let currentWord = words[i]
+        let first_letter = prev
+        prev = currentWord[0]
+        words[i] = first_letter+currentWord.slice(1)
+    }
+    return words.join(' ')
+}
+console.log(fisrtLetter('create a function'))
+//Shortest Subarray Whose Sum Exceeds N
+function minLength(arr,n){
+    let sum = 0
+    let sum_arr = []
+    for(let i = 0;i < arr.length;i++){
+        sum = sum+arr[i]
+        sum_arr.push(arr[i])
+        if(sum > n){
+            return sum_arr.length
+        }
+    }
+    return arr.length
+}
+// console.log(minLength([1, 0, 0, 0, 1], 1))
+
+//Average Word Length
+function averageWordLength(word){
+    let sum_arr = []
+    let length 
+    if(word.includes('.')){
+        let letters = word.split('.')[0].split(' ')
+        length = letters.length
+        for(let i in letters){
+            sum_arr.push(letters[i].length)
+        }
+    }else if(word.includes('!')){
+        let letters = word.split('!')[0].split(' ')
+        length = letters.length
+        for(let i in letters){
+            sum_arr.push(letters[i].length)
+        }
+    }else{
+        let letters = word.split(' ')
+        length = letters.length
+        for(let i in letters){
+            sum_arr.push(letters[i].length)
+        }
+    }
+    return sum_arr.reduce((a,b)=>a+b) / length
+}
+// console.log(averageWordLength("Dude this is so awesome"))
