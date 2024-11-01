@@ -135,14 +135,146 @@ function marsExploration(str){
 
 
 
+//absolute permutation.
 
 
+function larrysArray(A) {
+    // Conta o número de inversões
+    let inversions = 0;
+    let n = A.length;
+    for (let i = 0; i < n; i++) {
+        for (let j = i + 1; j < n; j++) {
+            if (A[i] > A[j]) {
+                inversions++;
+            }
+        }
+    }
+    
+    // Verifica se o número de inversões é par
+    if (inversions % 2 === 0) {
+        return "YES";
+    } else {
+        return "NO";
+    }
+}
+
+//ema is supercomputer
+function twoPluses(grid) {
+    const rows = grid.length;
+    const cols = grid[0].length;
+
+    // Helper function to get max possible arm length of a plus at a given cell
+    function getPlusSize(r, c) {
+        let size = 0;
+        while (r - size >= 0 && r + size < rows && c - size >= 0 && c + size < cols &&
+               grid[r - size][c] === 'G' && grid[r + size][c] === 'G' &&
+               grid[r][c - size] === 'G' && grid[r][c + size] === 'G') {
+            size++;
+        }
+        return size - 1; // Decrement by 1 to get the actual size
+    }
+
+    // Find all possible pluses and their sizes
+    const pluses = [];
+    for (let r = 0; r < rows; r++) {
+        for (let c = 0; c < cols; c++) {
+            if (grid[r][c] === 'G') {
+                const maxSize = getPlusSize(r, c);
+                for (let size = 0; size <= maxSize; size++) {
+                    pluses.push({ r, c, size, area: 4 * size + 1 });
+                }
+            }
+        }
+    }
+
+    // Check if two pluses overlap
+    function overlap(plus1, plus2) {
+        const cells1 = new Set();
+        const cells2 = new Set();
+
+        // Generate cells occupied by plus1
+        for (let i = 0; i <= plus1.size; i++) {
+            cells1.add(`${plus1.r + i},${plus1.c}`);
+            cells1.add(`${plus1.r - i},${plus1.c}`);
+            cells1.add(`${plus1.r},${plus1.c + i}`);
+            cells1.add(`${plus1.r},${plus1.c - i}`);
+        }
+
+        // Generate cells occupied by plus2 and check for overlap
+        for (let i = 0; i <= plus2.size; i++) {
+            if (cells1.has(`${plus2.r + i},${plus2.c}`) ||
+                cells1.has(`${plus2.r - i},${plus2.c}`) ||
+                cells1.has(`${plus2.r},${plus2.c + i}`) ||
+                cells1.has(`${plus2.r},${plus2.c - i}`)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    // Calculate maximum product of areas for two non-overlapping pluses
+    let maxProduct = 0;
+    for (let i = 0; i < pluses.length; i++) {
+        for (let j = i + 1; j < pluses.length; j++) {
+            const plus1 = pluses[i];
+            const plus2 = pluses[j];
+            if (!overlap(plus1, plus2)) {
+                const product = plus1.area * plus2.area;
+                maxProduct = Math.max(maxProduct, product);
+            }
+        }
+    }
+
+    return maxProduct;
+}
 
 
+//apple and orange
+function countApplesAndOranges(s, t, a, b, apples, oranges) {
+    // Contador para maçãs que caem na casa de Sam
+    let applesOnHouse = 0;
+    // Contador para laranjas que caem na casa de Sam
+    let orangesOnHouse = 0;
 
+    // Calcula a posição final de cada maçã e verifica se cai na casa de Sam
+    for (let i = 0; i < apples.length; i++) {
+        let applePosition = a + apples[i];
+        if (applePosition >= s && applePosition <= t) {
+            applesOnHouse++;
+        }
+    }
 
+    // Calcula a posição final de cada laranja e verifica se cai na casa de Sam
+    for (let i = 0; i < oranges.length; i++) {
+        let orangePosition = b + oranges[i];
+        if (orangePosition >= s && orangePosition <= t) {
+            orangesOnHouse++;
+        }
+    }
 
+    // Imprime o número de maçãs e laranjas que caem na casa de Sam
+    console.log(applesOnHouse);
+    console.log(orangesOnHouse);
+}
 
+countApplesAndOranges(7, 11, 5, 15, [-2, 2, 1], [5, -6]);
 
+function migratoryBirds(arr) {
+    const count = {};
+    let maxCount = 0;
+    let minBirdId = Infinity;
 
+    for (let bird of arr) {
+        count[bird] = (count[bird] || 0) + 1;
+        if (count[bird] > maxCount) {
+            maxCount = count[bird];
+            minBirdId = bird;
+        } else if (count[bird] === maxCount) {
+            minBirdId = Math.min(minBirdId, bird);
+        }
+    }
 
+    return minBirdId;
+}
+
+console.log(migratoryBirds([1 ,4 ,4 ,4 ,5 ,3]))

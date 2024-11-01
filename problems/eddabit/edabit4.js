@@ -926,3 +926,4 @@ function averageWordLength(word){
     return sum_arr.reduce((a,b)=>a+b) / length
 }
 // console.log(averageWordLength("Dude this is so awesome"))
+
