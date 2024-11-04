@@ -278,4 +278,4 @@ function migratoryBirds(arr) {
 }
 
 console.log(migratoryBirds([1 ,4 ,4 ,4 ,5 ,3]))
-
+console.clear()
