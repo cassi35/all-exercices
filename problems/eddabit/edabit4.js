@@ -1,3 +1,5 @@
+const { on } = require("nodemon")
+
 //hard challanges 
 console.clear()
 function zeroToend(array){
@@ -927,3 +929,125 @@ function averageWordLength(word){
 }
 // console.log(averageWordLength("Dude this is so awesome"))
 
+// rearrange
+
+function rearrange(string) {
+    let only_string = [];
+    string.split(' ').forEach((word) => {
+        let str = '';
+        let num 
+        for (let s of word.split('')) {
+            // Verifica se o caractere NÃO é um número
+            if (isNaN(s)) {
+                str += s;
+            }else{
+                num = Number(s)
+            }
+            
+        }
+        only_string.push({str:str,num:num});
+    });
+    let swaped 
+    do{
+        swaped = false
+        for(let i = 0;i < only_string.length-1;i++){
+            if(only_string[i].num > only_string[i+1].num){
+                let temp = only_string[i].num 
+                let temp_str = only_string[i].str 
+                only_string[i].num = only_string[i+1].num
+                only_string[i].str = only_string[i+1].str
+                only_string[i+1].num = temp
+                only_string[i+1].str = temp_str
+            }
+        }
+    }while(swaped)
+    let str_res = ''
+    for(let obj of only_string){
+        if(obj.num == only_string[only_string.length-1].num){
+            str_res = str_res+obj.str
+        }else{
+            str_res = str_res+obj.str+' '
+        }
+    }
+    return str_res
+
+}
+
+// console.log(rearrange('4of Fo1r pe6ople g3ood th5e the2'));
+// Persistence
+
+function additivePersistence(nums){
+    let nums_str = String(nums).split('').map((n)=>Number(n)).reduce((n1,n2)=> n1+n2)
+    return nums_str
+}
+// console.log(additivePersistence(1679583))
+
+// 24-Hour Time
+function convert_date(date) {
+    // Verifica se é PM
+    let isPM = /PM/g.test(date);
+    // Extrai a hora, minuto e segundo
+    let hour = Number(date.slice(0, 2));
+    let minuteSecond = date.slice(2, 8); // :MM:SS
+    let convertedHour;
+
+    if (isPM) {
+        // PM: Se for 12 PM, permanece 12; caso contrário, soma 12
+        convertedHour = hour === 12 ? 12 : hour + 12;
+    } else {
+        // AM: Se for 12 AM, converte para 00; caso contrário, mantém
+        convertedHour = hour === 12 ? 0 : hour;
+    }
+
+    // Garante que a hora tenha dois dígitos
+    let formattedHour = String(convertedHour).padStart(2, '0');
+    // Retorna o horário no formato 24h
+    return formattedHour + minuteSecond;
+}
+
+// console.log(convert_date('12:05:45AM')); // Saída: 00:05:45
+// balanced word
+function balanced(word){
+
+        let alphabet = 'abcdefghijklmnopqrstuvwxyz'.split('');
+        let arr_word = word.split('')
+        let left 
+        let right 
+        if(word.length % 2 == 0){
+             left = arr_word.slice(0,word.length/2)
+             right = arr_word.slice(left.length)
+        }else{
+            left = arr_word.slice(0,(word.length/2))
+            right = arr_word.slice(left.length+1)
+        }
+        let test = [left,right]
+        let res = []
+        for(let i in test){
+            for(let e in test[i]){
+                let temp = alphabet.indexOf(test[i][e])
+                test[i][e] = temp
+            }
+            res.push(test[i].reduce((a,b)=>a+b))
+        }
+        return res[0] == res[1]?true:false
+        
+        
+}
+// console.log(balanced('brake'))
+//Basic Statistics: Mode
+function mode(nums) {
+	let occ=[];
+	for (let i=0; i<=10; i++) occ[i]=0;
+	for (let i=0; i<nums.length; i++)
+		occ[nums[i]]++;
+	let max=0;
+	for (let i=0; i<occ.length; i++)
+		if (occ[i]>max)
+			max=occ[i];
+	let out=[];
+	for (let i=0; i<occ.length; i++)
+		if (occ[i]==max)
+			out.push(i);
+	return out;
+}
+console.log(mode([4, 5, 6, 6, 6, 7, 7, 9, 10]))
