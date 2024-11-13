@@ -807,7 +807,7 @@ function camconcatenate(arr){
     }
     return new_arr.length == arr.length?true:false
 }
-console.log(camconcatenate([[2, 1, 3], [5, 4, 7, 6, 7]]))
+// console.log(camconcatenate([[2, 1, 3], [5, 4, 7, 6, 7]]))
 //Who Left the Array?
 function left_arr(arr1,arr2){
     let miss 
@@ -1050,4 +1050,102 @@ function mode(nums) {
 			out.push(i);
 	return out;
 }
-console.log(mode([4, 5, 6, 6, 6, 7, 7, 9, 10]))
+// console.log(mode([4, 5, 6, 6, 6, 7, 7, 9, 10]))
+
+
+// highestPair
+
+function highestPair(cards){
+    let alphabet = 'abcdefghijklmnopqrstuvwxyz'.split('');
+    let pair = []
+    do{
+        let card_choose = cards[0]
+        let current_card = cards.filter((card)=>card == card_choose)
+        if(current_card.length % 2 == 0){
+            pair.push(true) 
+            pair.push(card_choose) 
+            return pair
+        }else{
+            let atualizar_carta = cards.filter((card)=>card != card_choose)
+            cards = atualizar_carta
+        }
+    }while(cards.length != 0)
+    return false
+}
+// console.log(highestPair(["A", "A", "Q", "Q", "6" ]))
+
+// maxItems
+
+function maxItems(prices,max){
+    let prices_int = []
+    for(let i in prices){
+        prices_int.push(Number(prices[i].slice(1)))
+    }
+    let count = 0
+    let i = 0
+    let res = 0
+    while(count <= max){
+        let calc = count+prices_int[i]
+        if(calc > max){
+            return res
+        }else{
+            count+=prices_int[i]
+            res++
+        }
+
+        i+=1
+    }
+    return prices_int
+}
+// console.log(maxItems(["$10", "$7", "$2", "$60"],20))
+
+// Know Your Neighbor
+
+function plusSign(str) {
+    for (let i = 1; i < str.length - 1; i++) {
+        if (/[a-zA-Z]/.test(str[i])) { // Check if the character is a letter
+            if (str[i - 1] !== '+' || str[i + 1] !== '+') { // Check if surrounded by '+'
+                return false;
+            }
+        }
+    }
+    return true;
+}
+
+// console.log(plusSign("+f+d+c+#+f+")); // ➞ true
+// console.log(plusSign("+d+=3=+s+"));   // ➞ true
+// console.log(plusSign("f++d+g+8+"));   // ➞ false
+// console.log(plusSign("+s+7+fg+r+8+"));// ➞ false
+// Happy Number
+
+function isHappy(num){
+    if(num.toPrecision().length == 1){
+        if(num == 1){
+            return true 
+        }else{
+            return false
+        }
+    }
+    num = String(num)
+    let nums = num.split('').map((n)=>Number(n)).map(n => n ** 2).reduce((a,b)=>a+b)
+    return isHappy(nums)
+}
+// console.log(isHappy(89))
+function findAllDigits(digits) {
+    let nums = new Set("0123456789"); // Dígitos de 0 a 9
+    for (let i = 0; i < digits.length; i++) {
+        let num_str = String(digits[i]);
+        for (let char of num_str) {
+            nums.delete(char); // Remove o dígito encontrado
+        }
+        if (nums.size === 0) {
+            return digits[i]; // Retorna o número quando todos os dígitos foram encontrados
+        }
+    }
+    return "Missing digits!"; // Caso não encontre todos os dígitos
+}
+
+// Exemplos de teste
+// console.log(findAllDigits([5175, 4538, 2926, 5057, 6401, 4376, 2280, 6137, 8798, 9083])); // ➞ 5057
+// console.log(findAllDigits([5719, 7218, 3989, 8161, 2676, 3847, 6896, 3370, 2363, 1381])); // ➞ 3370
+// console.log(findAllDigits([4883, 3876, 7769, 9846, 9546, 9634, 9696, 2832, 6822, 6868])); // ➞ "Missing digits!"
