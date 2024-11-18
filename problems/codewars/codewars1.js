@@ -60,7 +60,7 @@ function first_non_repeating_letter(str){
 }
 
 
-console.log(first_non_repeating_letter('stress'))
+// console.log(first_non_repeating_letter('stress'))
 
 // Greed is Good 5kyu
 
@@ -98,7 +98,7 @@ function greed(times){
     return pontuacao_final
 }
 let mat = [[ 5 ,1 ,3 ,4 ,1],[1, 1, 1, 3, 1 ],[ 2, 4 ,4 ,5 ,4  ]]
-console.log(greed(mat))
+// console.log(greed(mat))
 
 // Maximum subarray sum
 
@@ -161,7 +161,7 @@ function isPP(num){
    }while((n ** n) < num)
 return m == null && k == null?null:[m,k]
 }
-console.log(isPP(5))
+// console.log(isPP(5))
 
 //Linear Equation Solver
 function solve(equations) {
@@ -271,4 +271,142 @@ const equations = [
     "x + 2y = z - 3"
 ];
 
-console.log(solve(equations));
+// console.log(solve(equations));
+
+//RGB To Hex Conversion
+function rgbConversion(rgb){
+    let conversion = '#'
+    let hex = new Map()
+    let alf = ['a','b','c','d','e','f']
+    let num = [10,11,12,13,14,15]
+    for(let i in alf){
+        hex.set(num[i],alf[i])
+    }
+    for(let i in rgb){
+        if(rgb[i] < 0){
+
+        }else if(rgb[i] > 255){
+            
+        }else{
+            let quociente = Math.floor(rgb[i] / 16)
+            let resto = Math.floor(rgb[i] % 16)
+            let temp_conversion = ''
+            let q = quociente < 10?String(quociente):String(hex.get(quociente))
+            let r = resto < 10?String(resto):String(hex.get(resto))
+            temp_conversion+=q+r
+            conversion+=temp_conversion
+        }
+
+
+    }
+    return conversion
+}
+// console.log(rgbConversion([255,255,255]))
+
+//Human Readable Time
+function humanReadable(seconds) {
+    if(seconds < 0) return null;
+    let segundos = seconds
+    let minutos = Math.floor(segundos / 60)
+    let hora = Math.floor(minutos / 60)
+    let res = ''
+    if(hora > 99){
+        res+='99:'
+    }else{
+        res+=String(hora).concat(':')
+    }
+    if(minutos > 59){
+        res+='59:'
+    }else{
+        res+=String(minutos).concat(':')
+    }
+    if(seconds > 59){
+        res+='59'
+    }else{
+        res+=String(segundos)
+    }
+    return res
+}
+// console.log(humanReadable(359999))
+
+function firstNonRepeatingLetter(s) {
+    s = s.split('')
+    for(let i in s){
+        let repet = s.filter((l)=> l.toLowerCase() == s[i].toLowerCase())
+        if(repet.length == 1){
+            return s[i]
+        }
+    }
+}
+// console.log(firstNonRepeatingLetter(' iwDwW59viI;LMxADnEc5XMCVVrX3hp0u '))
+
+function findMostAdjacent(grid) {
+    const N = grid.length;
+    const visited = Array.from({ length: N }, () => Array(N).fill(false));
+    
+    // Directions for moving horizontally and vertically
+    const directions = [
+        [-1, 0], [1, 0], [0, -1], [0, 1]
+    ];
+    
+    // BFS or DFS helper function to count the size of the group
+    function dfs(x, y, value) {
+        let stack = [[x, y]];
+        let count = 0;
+        visited[x][y] = true;
+        
+        while (stack.length > 0) {
+            const [cx, cy] = stack.pop();
+            count++;
+            
+            // Explore neighbors
+            for (const [dx, dy] of directions) {
+                const nx = cx + dx;
+                const ny = cy + dy;
+                if (nx >= 0 && nx < N && ny >= 0 && ny < N && !visited[nx][ny] && grid[nx][ny] === value) {
+                    visited[nx][ny] = true;
+                    stack.push([nx, ny]);
+                }
+            }
+        }
+        
+        return count;
+    }
+
+    let maxSize = 0;
+    let minValue = Infinity;
+
+    // Iterate over every cell in the grid
+    for (let i = 0; i < N; i++) {
+        for (let j = 0; j < N; j++) {
+            if (!visited[i][j]) {
+                const value = grid[i][j];
+                const size = dfs(i, j, value);
+                
+                // Update the max size and min value if necessary
+                if (size > maxSize || (size === maxSize && value < minValue)) {
+                    maxSize = size;
+                    minValue = value;
+                }
+            }
+        }
+    }
+
+    return [minValue, maxSize];
+}
+
+// Example test cases
+const grid1 = [
+    [1, 2, 1],
+    [1, 1, 0],
+    [0, 0, 0],
+];
+console.log(findMostAdjacent(grid1)); // Output: [0, 4]
+
+const grid2 = [
+    [7, 2, 5, 1],
+    [7, 2, 5, 8],
+    [7, 2, 5, 8],
+    [7, 2, 5, 1],
+];
+console.log(findMostAdjacent(grid2)); // Output: [2, 4]
