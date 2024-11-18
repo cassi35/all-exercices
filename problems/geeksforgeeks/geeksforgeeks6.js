@@ -34,3 +34,89 @@ function sortAndCount(arr) {
 const [, inversions] = sortAndCount(arr);
 return inversions;
 }
+function binaryTreeExercices() {
+    class Node {
+        constructor(value) {
+            this.left = null;
+            this.right = null;
+            this.data = value;
+        }
+    }
+
+    class BFS {
+        constructor() {
+            this.root = null;
+        }
+
+        // Fixed typo: Renamed `isemphy` to `isEmpty`
+        isEmpty() {
+            return this.root === null;
+        }
+
+        insert(value) {
+            let newNode = new Node(value);
+            
+            // Check if tree is empty, insert root node if true
+            if (this.isEmpty()) {
+                this.root = newNode;
+            } else {
+                let temp = this.root;
+                
+                // Traverse the tree and insert new node in the correct position
+                while (true) {
+                    if (newNode.data < temp.data) {
+                        // Go left if the new node's value is smaller
+                        if (temp.left === null) {
+                            temp.left = newNode;
+                            break;
+                        } else {
+                            temp = temp.left;
+                        }
+                    } else {
+                        // Go right if the new node's value is greater or equal
+                        if (temp.right === null) {
+                            temp.right = newNode;
+                            break;
+                        } else {
+                            temp = temp.right;
+                        }
+                    }
+                }
+            }
+        }
+        maxHeight(node){
+            if(node == null){
+                return 0
+            }
+            let left = this.maxHeight(node.left)
+            let right = this.maxHeight(node.right)
+            return Math.max(left,right)+1
+        }
+        isIdentical(tree1, tree2) {
+            // If both trees are empty, they are identical
+            if (tree1 === null && tree2 === null) {
+                return true;
+            }
+
+            // If one tree is empty and the other is not, they are not identical
+            if (tree1 === null || tree2 === null) {
+                return false;
+            }
+
+            // Check if the current nodes' data are equal, and recursively check the subtrees
+            return (tree1.data === tree2.data) &&
+                   this.isIdentical(tree1.left, tree2.left) &&
+                   this.isIdentical(tree1.right, tree2.right);
+        }
+    }
+
+    let bfs = new BFS();
+    bfs.insert(10);
+    bfs.insert(20);
+    bfs.insert(30);
+    console.log(bfs.root); // Check the tree structure
+    console.log(bfs.maxHeight(bfs.root))
+
+}
+
+binaryTreeExercices();
