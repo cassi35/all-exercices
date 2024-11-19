@@ -1149,3 +1149,130 @@ function findAllDigits(digits) {
 // console.log(findAllDigits([5175, 4538, 2926, 5057, 6401, 4376, 2280, 6137, 8798, 9083])); // ➞ 5057
 // console.log(findAllDigits([5719, 7218, 3989, 8161, 2676, 3847, 6896, 3370, 2363, 1381])); // ➞ 3370
 // console.log(findAllDigits([4883, 3876, 7769, 9846, 9546, 9634, 9696, 2832, 6822, 6868])); // ➞ "Missing digits!"
+
+// The Dice Game
+function diceGame(scores) {
+    let players = ["p1", "p2", "p3", "p4"];
+
+    while (players.length > 1) {
+        // Get current round scores for the remaining players
+        let roundScores = scores.splice(0, players.length);
+        
+        // Calculate total scores for each player
+        let totalScores = roundScores.map(([dice1, dice2]) => dice1 + dice2);
+
+        // Find the minimum score
+        let minScore = Math.min(...totalScores);
+
+        // Find players with the minimum total score
+        let playersWithMinScore = totalScores
+            .map((score, index) => (score === minScore ? index : -1))
+            .filter(index => index !== -1);
+
+        if (playersWithMinScore.length === 1) {
+            // If only one player has the minimum score, remove them
+            players.splice(playersWithMinScore[0], 1);
+        } else {
+            // Check the first dice values of players with the minimum score
+            let firstDiceValues = playersWithMinScore.map(index => roundScores[index][0]);
+            let minFirstDice = Math.min(...firstDiceValues);
+
+            // Filter by the minimum first dice value
+            let playersWithMinFirstDice = playersWithMinScore.filter(
+                index => roundScores[index][0] === minFirstDice
+            );
+
+            if (playersWithMinFirstDice.length === 1) {
+                // If only one player has the minimum first dice value, remove them
+                players.splice(playersWithMinFirstDice[0], 1);
+            }
+            // If there's still a tie, move to the next round
+        }
+    }
+
+    return players[0];
+}
+
+// Exemplo de uso:
+console.log(diceGame([[6, 2], [4, 3], [3, 4], [5, 4], [3, 5], [1, 5], [4, 3], [1, 5], [1, 5], [5, 6], [2, 2]])); 
+// Resultado esperado: "
+
+//Can You Exit the Maze?
+function canExit(maze) {
+    const rows = maze.length;
+    const cols = maze[0].length;
+
+    // Movimentos possíveis: para cima, para baixo, para esquerda e para direita
+    const directions = [
+        [0, 1],  // Direita
+        [1, 0],  // Baixo
+        [0, -1], // Esquerda
+        [-1, 0]  // Cima
+    ];
+
+    // Cria uma matriz para rastrear células visitadas
+    const visited = Array.from({ length: rows }, () => Array(cols).fill(false));
+    // Verifica se uma célula está dentro do labirinto e é válida (não é uma parede e não foi visitada)
+    const isValid = (x, y) => x >= 0 && y >= 0 && x < rows && y < cols && maze[x][y] === 0 && !visited[x][y];
+
+    // Função de busca em profundidade (DFS)
+    function dfs(x, y) {
+        // Marca a célula como visitada
+        visited[x][y] = true;
+
+        // Se chegarmos ao canto inferior direito, retornamos true
+        if (x === rows - 1 && y === cols - 1) {
+            return true;
+        }
+
+        // Explora os vizinhos válidos
+        for (const [dx, dy] of directions) {
+            const nx = x + dx;
+            const ny = y + dy;
+            if (isValid(nx, ny)) {
+                if (dfs(nx, ny)) {
+                    return true;
+                }
+            }
+        }
+
+        // Se nenhum caminho funcionar, retorna false
+        return false;
+    }
+
+    // Inicia a DFS do canto superior esquerdo (0, 0)
+    return dfs(0, 0);
+}
+
+// Exemplos:
+console.log(canExit([
+  [0, 1, 1, 1, 1, 1, 1],
+  [0, 0, 1, 1, 0, 1, 1],
+  [1, 0, 0, 0, 0, 1, 1],
+  [1, 1, 1, 1, 0, 0, 1],
+  [1, 1, 1, 1, 1, 0, 0]
+])); // true
+
+// console.log(canExit([
+//   [0, 1, 1, 1, 1, 1, 1],
+//   [0, 0, 1, 0, 0, 1, 1],
+//   [1, 0, 0, 0, 0, 1, 1],
+//   [1, 1, 0, 1, 0, 0, 1],
+//   [1, 1, 0, 0, 1, 1, 1]
+// ])); // false
+
+// console.log(canExit([
+//   [0, 1, 1, 1, 1, 0, 0],
+//   [0, 0, 0, 0, 1, 0, 0],
+//   [1, 1, 1, 0, 0, 0, 0],
+//   [1, 1, 1, 1, 1, 1, 0],
+//   [1, 1, 1, 1, 1, 1, 1]
+// ])); // false
+
+// console.log(canExit([
+//   [0, 1, 1, 1, 1, 0, 0],
+//   [0, 0, 0, 0, 1, 0, 0],
+//   [1, 1, 1, 0, 0, 0, 0],
+//   [1, 0, 0, 0, 1, 1, 0],
+//   [1, 1, 1, 1, 1, 1, 0]
+// ])); // true

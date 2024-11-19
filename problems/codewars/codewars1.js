@@ -410,3 +410,101 @@ const grid2 = [
     [7, 2, 5, 1],
 ];
 console.log(findMostAdjacent(grid2)); // Output: [2, 4]
+//Recursion: Underscore-Hash Staircase
+function recursionStair(n, step = 1) {
+    if (step > Math.abs(n)) {
+        return; // Caso base: quando a etapa atual ultrapassa o tamanho
+    }
+
+    const absN = Math.abs(n);
+    const underscores = '_'.repeat(n > 0 ? absN - step : step - 1);
+    const hashes = '#'.repeat(n > 0 ? step : absN - step + 1);
+
+    console.log(underscores + hashes); // Imprime a linha atual
+
+    recursionStair(n, step + 1); // Chama a função recursivamente para a próxima linha
+}
+
+// // Testes
+// recursionStair(3);
+// recursionStair(7);
+// recursionStair(-8);
+// //Centered Hexagonal Number
+function hexLattice(n) {
+    // Verifica se `n` é hexagonal centralizado
+    const k = (Math.sqrt(12 * n - 3) + 3) / 6;
+    if (!Number.isInteger(k) || k <= 0) {
+        return "Invalid";
+    }
+
+    // Gera a ilustração em múltiplas linhas
+    const rows = [];
+    const mid = Math.ceil(k); // O meio da estrutura
+
+    // Construção da metade superior e linha do meio
+    for (let i = 1; i <= mid; i++) {
+        const spaces = " ".repeat(mid - i); // Espaços iniciais
+        const dots = "o ".repeat(mid + i - 1).trim(); // Pontos
+        rows.push(`${spaces}${dots}${spaces}`);
+    }
+
+    // Construção da metade inferior
+    for (let i = mid - 1; i >= 1; i--) {
+        const spaces = " ".repeat(mid - i);
+        const dots = "o ".repeat(mid + i - 1).trim();
+        rows.push(`${spaces}${dots}${spaces}`);
+    }
+
+    return rows.join("\n");
+}
+
+// Testes
+// console.log(hexLattice(1)); // o
+// console.log(hexLattice(7)); // Hexágono com 7 pontos
+// console.log(hexLattice(19)); // Hexágono com 19 pontos
+// console.log(hexLattice(21)); // Invalid
+
+//Numbers First, Letters Second
+function numThenChar(mat){
+    let len_mat = []
+    let str = mat.flat().filter((n)=> isNaN(n))
+    let num = mat.flat().filter(s => !isNaN(s))
+    // console.log() [num,str].flat()
+    let swaped
+    do{
+        swaped = false
+        for(let i = 0;i < str.length;i++){
+            if(str[i] > str[i+1]){
+                let temp = str[i]
+                str[i] = str[i+1]
+                str[i+1] = temp
+                swaped = true 
+            }
+        }
+        for(let i = 0;i < num.length;i++){
+            if(num[i] > num[i+1]){
+                let temp = num[i]
+                num[i] = num[i+1]
+                num[i+1] = temp
+                swaped = true 
+            }
+        }
+    }while(swaped)
+    let new_arrNUm = [num,str].flat()
+    for(let i in mat){
+        let arr_new = Array(mat[i].length)
+        let arr = []
+        for(let e = 0;e < arr_new.length;e++){
+            arr.push(new_arrNUm.shift())
+        }
+        len_mat.push(arr)
+    }
+    return len_mat
+}
+// console.log(numThenChar([
+//     [1, 2, 4, 3, "a", "b"],
+//     [6, "c", 5], [7, "d"],
+//     ["f", "e", 8]
+//   ]))
+
+// What Gives a Bad Mood?
