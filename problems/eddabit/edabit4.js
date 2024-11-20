@@ -1276,3 +1276,199 @@ console.log(canExit([
 //   [1, 0, 0, 0, 1, 1, 0],
 //   [1, 1, 1, 1, 1, 1, 0]
 // ])); // true
+//Remove the Last Vowel
+function removeLastVowel(word){
+    let vowels = ['a','e','i','o','u']
+    word = word.split('')
+    for(let i = word.length;i >0;i--){
+        if(vowels.includes(word[i])){
+            let new_word = ''
+            for(let e = 0;e < word.length;e++){
+                if(e == i){
+                    continue
+                }else{
+                    new_word+=word[e]
+                }
+            }
+            return new_word
+        }
+    }
+}
+// console.log(removeLastVowel('Those who dare to fail miserably can achieve greatly.'))
+
+//Sorting Band Names without Articles
+
+function bandNamesSort(names) {
+    const articles = ["The", "A", "An"];
+    
+    return names.sort((a, b) => {
+        // Remove os artigos para comparação
+        const stripArticle = name => {
+            const words = name.split(" ");
+            if (articles.includes(words[0])) {
+                return words.slice(1).join(" "); // Remove o primeiro termo (artigo)
+            }
+            return name;
+        };
+        
+        const strippedA = stripArticle(a).toLowerCase();
+        const strippedB = stripArticle(b).toLowerCase();
+        
+        // Ordenar comparando os nomes sem artigos
+        return strippedA.localeCompare(strippedB);
+    });
+}
+
+// Testes
+// console.log(bandNamesSort([
+//     "The New Yardbirds", 
+//     "The Beatles", 
+//     "The Square Roots", 
+//     "On A Friday", 
+//     "An Irony"
+// ])); 
+// // ➞ ["The Beatles", "An Irony", "The New Yardbirds", "On A Friday", "The Square Roots"]
+
+// console.log(bandNamesSort([
+//     "The Platters", 
+//     "A Yard of Yarn", 
+//     "The Everly Brothers", 
+//     "A Monster Effect", 
+//     "The Sex Maggots"
+// ])); 
+// // ➞ ["The Everly Brothers", "A Monster Effect", "The Platters", "The Sex Maggots", "A Yard of Yarn"]
+
+// console.log(bandNamesSort([
+//     "But Myth", 
+//     "An Old Dog", 
+//     "Def Leppard", 
+//     "The Any Glitters", 
+//     "The Dawn"
+// ])); 
+// ➞ ["The Any Glitters", "But Myth", "The Dawn", "Def Leppard", "An Old Dog"]
+// Sort by Frequency
+function sortFreq(nums) {
+    // Passo 1: Calcular a frequência de cada número
+    const frequencyMap = {};
+    for (const num of nums) {
+        frequencyMap[num] = (frequencyMap[num] || 0) + 1;
+    }
+    console.log(frequencyMap)
+    // Passo 2: Ordenar os números
+    return nums.sort((a, b) => {
+        const freqA = frequencyMap[a];
+        const freqB = frequencyMap[b];
+
+        // Comparar pela frequência (decrescente)
+        if (freqA !== freqB) {
+            return freqB - freqA;
+        }
+
+        // Se as frequências forem iguais, comparar pelo valor (crescente)
+        return a - b;
+    });
+}
+
+// Testes
+// console.log(sortFreq([2, 3, 5, 3, 7, 9, 5, 3, 7])); 
+// ➞ [3, 3, 3, 5, 5, 7, 7, 2, 9]
+
+// console.log(sortFreq([1, 2, 3, 0, 5, 0, 1, 6, 8, 8, 6, 9, 1]));
+// // ➞ [1, 1, 1, 0, 0, 6, 6, 8, 8, 2, 3, 5, 9]
+
+// console.log(sortFreq([4, 4, 2, 5, 1, 1, 3, 3, 2, 8]));
+// // ➞ [1, 1, 2, 2, 3, 3, 4, 4, 5, 8]
+// pigLatinSentence
+
+function pigLatinSentence(string){
+    let vowels = ['a','e','i','o','u']
+    let arr_str = string.split(' ')
+    for(let i in arr_str){
+        if(vowels.includes(arr_str[i][0])){
+            let new_word = arr_str[i]+'way'
+            arr_str[i] = new_word
+        }else{
+           let index = arr_str[i].split('').findIndex((letra)=> vowels.includes(letra))
+           let conc = arr_str[i].slice(0,index).concat('ay')
+           arr_str[i] =  arr_str[i].slice(index).concat(conc)
+        }
+    }
+    return arr_str
+}
+// console.log(pigLatinSentence("wall street journal"))
+
+//Translate from Human to Programmer
+function replaceNums(frase){
+    let traducao = ''
+    let i = 0
+    while(i < frase.length){
+        if(!isNaN(frase[i]) && frase[i] != ' '){
+            let nums = String(frase[i])
+            while(!isNaN(frase[i])){
+                nums+=String(frase[i])
+                i+=1
+            }
+            let binario = Binario(Number(nums))
+            traducao+=binario.toString()+' '
+        }else{
+            traducao+=frase[i]
+            i+=1
+        }
+    }
+    return traducao
+}
+
+function Binario(n){
+  resposta = '';
+  let quociente = n;
+
+  //enquanto o novo quociente não atingir 1 ou 2, o algoritmo de divisão deve ser repetido
+  while (quociente > 1) {   
+    //let n2 = n/2; é mais interessante usar o operador de resto da divisão, já que facilita para encontrar o proximo quociente
+    // 5 % 2 = 1
+    let resto = quociente % 2;
+    quociente  = (quociente - resto) / 2;
+
+    if(resto == 0){
+      resposta = '0' + resposta;
+      //como a resolução começa de tras para frente, vamos colocando os novos     
+      //algarismos sempre no começo da string, para não ter que inverter no final   
+    }else{
+      resposta = '1' + resposta;
+    }
+  }//fim while
+
+  //ao final concatenar o ultimo valor de quociente (que pode ser 0 ou 1) 
+  //no inicio da string resposta
+  resposta = quociente + resposta;
+  return resposta
+}
+console.log(replaceNums('I have 2 sheep.'))
+
+
+//Searching Two Objects at Once
+class Classes{
+    constructor(){
+        this.aulas = new Map()
+        this.aceita = null 
+    }
+    add(name,accept){
+        if(typeof accept != 'boolean'){
+            return null
+        }else{
+            this.aulas.set(name,accept)
+        }
+    }
+    acceptsLateWork(teacherName){
+        if(this.aulas.get(teacherName) == undefined){
+            return null 
+        }else{
+            return this.aulas.get(teacherName)
+        }
+    }
+
+}
+let aula = new Classes()
+aula.add("Mr. Citrano",false)
+aula.add("Mr. Roberson",true)
+console.log(aula.acceptsLateWork("Mr. Citrano"))
