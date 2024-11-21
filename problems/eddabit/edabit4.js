@@ -1472,3 +1472,174 @@ let aula = new Classes()
 aula.add("Mr. Citrano",false)
 aula.add("Mr. Roberson",true)
 console.log(aula.acceptsLateWork("Mr. Citrano"))
+console.clear()
+
+function timeAdjust(now, hrs, min, sec) {
+    // Converta o tempo atual em horas, minutos e segundos
+    let [currentHrs, currentMin, currentSec] = now.split(':').map(Number);
+    
+    // Adicione os segundos e ajuste os minutos se ultrapassar 60
+    currentSec += sec;
+    currentMin += Math.floor(currentSec / 60);
+    currentSec %= 60;
+
+    // Adicione os minutos e ajuste as horas se ultrapassar 60
+    currentMin += min;
+    currentHrs += Math.floor(currentMin / 60);
+    currentMin %= 60;
+
+    // Adicione as horas e ajuste para o formato de 24 horas
+    currentHrs += hrs;
+    currentHrs %= 24;
+
+    // Formate o tempo para o formato hh:mm:ss
+    return [
+        String(currentHrs).padStart(2, '0'),
+        String(currentMin).padStart(2, '0'),
+        String(currentSec).padStart(2, '0')
+    ].join(':');
+}
+
+// Exemplos de uso
+// console.log(timeAdjust("01:00:00", 1, 30, 10)); // ➞ "02:30:10"
+// console.log(timeAdjust("18:22:30", 4, 60, 30)); // ➞ "23:23:00"
+// console.log(timeAdjust("00:00:00", 72, 120, 120)); // ➞ "02:02:00"
+//Return the Sum of Two Numbers (With a Twist)
+
+function sum2(sum1, sum2) {
+    // Garantir que os números tenham o mesmo comprimento
+    while (sum1.length < sum2.length) sum1 = '0' + sum1;
+    while (sum2.length < sum1.length) sum2 = '0' + sum2;
+
+    let res = ''; // Resultado final
+    let carry = 0; // Transporte (carrego)
+
+    // Percorrer de trás para frente
+    for (let i = sum1.length - 1; i >= 0; i--) {
+        const digit1 = Number(sum1[i]);
+        const digit2 = Number(sum2[i]);
+
+        // Soma dos dígitos, incluindo o transporte
+        const sum = digit1 + digit2 + carry;
+
+        // Atualizar o transporte
+        carry = Math.floor(sum / 10);
+
+        // Adicionar o dígito atual ao resultado
+        res = (sum % 10) + res;
+    }
+
+    // Adicionar o transporte restante, se houver
+    if (carry > 0) {
+        res = carry + res;
+    }
+
+    return res;
+}
+
+// // Testes
+// console.log(sum2("5125515215521515", "125261616261626")); // ➞ "5250776831783141"
+// console.log(sum2("6666666666666666666666666666", "99999999999999999999999")); // ➞ "6666766666666666666666666665"
+// console.log(sum2("123456789123456789123456789", "987654321987654321987654329876543")); // ➞ "987654445444443445444443453333332"
+
+
+// Infection of the Ones
+function onesInfection(matrix){
+    let modified = [0,0,0,0]
+    for(let i in matrix){
+        if(matrix[i].includes(1)){
+            for(let e in modified){
+                if(modified[e] == 0 && matrix[i][e] == 1){
+                    modified[e] = 1
+                }
+            }
+            matrix[i] =  matrix[i].map(()=> 1)
+        }else{
+            for(let e in modified){
+                if(modified[e] == 0 && matrix[i][e] == 1){
+                    modified[e] = 1
+                }
+            }
+            matrix[i] = modified
+        }
+
+    }
+    return matrix
+}
+// console.log(onesInfection([
+//     [1, 0, 1, 0],
+//     [0, 1, 0, 0],
+//     [0, 0, 0, 0]
+//   ]))
+
+// numbersToRanges
+
+function numbersToRanges(arr){
+    let i = 0
+    let sequencia = []
+    while(i < arr.length){
+        if(arr[i] +1 == arr[i+1]){
+            let seq = [arr[i]]
+            while(arr[i] + 1 == arr[i+1]){
+                i+=1
+            }
+            seq.push(arr[i])
+            sequencia.push(seq)
+        }else{
+            i+=1
+        }
+    }
+    return sequencia
+}
+// console.log(numbersToRanges([3, 4, 5, 10, 11, 12]))
+
+
+function almostUniform(arr) {
+    const freq = {}; // Frequência de cada número no array
+
+    // Calcular frequência de cada número
+    for (let num of arr) {
+        freq[num] = (freq[num] || 0) + 1;
+    }
+
+    let maxLen = 0; // Maior comprimento da subsequência encontrada
+
+    // Iterar sobre os números únicos no array
+    for (let num in freq) {
+        num = parseInt(num);
+
+        // Verificar se há um número cuja diferença é 1
+        if (freq[num + 1]) {
+            // Comprimento da subsequência para o par (num, num + 1)
+            const currentLen = freq[num] + freq[num + 1];
+            maxLen = Math.max(maxLen, currentLen);
+        }
+    }
+
+    return maxLen;
+}
+
+// Exemplos de uso
+console.log(almostUniform([1, 3, 2, 2, 5, 2, 3, 7])); // ➞ 5
+console.log(almostUniform([1, 2, 3, 4])); // ➞ 2
+console.log(almostUniform([1, 1, 1, 1])); // ➞ 0
+
+//Simple Fun
+function digtOne(n){
+    let casas = String(n).length > 1?Number(String(n).split('').map(()=>1).join('')):11
+    let count = 1
+    let digit = casas
+    while(digit != n){
+       if(digit > n){
+        //diminuir
+        if(count < String(n).length -1){
+            
+        }
+       }else{
+        //aumentar
+
+       }
+    }
+
+}
+console.log(digtOne(1000))
