@@ -1643,3 +1643,4 @@ function digtOne(n){
 
 }
 console.log(digtOne(1000))
+
