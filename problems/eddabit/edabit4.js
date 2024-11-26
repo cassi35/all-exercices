@@ -1620,27 +1620,36 @@ function almostUniform(arr) {
 }
 
 // Exemplos de uso
-console.log(almostUniform([1, 3, 2, 2, 5, 2, 3, 7])); // ➞ 5
-console.log(almostUniform([1, 2, 3, 4])); // ➞ 2
-console.log(almostUniform([1, 1, 1, 1])); // ➞ 0
+// console.log(almostUniform([1, 3, 2, 2, 5, 2, 3, 7])); // ➞ 5
+// console.log(almostUniform([1, 2, 3, 4])); // ➞ 2
+// console.log(almostUniform([1, 1, 1, 1])); // ➞ 0
 
-//Simple Fun
-function digtOne(n){
-    let casas = String(n).length > 1?Number(String(n).split('').map(()=>1).join('')):11
-    let count = 1
-    let digit = casas
-    while(digit != n){
-       if(digit > n){
-        //diminuir
-        if(count < String(n).length -1){
-            
-        }
+
+//..............................
+// ROT13 
+
+function rot13(letras){
+    let alf = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z']
+    let substiituicao = []
+    for(let i in letras){
+        let temp_letra = letras[i]
+        let index = alf.indexOf(temp_letra)+13
+       if(alf[index] == undefined){
+            let contador = index
+            for(let a = 0;a < 13;a++){
+                if(contador > alf.length){
+                    contador = 0
+                }else{
+                    contador+=1
+                }
+
+            }   
+            substiituicao.push(alf[contador])
        }else{
-        //aumentar
-
+        substiituicao.push(alf[index])
        }
     }
-
+    return substiituicao
 }
-console.log(digtOne(1000))
+// console.log(rot13('cassiano acertou mais uma de prima eu sou foda'))
 
