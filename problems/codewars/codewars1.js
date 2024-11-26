@@ -508,3 +508,56 @@ function numThenChar(mat){
 //   ]))
 
 // What Gives a Bad Mood?
+//Factoradic class
+function classFactorial(expression){
+    let fat = new Map()
+    expression = expression.split('')
+    for(let i in expression){
+       if(!isNaN(expression[i]) && expression[Number(i)+1] == '!'){
+        let fator = fatorial(Number(expression[i]))
+        fat.set(expression[i]+expression[Number(i)+1],String(fator))
+       }
+    }
+    expression = expression.join('')
+    for(let [chave,...valor] of fat){
+        expression = expression.replace(chave,valor)
+    }
+    let operacoes = ['+','-','*','/']
+    do{
+        for(let i = 0;i < expression.length;i++){
+            if(expression[i] == '*' || expression[i] == '/'){
+                let expressao_troca = expression[Number(i)-1]+expression[i]+expression[Number(i)+1]
+                let calc = expression[i] == '*'?Number(expression[i-1] )* Number(expression[i+1]):Number(expression[i-1]) / Number(expression[i+1])
+              
+                expression = expression.replace(expressao_troca,calc)
+                break
+            }
+        }
+
+    }while(expression.includes('*'|| '/'))
+        do{
+            for(let i = 0;i < expression.length;i++){
+                if(expression[i] == '+' || expression[i] == '-'){
+                    let expressao_troca = expression[Number(i)-1]+expression[i]+expression[Number(i)+1]
+                    let calc = expression[i] == '+'?Number(expression[i-1]) + Number(expression[i+1]):Number(expression[i-1]) - Number(expression[i+1])
+                  
+                    expression = expression.replace(expressao_troca,calc)
+                    break
+                }
+            }
+    
+        }while(expression.includes('+'|| '-'))
+    return expression
+    // while(expression.includes('!')){
+
+    // }
+}
+function fatorial(n){
+    if(n == 0){
+        return 1
+    }
+    return n * fatorial(n -1)
+}
+// console.log(classFactorial('5!/2'))
+
+

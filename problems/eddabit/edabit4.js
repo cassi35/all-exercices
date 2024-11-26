@@ -1653,3 +1653,130 @@ function rot13(letras){
 }
 // console.log(rot13('cassiano acertou mais uma de prima eu sou foda'))
 
+//sudokuValidator
+function sudokuValidator(mat){
+    for(let i in mat){
+        let sortArr = sort(mat[i])
+        if(!sortArr){
+            return false
+        }
+    }
+    return true
+}
+function sort(arr){
+    let swaped
+    do{
+        swaped = false
+        for(var i = 0;i < arr.length -1;i++){
+            if(arr[i] > arr[i + 1]){
+                let temp = arr[i]
+                arr[i] = arr[i+1]
+                arr[i+1] = temp
+                swaped = true
+            }
+        } 
+    }while(swaped)
+    for(let i = 1;i <= 9;i++){
+        if(arr[i] != i){
+            return false
+        }
+    }
+    return true
+}
+console.log(sudokuValidator([
+    [ 1, 5, 2, 4, 8, 9, 3, 7, 6 ],
+    [ 7, 3, 9, 2, 5, 6, 8, 4, 1 ],
+    [ 4, 6, 8, 3, 7, 1, 2, 9, 5 ],
+    [ 3, 8, 7, 1, 2, 4, 6, 5, 9 ],
+    [ 5, 9, 1, 7, 6, 3, 4, 2, 8 ],
+    [ 2, 4, 6, 8, 9, 5, 7, 1, 3 ],
+    [ 9, 1, 4, 6, 3, 7, 5, 8, 2 ],
+    [ 6, 2, 5, 9, 4, 8, 1, 3, 7 ],
+    [ 8, 7, 3, 5, 1, 2, 9, 6, 4 ]
+  ]))
+
+// ascending
+function ascending(string) {
+    let arrStr = string.split(''); // Dividir em um array de caracteres
+    for (let i = 1; i <= arrStr.length / 2; i++) { // Tamanho do grupo começa em 1
+        if (arrStr.length % i === 0) { // Verifica divisibilidade
+            let new_strArr = [...arrStr]; // Cópia do array original
+            let new_str = []; // Grupos formados
+            while (new_strArr.length !== 0) {
+                new_str.push(Number(new_strArr.splice(0, i).join(''))); // Forma grupos de tamanho i
+            }
+            let teste = true; // Verificar se é sequência
+            for (let j = 1; j < new_str.length; j++) {
+                if (new_str[j] !== new_str[j - 1] + 1) { // Verifica se é consecutivo
+                    teste = false;
+                    break;
+                }
+            }
+            if (teste) {
+                return true; // Se for consecutivo, retorna true
+            }
+        }
+    }
+    return false; // Nenhum agrupamento foi consecutivo
+}
+// console.log(ascending('666667'))
+
+// function diamond(n){
+//     let dimonds = []
+//     let temp_parte = n % 2 == 0? Array(n).fill(0).map((num,i)=> n / 2 == i || n / 2 -1 == i?1:num):
+//     Array(n).fill(0).map((num,i)=> Math.floor(n/ 2) == i?1:num)
+//     let original = temp_parte
+//     let left 
+//     let right 
+//     dimonds.push(temp_parte)
+//     if(n % 2 == 0){
+//         do{
+
+//             if(temp_parte[temp_parte.length -1] == 1 && temp_parte[0] == 1){
+//                 left = temp_parte.slice(0,n/2)
+//                 right = temp_parte.slice(n/2)
+//                 let indexL = left.findIndex((a)=>a == 1)
+//                 let indexR = right.findIndex((a)=>a == 1)
+//                 left[indexL] = 0
+//                 left[indexL+1 ] = 1
+//                 right[indexR] = 0
+//                 right[indexR -1] = 1
+//                 let new_arr = left.concat(right)
+//                 dimonds.push(new_arr)
+//                 temp_parte = new_arr
+//             }else{
+//                 left = temp_parte.slice(0,n/2)
+//                 right = temp_parte.slice(n/2)
+//                 let indexL = left.findIndex((a)=>a == 1)
+//                 let indexR = right.findIndex((a)=>a == 1)
+//                 left[indexL] = 0
+//                 left[indexL-1] = 1
+//                 right[indexR] = 0
+//                 right[indexR +1] = 1
+//                 let new_arr = left.concat(right)
+//                 dimonds.push(new_arr)
+//                 temp_parte = new_arr
+//             }
+//            let teste = false
+//            for(let i in temp_parte){
+//             if(temp_parte[i] != original[i]){
+//                 teste = true
+//             }
+//            }    
+//            if(teste){
+//             continue
+//            }else{
+//             dimonds.push("good cut")
+//             for(let i in dimonds){
+//                 console.log(dimonds[i])
+//             }
+//             return 
+//            }
+
+//         }while(true)
+//     }else{
+//         //outro caso 
+//     }
+    
+// }
+// diamond(4)
