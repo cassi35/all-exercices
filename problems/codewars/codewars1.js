@@ -409,7 +409,7 @@ const grid2 = [
     [7, 2, 5, 8],
     [7, 2, 5, 1],
 ];
-console.log(findMostAdjacent(grid2)); // Output: [2, 4]
+// console.log(findMostAdjacent(grid2)); // Output: [2, 4]
 //Recursion: Underscore-Hash Staircase
 function recursionStair(n, step = 1) {
     if (step > Math.abs(n)) {
@@ -561,3 +561,207 @@ function fatorial(n){
 // console.log(classFactorial('5!/2'))
 
 
+// // Emirps
+// function numersEmprs(n){
+//     let isPrimeInvert = []
+
+//     let max = Math.max(...isPrimeInvert)
+//     let min = Math.min(...isPrimeInvert)
+//     let sum = isPrimeInvert.reduce((a,b)=>a+b)
+//     function numbersTest(number){
+//         if(n == 1){
+//             return [min,max,sum]
+//         }else{
+//             function isPrime(num,count){
+//               if(count == num){
+//                 return true
+//               }  
+//               if(num % count == 0){
+//                 return false
+//               }
+//               return isPrime(num,count+1)
+//             }
+//             let num = isPrime(number,2)
+//             if(num){
+//                 let num_str = String(number)
+//                 let invert = num_str[1]+num_str[0]
+//                 let invert_num = isPrime(Number(invert))
+//                 if(invert_num){
+//                     isPrimeInvert.push(Number(invert)) 
+//                 }
+//             }
+//             return numbersTest(n-1)
+//         }
+//     }
+//     return numbersTest(n)
+
+// }//o(log n)(log n)
+// console.log(numersEmprs(100))
+function find_emirp(n) {
+    // Gerar todos os números primos abaixo de n usando o Crivo de Eratóstenes
+    function generatePrimes(limit) {
+        const sieve = Array(limit).fill(true);
+        sieve[0] = sieve[1] = false; // 0 e 1 não são primos
+
+        for (let i = 2; i * i < limit; i++) {
+            if (sieve[i]) {
+                for (let j = i * i; j < limit; j += i) {
+                    sieve[j] = false;
+                }
+            }
+        }
+        return sieve.map((isPrime, index) => (isPrime ? index : null)).filter((num) => num !== null);
+    }
+
+    // Verificar se um número é palíndromo
+    function isPalindrome(num) {
+        const str = String(num);
+        return str === str.split('').reverse().join('');
+    }
+
+    const primes = generatePrimes(n);
+    const primeSet = new Set(primes); // Usar um conjunto para busca rápida
+
+    const emirps = [];
+    for (const prime of primes) {
+        const reversed = Number(String(prime).split('').reverse().join(''));
+        if (prime !== reversed && primeSet.has(reversed)) {
+            emirps.push(prime);
+        }
+    }
+
+    if (emirps.length === 0) {
+        return [0, 0, 0];
+    }
+
+    const largest = Math.max(...emirps);
+    const sum = emirps.reduce((a, b) => a + b, 0);
+    return [emirps.length, largest, sum];
+}
+
+// Exemplos:
+// console.log(find_emirp(10));  // ➞ [0, 0, 0]
+// console.log(find_emirp(50)); // ➞ [4, 37, 98]
+// console.log(find_emirp(100)); // ➞ [8, 97, 418]
+// Sum of Pairs
+function sum_pairs(arr,n){
+    let index_mai = 0
+    let pair = []
+    for(let i = 0;i < arr.length;i++){
+        let compare = arr[i]
+        for(let j = i+1;j < arr.length;j++){
+            if(compare+arr[j] == n){
+                let sum_index = Number(i+j)
+                if(index_mai < sum_index){
+                    pair = [arr[j],arr[i]]
+                }
+            }
+
+        }
+    }
+    return pair
+
+}
+// console.log(sum_pairs([10, 5, 2, 3, 7, 5],10))
+//Calculating with Functions
+function plus(num){
+
+    return {number:null,sinal:'+',adicionar:num,fun:null}
+}
+function divide(num){
+    return {number:null,sinal:'/',adicionar:num,fun:null}
+}
+function multiple(num){
+    return {number:null,sinal:'*',adicionar:num,fun:null}
+}
+function minus(num){
+    return {number:null,sinal:'-',adicionar:num,fun:null}
+}
+
+function one(f=null){
+    if(f == null ){
+        return 1
+    }else{
+        switch(f.sinal){
+            case '+':
+                return f.adicionar+1
+            case '-':
+                return f.adicionar -1
+            case '/' :
+                return f.adicionar / 1
+            case '*':
+                return f.adicionar / 1
+        }
+    }
+
+}
+function two(f=null){
+    if(f == null){
+        return 2
+    }else{
+        switch(f.sinal){
+            case '+':
+                return f.adicionar+2
+            case '-':
+                return f.adicionar -2
+            case '/' :
+                return f.adicionar / 2
+            case '*':
+                return f.adicionar / 2
+        }
+    }
+
+}
+function tree(f = null ){
+    if(f == null){
+        return 3
+    }else{
+        switch(f.sinal){
+            case '+':
+                return f.adicionar+3
+            case '-':
+                return f.adicionar -3
+            case '/' :
+                return f.adicionar / 3
+            case '*':
+                return f.adicionar / 3
+        }
+    }
+
+}
+function four(f=null){
+    if(f == null){
+        return 4
+    }else{
+        switch(f.sinal){
+            case '+':
+                return f.adicionar+4
+            case '-':
+                return f.adicionar -4
+            case '/' :
+                return f.adicionar / 4
+            case '*':
+                return f.adicionar / 4
+        }
+    }
+
+}
+function five(f=null){
+    if(f == null){
+        return 5
+    }else{
+        switch(f.sinal){
+            case '+':
+                return f.adicionar+5
+            case '-':
+                return f.adicionar -5
+            case '/' :
+                return f.adicionar / 5
+            case '*':
+                return f.adicionar / 5
+        }
+    }
+
+}
+let calc = one(plus(tree()))
+// console.log(calc)

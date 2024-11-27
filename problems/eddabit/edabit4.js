@@ -1780,3 +1780,45 @@ function ascending(string) {
     
 // }
 // diamond(4)
+// Patterned Wristband
+
+function isWristband(mat){
+    let vertical = true 
+    let diagonalLeft = true 
+    let diagonalRight = true
+    let horizontal = true 
+    let count = mat[0].length-1
+    for(let i in mat){
+        if(mat[0][0] != mat[i][0]){
+            vertical = false
+        }
+        if(i == mat[i].length){
+            if(mat[0][0] != mat[i][i]){
+                diagonalLeft = false
+            }
+            if(mat[0][mat[0].length] != mat[i][count]){
+                diagonalRight = false
+            }
+            count--
+        }
+        for(let a in mat[i]){
+            if(mat[i][0] != mat[i][a]){
+                horizontal = false
+            }
+        }
+    } 
+    if(horizontal || vertical || diagonalLeft || diagonalRight){
+        return true 
+    }else{
+        return false
+    }
+
+
+}
+// console.log(isWristband([
+//     ["A", "A"],
+//     ["B", "B"],
+//     ["C", "C"]
+//   ]))
+// Moving Particles Absorb Each Other after Collisions
+
