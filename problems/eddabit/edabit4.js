@@ -1782,43 +1782,142 @@ function ascending(string) {
 // diamond(4)
 // Patterned Wristband
 
-function isWristband(mat){
-    let vertical = true 
-    let diagonalLeft = true 
-    let diagonalRight = true
-    let horizontal = true 
-    let count = mat[0].length-1
-    for(let i in mat){
-        if(mat[0][0] != mat[i][0]){
-            vertical = false
-        }
-        if(i == mat[i].length){
-            if(mat[0][0] != mat[i][i]){
-                diagonalLeft = false
+// function isWristband(mat){
+//     let vertical = true 
+//     let diagonalLeft = true 
+//     let diagonalRight = true
+//     let horizontal = true 
+//     let count = mat[0].length-1
+//     for(let i in mat){
+//         if(mat[0][0] != mat[i][0]){
+//             vertical = false
+//         }
+//         if(i == mat[i].length){
+//             if(mat[0][0] != mat[i][i]){
+//                 diagonalLeft = false
+//             }
+//             if(mat[0][mat[0].length] != mat[i][count]){
+//                 diagonalRight = false
+//             }
+//             count--
+//         }
+//         for(let a in mat[i]){
+//             if(mat[i][0] != mat[i][a]){
+//                 horizontal = false
+//             }
+//         }
+//     } 
+//     if(horizontal || vertical || diagonalLeft || diagonalRight){
+//         return true 
+//     }else{
+//         return false
+//     }
+
+
+// }
+// // console.log(isWristband([
+// //     ["A", "A"],
+// //     ["B", "B"],
+// //     ["C", "C"]
+// //   ]))
+// // Moving Particles Absorb Each Other after Collisions
+
+// //get subset 
+// function getSubsets(array, target) {
+//     const result = [];
+    
+//     // Função para gerar todos os subconjuntos do array
+//     function generateSubsets(start, subset) {
+//         const sum = subset.reduce((acc, val) => acc + val, 0);
+//         if (sum === target) {
+//             result.push([...subset]); // Adiciona uma cópia do subset
+//         }
+        
+//         for (let i = start; i < array.length; i++) {
+//             subset.push(array[i]); // Adiciona o elemento ao subset
+//             generateSubsets(i + 1, subset); // Continua gerando a partir do próximo elemento
+//             subset.pop(); // Remove o elemento para voltar ao estado anterior
+//         }
+//     }
+
+//     generateSubsets(0, []);
+
+//     // Ordena os subconjuntos:
+//     // 1. Primeiro por tamanho
+//     // 2. Depois por ordem lexicográfica (comparação elemento a elemento)
+//     result.sort((a, b) => {
+//         if (a.length !== b.length) {
+//             return a.length - b.length; // Primeiro pelo tamanho
+//         }
+//         for (let i = 0; i < a.length; i++) {
+//             if (a[i] !== b[i]) {
+//                 return a[i] - b[i]; // Depois por valor de cada elemento
+//             }
+//         }
+//         return 0; // Subconjuntos idênticos
+//     });
+
+//     return result;
+// }
+
+// // Testes
+// // console.log(getSubsets([-3, -2, -1, 0, 1, 2, 3], 2));
+// // [[2], [-1, 3], [0, 2], [-3, 2, 3], [-2, 1, 3], [-1, 0, 3], [-1, 1, 2], ...]
+
+
+// Consecutive Number Series
+function isConsecutive(numbers){
+    let grupo = 1
+
+    while(numbers.length % grupo == 0 ){
+        let agrupado = numbers.split('')
+        let grupos = []
+        while(agrupado.length != 0){
+            let gp = ''
+            for(let i = 0;i < grupo;i++){
+                gp+= agrupado.shift()
             }
-            if(mat[0][mat[0].length] != mat[i][count]){
-                diagonalRight = false
-            }
-            count--
+            grupos.push(Number(gp))
         }
-        for(let a in mat[i]){
-            if(mat[i][0] != mat[i][a]){
-                horizontal = false
+        let isSequence = true
+        for(let i = 1;i < grupos.length-1;i++){
+            if((grupos[i-1] +1 ) != grupos[i]){
+                isSequence = false
+                break
             }
         }
-    } 
-    if(horizontal || vertical || diagonalLeft || diagonalRight){
-        return true 
-    }else{
-        return false
+        console.log(grupos)
+        if(isSequence){
+            return true
+        }else{
+            grupo++
+        }
     }
-
-
+    return false
 }
-// console.log(isWristband([
-//     ["A", "A"],
-//     ["B", "B"],
-//     ["C", "C"]
-//   ]))
-// Moving Particles Absorb Each Other after Collisions
+// console.log(isConsecutive("123124125"))
 
+//Indices of Zeroes for the Longest Run of Contiguous Ones
+// function zeroIndices(binaries,k){
+
+//     let zeros = []
+//     for(let i in binaries){
+//         if(binaries[i] == 0){
+//             zeros.push(i)
+//         }
+//     }
+//     let combinacoes = []
+//     for(let i in zeros){
+//         let combinacao = []
+//         if(zeros[i+k]){
+//             let comb = []
+//             for(let a = 0;a < k;a++){
+//                 comb.push()
+//             }
+//         } 
+//     }
+//     let sequenciaMaior = 0
+    
+
+// }
+// console.log(zeroIndices([1, 0, 1, 1, 0, 0, 0, 1], 1))

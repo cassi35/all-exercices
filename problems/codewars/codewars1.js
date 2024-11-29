@@ -765,3 +765,6 @@ function five(f=null){
 }
 let calc = one(plus(tree()))
 // console.log(calc)
+
+
+// parseInt() reloaded
