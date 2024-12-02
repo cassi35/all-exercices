@@ -1921,3 +1921,13 @@ function isConsecutive(numbers){
 
 // }
 // console.log(zeroIndices([1, 0, 1, 1, 0, 0, 0, 1], 1))
+
+// oddSquarePatch
+function oddSquarePatch(mat){
+    
+}
+console.log(oddSquarePatch([
+    [1, 2, 4, 9],
+    [4, 5, 5, 7],
+    [3, 6, 1, 7]
+  ]))
