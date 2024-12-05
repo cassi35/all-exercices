@@ -768,3 +768,20 @@ let calc = one(plus(tree()))
 
 
 // parseInt() reloaded
+
+// Land perimeter
+// int32 to IPv4
+function intToIPv4(num) {
+    // Obtenha cada octeto usando deslocamentos de bits e máscaras
+    const octet1 = (num >> 24) & 255; // Extrai os 8 bits mais significativos
+    const octet2 = (num >> 16) & 255; // Próximos 8 bits
+    const octet3 = (num >> 8) & 255;  // Próximos 8 bits
+    const octet4 = num & 255;         // Últimos 8 bits
+
+    // Combine os octetos em uma string no formato IPv4
+    return `${octet1}.${octet2}.${octet3}.${octet4}`;
+}
+
+// Exemplo de uso
+const num = 2149583361;
+console.log(intToIPv4(num)); // Saída: "128.32.10.1"
