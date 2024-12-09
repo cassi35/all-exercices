@@ -1683,17 +1683,17 @@ function sort(arr){
     }
     return true
 }
-console.log(sudokuValidator([
-    [ 1, 5, 2, 4, 8, 9, 3, 7, 6 ],
-    [ 7, 3, 9, 2, 5, 6, 8, 4, 1 ],
-    [ 4, 6, 8, 3, 7, 1, 2, 9, 5 ],
-    [ 3, 8, 7, 1, 2, 4, 6, 5, 9 ],
-    [ 5, 9, 1, 7, 6, 3, 4, 2, 8 ],
-    [ 2, 4, 6, 8, 9, 5, 7, 1, 3 ],
-    [ 9, 1, 4, 6, 3, 7, 5, 8, 2 ],
-    [ 6, 2, 5, 9, 4, 8, 1, 3, 7 ],
-    [ 8, 7, 3, 5, 1, 2, 9, 6, 4 ]
-  ]))
+// console.log(sudokuValidator([
+//     [ 1, 5, 2, 4, 8, 9, 3, 7, 6 ],
+//     [ 7, 3, 9, 2, 5, 6, 8, 4, 1 ],
+//     [ 4, 6, 8, 3, 7, 1, 2, 9, 5 ],
+//     [ 3, 8, 7, 1, 2, 4, 6, 5, 9 ],
+//     [ 5, 9, 1, 7, 6, 3, 4, 2, 8 ],
+//     [ 2, 4, 6, 8, 9, 5, 7, 1, 3 ],
+//     [ 9, 1, 4, 6, 3, 7, 5, 8, 2 ],
+//     [ 6, 2, 5, 9, 4, 8, 1, 3, 7 ],
+//     [ 8, 7, 3, 5, 1, 2, 9, 6, 4 ]
+//   ]))
 
 // ascending
 function ascending(string) {
@@ -1921,3 +1921,51 @@ function isConsecutive(numbers){
 
 // }
 // console.log(zeroIndices([1, 0, 1, 1, 0, 0, 0, 1], 1))
+function productOfPrimes(num) {
+    // Função para verificar se um número é primo
+    function isPrime(n) {
+        if (n <= 1) return false; // Números menores ou iguais a 1 não são primos
+        for (let i = 2; i <= Math.sqrt(n); i++) {
+            if (n % i === 0) return false; // Encontrou um divisor
+        }
+        return true;
+    }
+
+    // Testar todos os pares de números primos
+    for (let i = 2; i <= num / 2; i++) {
+        if (isPrime(i)) { // Verifica se 'i' é primo
+            let complement = num / i;
+            if (isPrime(complement) && Number.isInteger(complement)) { 
+                return true; // Se o complemento também é primo e a divisão é exata
+            }
+        }
+    }
+
+    return false; // Se nenhum par de primos for encontrado
+}
+
+// Testes
+// console.log(productOfPrimes(2059)); // ➞ true (29 * 71)
+// console.log(productOfPrimes(10));   // ➞ true (2 * 5)
+// console.log(productOfPrimes(25));   // ➞ true (5 * 5)
+// console.log(productOfPrimes(999));  // ➞ false
+//Sorting in R: Order (Part I)
+
+function order(arr) {
+    // Cria uma lista de índices de 0 a arr.length - 1
+    let indices = Array.from(arr.keys());
+
+    // Ordena os índices com base nos valores do array original
+    indices.sort((a, b) => {
+        if (arr[a] < arr[b]) return -1; // Menor valor vem antes
+        if (arr[a] > arr[b]) return 1;  // Maior valor vem depois
+        return a - b; // Preserva a ordem original em caso de empate
+    });
+
+    return indices;
+}
+
+// Testes
+// console.log(order([9, 1, 4, 5, 4]));         // ➞ [1, 2, 4, 3, 0]
+// console.log(order(["z", "c", "f", "b", "c"])); // ➞ [3, 1, 4, 2, 0]
+// console.log(order(["order", "my", "words"]));  // ➞ [1, 0, 2]
