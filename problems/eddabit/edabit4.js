@@ -1969,3 +1969,5 @@ function order(arr) {
 // console.log(order([9, 1, 4, 5, 4]));         // ➞ [1, 2, 4, 3, 0]
 // console.log(order(["z", "c", "f", "b", "c"])); // ➞ [3, 1, 4, 2, 0]
 // console.log(order(["order", "my", "words"]));  // ➞ [1, 0, 2]
+
+
