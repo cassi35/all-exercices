@@ -784,4 +784,6 @@ function intToIPv4(num) {
 
 // Exemplo de uso
 const num = 2149583361;
-console.log(intToIPv4(num)); // Saída: "128.32.10.1"
+// console.log(intToIPv4(num)); // Saída: "128.32.10.1"
+
+//jogo da velha 

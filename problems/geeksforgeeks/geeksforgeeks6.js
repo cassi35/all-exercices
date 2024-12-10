@@ -119,4 +119,4 @@ function binaryTreeExercices() {
 
 }
 
-binaryTreeExercices();
+// binaryTreeExercices();
