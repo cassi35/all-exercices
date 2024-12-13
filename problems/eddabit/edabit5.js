@@ -105,23 +105,41 @@ function lookAndSay(start,n){
 
 //The Longest Substring
 
-function maxSeparator(string){
-    let separator = []
-    let maxSubstr = 0
-    string = string.split('')
-    for(let i in string){
-        if(string.slice(i+1).includes(string[i])){
-            let index = string.slice(i+1).findIndex((str)=>str== string[i])
-            let length_index = string.slice(i,index).length
-            if(length_index > maxSubstr){
-                if(!separator.includes(string[i])){
-                    separator.push(string[i])
-                }
-                maxSubstr = length_index
+// Function to find the longest substring based on the separator
+function maxSeparator(str) {
+    const substrings = {};
+
+    // Iterate through all unique characters in the string
+    for (const char of new Set(str)) {
+        const firstIndex = str.indexOf(char);
+        const lastIndex = str.lastIndexOf(char);
+
+        // Ensure the separator occurs at least twice
+        if (firstIndex !== lastIndex) {
+            const substring = str.slice(firstIndex, lastIndex + 1);
+
+            // Check if the separator occurs only at the edges
+            if (!substring.slice(1, -1).includes(char)) {
+                substrings[char] = substring.length;
             }
         }
-        console.log(string.slice(i+1),Number(i+1))
     }
-    return separator
+
+    // Find the maximum length of substrings
+    const maxLength = Math.max(0, ...Object.values(substrings));
+
+    // Return the separators that yield substrings of the maximum length, sorted alphabetically
+    return Object.keys(substrings)
+        .filter((key) => substrings[key] === maxLength)
+        .sort();
 }
-console.log(maxSeparator("lacsa"))
+
+// // Examples
+// console.log(maxSeparator("supercalifragilistic"));
+// // Output: ["s"]
+
+// console.log(maxSeparator("laboratory"));
+// // Output: ["a", "o", "r"]
+
+// console.log(maxSeparator("candle"));
+// // Output: []
