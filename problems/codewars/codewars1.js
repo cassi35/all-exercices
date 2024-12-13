@@ -787,3 +787,63 @@ const num = 2149583361;
 // console.log(intToIPv4(num)); // Saída: "128.32.10.1"
 
 //jogo da velha 3
+
+
+
+//Four Letter Words ~ Mutations
+//5hku
+function mutations(word) {
+    let length_palavras_bob = ['boar', 'clap', 'farm', 'lend', 'near', 'peat', 'pure', 'more', 'plan', 'soap'];
+    let length_palavras_alice = ['plat', 'rend', 'bear', 'soar', 'mare', 'pare', 'flap', 'neat', 'clan', 'pore'];
+
+    function isValidMutation(word1, word2) {
+        if (word1.length !== 4 || word2.length !== 4) return false;
+
+        let diffCount = 0;
+        for (let i = 0; i < 4; i++) {
+            if (word1[i] !== word2[i]) {
+                diffCount++;
+            }
+        }
+        return diffCount === 1;
+    }
+
+    function jogo(initial_word, vez) {
+        while (true) {
+            if (vez === 'bob') {
+                let jogou = false;
+                for (let i in length_palavras_bob) {
+                    if (length_palavras_bob[i] && isValidMutation(initial_word, length_palavras_bob[i])) {
+                        initial_word = length_palavras_bob[i];
+                        length_palavras_bob[i] = null;
+                        vez = 'alice';
+                        jogou = true;
+                        break;
+                    }
+                }
+                if (!jogou) return 'alice ganhou o jogo';
+            } else {
+                let jogou = false;
+                for (let i in length_palavras_alice) {
+                    if (length_palavras_alice[i] && isValidMutation(initial_word, length_palavras_alice[i])) {
+                        initial_word = length_palavras_alice[i];
+                        length_palavras_alice[i] = null;
+                        vez = 'bob';
+                        jogou = true;
+                        break;
+                    }
+                }
+                if (!jogou) return 'bob ganhou o jogo';
+            }
+        }
+    }
+
+    if (length_palavras_alice.length > 2000 || length_palavras_bob.length > 2000) {
+        return false;
+    } else {
+        let start = Math.floor(Math.random() * 2);
+        return start === 1 ? jogo(word, 'bob') : jogo(word, 'alice');
+    }
+}
+
+console.log(mutations('rend'));

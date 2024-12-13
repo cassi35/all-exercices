@@ -143,3 +143,5 @@ function maxSeparator(str) {
 
 // console.log(maxSeparator("candle"));
 // // Output: []
+
+
