@@ -796,3 +796,84 @@ function linkedListProblems(){
 }
 
 linkedListProblems()
+console.clear()
+
+
+function arrays_exercices(){
+    //Missing And Repeating
+    function findTwoElement(arr){
+        const n = arr.length;
+
+        // Inicializar variáveis para armazenar os valores
+        let missing = 0;
+        let repeating = 0;
+
+        // Primeiro loop: marcar os números como visitados
+        for (let i = 0; i < n; i++) {
+            let index = Math.abs(arr[i]) - 1; // Obter o índice correto para o número atual
+            if (arr[index] < 0) {
+                // Se já foi marcado, então esse número está repetindo
+                repeating = Math.abs(arr[i]);
+            } else {
+                // Marcar o número como visitado
+                arr[index] = -arr[index];
+            }
+        }
+
+        // Segundo loop: encontrar o número faltante
+        for (let i = 0; i < n; i++) {
+            if (arr[i] > 0) {
+                missing = i + 1; // Número faltante é o índice + 1
+                break;
+            }
+        }
+
+        return [repeating, missing];
+    }
+
+    // console.log(findTwoElement([4, 3, 6, 2, 1, 1]))
+
+
+    //floor in sorted array
+    function findFloor(arr,k){
+        let less = arr[0]
+        let index = 0
+        let exists = false
+        for(let i in arr){
+            if(arr[i] <= k){
+                if(less < arr[i]){
+                    less = arr[i]
+                    index = i
+                }
+                exists = true
+            }
+        }
+       if(exists){
+        return index
+       }else{
+        return -1
+       }
+    }
+    // console.log(findFloor([1, 2, 8, 10, 11, 12, 19],0))
+
+    // Count Inversions
+
+    function inversionCount(arr){
+        let countInversion = 0
+        for(let i in arr){
+            let after = arr.slice(Number(i))
+            for(let index in after){
+                if(after[index] < arr[i]){
+                    countInversion+=1
+                }
+            }
+        }
+
+        return countInversion
+    }
+    // console.log(inversionCount([10, 10, 10]))
+
+    
+    
+}
+arrays_exercices()

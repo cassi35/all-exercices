@@ -145,3 +145,117 @@ function maxSeparator(str) {
 // // Output: []
 
 
+//Casual String Builder
+function decodeString(s) {
+    const stack = [];
+    let currentString = '';
+    let currentNumber = 0;
+
+    for (let char of s) {
+        if (!isNaN(char)) {
+            // Construir o número para casos como "10[abc]"
+            currentNumber = currentNumber * 10 + parseInt(char);
+        } else if (char === '[') {
+            // Empilha o número atual e a string atual, e reseta
+            stack.push(currentString);
+            stack.push(currentNumber);
+            currentString = '';
+            currentNumber = 0;
+        } else if (char === ']') {
+            // Recupera o número e a string anteriores da pilha
+            const num = stack.pop();
+            const prevString = stack.pop();
+            currentString = prevString + currentString.repeat(num);
+        } else {
+            // Monta a string atual
+            currentString += char;
+        }
+    }
+
+    return currentString;
+}
+
+// Exemplo de uso:
+// console.log(decodeString("3[a2[c]]")); // Saída: "accaccacc"
+// console.log(decodeString("3[a]2[bc]")); // Saída: "accaccacc"
+// console.log(decodeString("2[abc]3[cd]ef")); // Saída: "abcabccdcdcdef"
+
+
+
+// Sort Characters by Frequency, Case, Alphabet
+
+function frequencySort(s) {
+    // Criar um mapa para armazenar a frequência dos caracteres
+    const freqMap = new Map();
+
+    // Preencher o mapa com a frequência de cada caractere
+    for (const char of s) {
+        freqMap.set(char, (freqMap.get(char) || 0) + 1);
+    }
+
+    // Converter os caracteres em um array e ordenar com base nas condições
+    const sortedChars = Array.from(freqMap.keys()).sort((a, b) => {
+        const freqA = freqMap.get(a);
+        const freqB = freqMap.get(b);
+
+        // Ordenar pela frequência (decrescente)
+        if (freqA !== freqB) {
+            return freqB - freqA;
+        }
+
+        // Ordenar caracteres de mesma frequência: maiúsculas antes de minúsculas
+        const isUpperA = a === a.toUpperCase();
+        const isUpperB = b === b.toUpperCase();
+        if (isUpperA !== isUpperB) {
+            return isUpperA ? -1 : 1;
+        }
+
+        // Ordenar alfabeticamente para mesma frequência e caso
+        return a.localeCompare(b);
+    });
+
+    // Construir a string final com base nas frequências
+    return sortedChars
+        .map(char => char.repeat(freqMap.get(char)))
+        .join('');
+}
+
+// Exemplos de uso:
+// console.log(frequencySort("tree"));    // ➞ "eert"
+// console.log(frequencySort("cccaaa")); // ➞ "aaaccc"
+// console.log(frequencySort("Aabb"));   // ➞ "bbAa"
+
+//A Capital Challenge
+function selectLetters(s1,s2){
+    let word = ''
+    function compare(letra1,letra2){
+        if(!isNaN(letra1)){
+            if(letra2.toUpperCase() == letra2){
+                return String(letra1)
+            }else{
+                return undefined
+            }
+        }else{
+            if(letra2.toUpperCase() == letra2 && letra1.toLowerCase() == letra1){
+                return letra1
+            }else if(letra2.toLowerCase() == letra2 && letra1.toUpperCase() == letra1){
+                return letra2
+            }else if(letra2.toUpperCase() == letra2 && letra1.toUpperCase() == letra1){
+                return letra1+letra2
+            }   
+        }
+    }
+    for(let i in s1.split('')){
+        if(s1[i] != undefined && s2[i] != undefined){
+            let result = compare(s1[i],s2[i])
+            if(result != undefined){
+                word+=result
+            }
+            console.log(s1[i],s2[i],result)
+        }
+    }
+    return word
+}
+// console.log(selectLetters("EVERYTHING", "SomeThings"))
+
+

@@ -846,4 +846,4 @@ function mutations(word) {
     }
 }
 
-console.log(mutations('rend'));
+// console.log(mutations('rend'));
