@@ -259,3 +259,184 @@ function selectLetters(s1,s2){
 // console.log(selectLetters("EVERYTHING", "SomeThings"))
 
 
+// Aluminum Foil
+function foil(n){
+    let diametro = 4
+    let espesura = 0.025 / 10
+    let raio = diametro / 2
+    let comprimento = n 
+    while(comprimento > 0){
+        let circunferenciaAtual = 2 * Math.PI * raio
+        console.log(comprimento,' ',circunferenciaAtual)
+        comprimento-=circunferenciaAtual
+        if(comprimento > 0){
+            raio+=espesura
+        }
+    }
+    let diametroFinal = raio * 2 
+
+    return diametroFinal.toFixed(4)
+}
+// console.log(foil(50))
+
+
+//String Cleaver
+function cleave(string,words){
+    let isPresent = []
+    let len = string.length
+    for(let i = 0;i < len;i++){
+        if(string.includes(words[i])){
+            let present = {index:string.indexOf(words[i]),palavra:words[i]}
+            isPresent.push(present)
+            let remove = ''
+            for(let index = 0;index < words[i].length;index+=1){
+                remove+='-'
+            }
+            string = string.replaceAll(words[i],remove)
+        }
+    }
+    let swaped 
+    do{
+        swaped = false
+        for(let i = 1;i < isPresent.length;i++){
+            if(isPresent[i].index  < isPresent[i-1].index){
+                let temp = isPresent[i]
+                isPresent[i] = isPresent[i-1]
+                isPresent[i-1] = temp 
+                swaped = true
+                break
+            }
+        }
+    }while(swaped)
+        let output = isPresent.map((palavras)=>palavras.palavra).join().replaceAll(',',' ')
+        let teste = string.split('').some(l => l != '-')
+        if(teste){
+            return 'Cleaving stalled: Word not found'
+        }else{
+            return output
+        }
+}
+const words = ["about", "be", "hell", "if", "is", "it", "me", "other", "outer", "people", "the", "to", "up", "where"]
+let cleaves = cleave("hellisotherpeople", words) // "if it is to be it is up to me"
+// console.log(cleaves)
+
+
+//Recursion: Find The Longest Word
+
+function findLongest(sentence){
+    function selectionSort(word,length){
+        let n = length
+        for(let i = 0;i < n;i++){
+            let max = i
+            for(let j = i+1;j < n;j++){
+                if(word[j].length > word[max].length){
+                    max = j
+                }
+            }
+            if(max != i){
+                [word[i],word[max]] = [word[max],word[i]]
+            }
+        }
+        return word[0]
+    }
+    let splitWords = sentence.split(' ')
+    return selectionSort(splitWords,splitWords.length)
+}
+
+// console.log(findLongest('Forgetfulness is by all means powerless'))
+
+// Indices of Zeroes for the Longest Run of Contiguous Ones
+
+
+
+
+
+
+
+function zeroIndices(arr, k) {
+    let left = 0; // Ponteiro esquerdo da janela deslizante
+    let zeroes = []; // Armazena os índices dos zeros encontrados na janela
+    let maxLength = 0; // Comprimento da maior sequência contínua de uns
+    let result = []; // Índices dos zeros que formam a sequência máxima
+  
+    for (let right = 0; right < arr.length; right++) {
+      // Quando encontramos um zero, adicionamos seu índice à lista
+      if (arr[right] === 0) {
+        zeroes.push(right);
+      }
+  
+      // Se o número de zeros na janela exceder `k`, ajustamos o ponteiro esquerdo
+      if (zeroes.length > k) {
+        left = zeroes.shift() + 1; // Remove o primeiro zero e move o ponteiro esquerdo
+      }
+  
+      // Atualiza o comprimento da maior sequência e os índices dos zeros
+      if (right - left + 1 > maxLength) {
+        maxLength = right - left + 1;
+        result = [...zeroes]; // Copia os índices atuais dos zeros usados
+      }
+    }
+  
+    return result;
+  }
+  
+//   // Exemplos de teste
+//   console.log(zeroIndices([1, 0, 1, 1, 0, 0, 0, 1], 1)); // ➞ [1]
+//   console.log(zeroIndices([1, 0, 0, 0, 0, 1], 1)); // ➞ [1]
+//   console.log(zeroIndices([1, 0, 0, 0, 0, 0, 0, 0, 1, 0, 1, 0], 3)); // ➞ [6, 7, 9]
+//   console.log(zeroIndices([1, 0, 0, 0, 0, 1, 1, 0, 0, 0, 1, 0], 3)); // ➞ [7, 8, 9]
+  
+
+//Extracting Words with "-ing" Inflection
+
+
+function ingExtractor(words){
+    let palavras = words.split(' ').filter((p)=> p.includes('ing')).filter((p)=> p.length > 4)
+    return palavras
+}
+
+// console.log(ingExtractor("coming bringing Letting sing"))
+//Vertical Text
+
+function verticalText(string){
+    let words = string.split(' ')
+    let word1 = words[0].split('')
+    let word2 = words[1].split('')
+    let output = []
+    while(word1.length != 0 || word2.length != 0){
+        if(word1.length == 0){
+            output.push([' ',word2.shift()])
+        }else if(word2.length == 0){
+            output.push([word2.shift(),' '])
+        }else{
+            output.push([word1.shift(),word2.shift()])
+        }
+    }
+    return output
+}
+
+// console.log(verticalText('holy bananas'))
+// Shortest Subarray Whose Sum Exceeds N
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
