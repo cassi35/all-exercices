@@ -120,3 +120,140 @@ function binaryTreeExercices() {
 }
 
 // binaryTreeExercices();
+function linkedListExec(){
+    function sumlist(){
+        class Node{
+            constructor(value){
+               this.value = value
+               this.next = null
+            }
+        }
+        class LinkedList{
+            constructor(){
+                this.head = null 
+                this.size = 0
+               this.tail = null 
+            }
+            prepend(value){
+                let node = new Node(value)
+                if(!this.head){
+                    this.head = node
+                    this.tail = node 
+                    this.size++
+                    
+                }else{
+                    node.next = this.head
+                    this.size++
+                    this.head = node 
+
+                }
+            }
+            append(value){
+                let node = new Node(value)
+                if(!this.head){ 
+                    this.head = node
+                    this.size++
+                }else{
+                    let temp = this.head
+                    while(temp.next){
+                        temp = temp.next
+                    }
+                    temp.next = node
+                    this.size++
+                }
+            }
+            removeFromEnd(){
+                if(!this.head){
+                    return null 
+                }else{
+                    let temp = this.head
+                    while(temp.next.next){
+                        temp = temp.next
+
+                    }
+                    let remove = temp.next.value
+                    temp.next = null 
+                    this.size--
+                    return remove
+                }
+            }
+            isEmpty(){
+                return this.size == 0
+            }
+            print(){
+                let values = ''
+                let temp = this.head
+                while(temp){
+                    values+=`${temp.value}`
+                    temp = temp.next
+                }
+                return console.log(values)
+            }
+        }
+        let list = new LinkedList()
+        list.append(1)        
+        list.append(2)        
+        list.append(4)
+        list.prepend(5)        
+        // list.print()
+
+        let num1 = new LinkedList()
+        let num2 = new LinkedList()
+       num1.append(0)
+       num1.append(0)
+       num1.append(6)
+       num1.append(3)
+       num1.print()
+    num2.append(0)
+    num2.append(7)
+    num2.print()
+    class Stack{
+        constructor(){
+            this.stack = new LinkedList()
+        }
+        push(value){
+            return stack.append(value)
+        }
+        pop(){
+            return stack.removeFromEnd()
+        }
+        print(){
+            return this.stack.print()
+        }
+
+    }
+    function calc(list1,list2){
+        if(list1.size > list2.size){
+            while(list2.size < list1.size){
+                list2.prepend(0)
+            }
+        }else if(list2.size > list1.size){
+            while(list1.size < list2.size){
+                list2.prepend(0)
+            }
+        }else{
+            let resCalc = 0
+            let tempSum
+            while(!list1.isEmpty() && !list2.isEmpty()){
+                let sum = list1.removeFromEnd() + list2.removeFromEnd()
+                if(sum > 10){
+                    if(list1.size != 0){
+                        let temp = list1
+                        while(temp.next){
+                         temp = temp.next
+                        }
+                        temp.value = temp.value + Number(String(sum[0]))
+
+                    }
+                }
+                resCalc+=sum
+            }
+            return resCalc
+        }
+       
+    }
+    // calc(num1,num2)
+    }
+    sumlist()
+}
+linkedListExec()
