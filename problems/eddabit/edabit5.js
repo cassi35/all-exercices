@@ -419,24 +419,227 @@ function verticalText(string){
 // Shortest Subarray Whose Sum Exceeds N
 
 
+// Remove the Last Vowel
+
+function removeLastVowel(string){
+    let words = string.split(' ').map(palavra => palavra.slice(0,palavra.length-1))
+    return words.join(' ')
+}
+// console.log(removeLastVowel("Those who dare to fail miserably can achieve greatly."))
+
+
+//Column With Maximum Sum
+
+function colWithMaxSum(nums,n){
+    let stack = []
+    while(nums.length != 0){
+        stack.push(nums.slice(0,n))
+        nums = nums.slice(n)
+    }
+    let maior = 0
+    let i = stack.length-1
+    let index_maior 
+    while(stack.length != 0 && i >= 0){
+        let index  = stack.indexOf(stack[i])
+        let removido = stack.pop()
+        let soma = removido.reduce((a,b)=> a+b)
+        if(maior < soma){
+            maior = soma
+            index_maior = index
+        }
+        i-=1
+    }
+    return index_maior
+
+}
+// console.log(colWithMaxSum( [4, 14, 12, 7, 14, 16, 5, 13, 7, 16, 11, 19],4))
+
+// Palindrome Sequence
+
+function palSeq(n) {
+    if(String(n).length == 5){
+        return false
+    }else{
+        let reverseNum = Number(String(n).split('').reverse().join(''))
+        let numer = n 
+        if(reverseNum == numer){
+            return true
+        }else{
+            let sum = reverseNum+numer
+            return palSeq(sum)
+        }
+    }
+    
+}
+// console.log(palSeq(78))
+
+// Calculate Depth of Array
+
+function depth(arr){
+    function teste(arr_teste){
+        for(let i in arr_teste){
+            if(typeof arr_teste[i] == 'object'){
+                return true
+            }
+        }
+        return false
+    }
+    let count = 1
+    let exists 
+    do{
+        exists = teste(arr)
+        if(!exists){
+            return count
+        }else{
+            arr = arr.flat()
+            count+=1
+        }
+    }while(exists)
+}
+// console.log(depth([1, [2, [3, [4]]]]))
 
 
 
+//Standard Competition Ranking
+
+function competitionRank(results, person) {
+    let sortedResults = Object.entries(results).sort((a, b) => b[1] - a[1]); 
+    let rank = 1; 
+    let previousScore = null;
+    for (let i = 0; i < sortedResults.length; i++) {
+        let [name, score] = sortedResults[i]; 
+        if (score !== previousScore) {
+            rank = i + 1; 
+            previousScore = score; 
+        }
+        if (name === person) {
+            return rank;
+        }
+    }
+
+    // Retorna -1 se o nome não for encontrado
+    return -1;
+}
+// console.log(competitionRank({
+//     George: 96,
+//     Emily: 95,
+//     Susan: 93,
+//     Jane: 89,
+//     Brett: 82
+// }, "Jane")); // ➞ 4
+
+// console.log(competitionRank({
+//     Kate: 92,
+//     Carol: 92,
+//     Jess: 87,
+//     Bruce: 87,
+//     Scott: 84
+// }, "Bruce")); // ➞ 3
+
+// console.log(competitionRank({
+//     Alex: 100,
+//     John: 100,
+//     Mike: 99,
+//     Sarah: 98,
+//     Zoe: 97
+// }, "Sarah")); // ➞ 4
 
 
+//N-ary Tree Height
+function treeHeight() {
+    // Classe para representar um nó da árvore
+    class TreeNode {
+        constructor(value) {
+            this.value = value;  // Valor armazenado no nó
+            this.children = [];  // Array para armazenar filhos
+        }
+    }
 
+    // Classe para representar a árvore
+    class Tree {
+        constructor() {
+            this.root = null; // Raiz da árvore
+        }
 
+        isEmpty() {
+            return this.root === null;
+        }
 
+        // Método para inserir um valor na árvore
+        insert(value, parentValue = null) {
+            const newNode = new TreeNode(value);
 
+            // Caso especial: se a árvore estiver vazia, insere na raiz
+            if (this.isEmpty()) {
+                this.root = newNode;
+                return;
+            }
 
+            // Se `parentValue` for especificado, encontra o nó pai e insere o novo nó como filho
+            const parent = this.findNode(this.root, parentValue);
+            if (parent) {
+                parent.children.push(newNode);
+            } else {
+                console.log(`Pai com valor ${parentValue} não encontrado.`);
+            }
+        }
 
+        // Método para encontrar um nó na árvore (busca em profundidade)
+        findNode(node, value) {
+            if (!node) return null;
 
+            if (node.value === value) {
+                return node;
+            }
 
+            for (let child of node.children) {
+                const found = this.findNode(child, value);
+                if (found) return found;
+            }
 
+            return null;
+        }
 
+        // Método para calcular a altura da árvore
+        calculateHeight(node = this.root) {
+            if (!node) return 0;
 
+            let maxHeight = 0;
+            for (let child of node.children) {
+                maxHeight = Math.max(maxHeight, this.calculateHeight(child));
+            }
 
+            return maxHeight + 1;
+        }
 
+        // Método para imprimir a árvore (pré-ordem)
+        print(node = this.root, level = 0) {
+            if (!node) return;
 
+            console.log(' '.repeat(level * 2) + node.value); // Indenta com base no nível
+            for (let child of node.children) {
+                this.print(child, level + 1);
+            }
+        }
+    }
+
+    // Testando a árvore
+    const tree = new Tree();
+    tree.insert("A"); // Raiz
+    tree.insert("B", "A"); // Filho de A
+    tree.insert("C", "A"); // Filho de A
+    tree.insert("D", "B"); // Filho de B
+    tree.insert("E", "B"); // Filho de B
+    tree.insert("F", "C"); // Filho de C
+    tree.insert("G", "C"); // Filho de C
+    tree.insert("H", "E"); // Filho de E
+
+    console.log("Árvore:");
+    tree.print();
+
+    console.log("\nAltura da árvore:", tree.calculateHeight());
+}
+
+// treeHeight();
 
 
