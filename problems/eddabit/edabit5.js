@@ -642,4 +642,50 @@ function treeHeight() {
 
 // treeHeight();
 
-
+//All Subsets that Add to a Value
+function getSubsets(array, targetSum) {
+    const result = [];
+  
+    // Função auxiliar para gerar todas as combinações de subarrays
+    function findSubsets(index, subset) {
+      // Soma os elementos do subarray atual
+      const sum = subset.reduce((acc, val) => acc + val, 0);
+  
+      // Se a soma for igual ao alvo, adiciona o subarray ao resultado
+      if (sum === targetSum) {
+        result.push([...subset]);
+      }
+  
+      // Percorre os próximos elementos
+      for (let i = index; i < array.length; i++) {
+        subset.push(array[i]); // Adiciona o elemento atual
+        findSubsets(i + 1, subset); // Continua com o próximo índice
+        subset.pop(); // Remove o último elemento para explorar outras combinações
+      }
+    }
+  
+    // Inicia a busca com índice 0 e subarray vazio
+    findSubsets(0, []);
+  
+    // Ordena os resultados por comprimento e, depois, lexicograficamente
+    result.sort((a, b) => {
+      if (a.length !== b.length) {
+        return a.length - b.length; // Subarrays mais curtos primeiro
+      }
+      for (let i = 0; i < a.length; i++) {
+        if (a[i] !== b[i]) {
+          return a[i] - b[i]; // Ordem crescente elemento por elemento
+        }
+      }
+      return 0;
+    });
+  
+    return result;
+  }
+  
+  // Exemplos de uso:
+  console.log(getSubsets([-1, 0, 1, 2], 2)); // [[2], [0, 2], [-1, 1, 2], [-1, 0, 1, 2]]
+//   console.log(getSubsets([-1, 0, 1, 2], 3)); // [[1, 2], [0, 1, 2]]
+//   console.log(getSubsets([1, 2, 3, 4], 5));  // [[1, 4], [2, 3]]
+//   console.log(getSubsets([-1, 0, 1, 2], 4)); // []
+  
