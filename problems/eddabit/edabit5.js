@@ -684,8 +684,76 @@ function getSubsets(array, targetSum) {
   }
   
   // Exemplos de uso:
-  console.log(getSubsets([-1, 0, 1, 2], 2)); // [[2], [0, 2], [-1, 1, 2], [-1, 0, 1, 2]]
+//   console.log(getSubsets([-1, 0, 1, 2], 2)); // [[2], [0, 2], [-1, 1, 2], [-1, 0, 1, 2]]
 //   console.log(getSubsets([-1, 0, 1, 2], 3)); // [[1, 2], [0, 1, 2]]
 //   console.log(getSubsets([1, 2, 3, 4], 5));  // [[1, 4], [2, 3]]
 //   console.log(getSubsets([-1, 0, 1, 2], 4)); // []
-  
+
+
+function countChocolates(money, cost) {
+    const cleanNumber = (input) =>
+        Number(input.replace(/[^0-9]/g, '')); 
+    const have_money = cleanNumber(money);
+    const have_cost = cleanNumber(cost);
+
+    if (isNaN(have_money) || isNaN(have_cost) || have_money <= 0 || have_cost <= 0) {
+        return 'Invalid input';
+    }
+
+    let chocolates = Math.floor(have_money / have_cost);
+    let wrappers = chocolates;
+    let extra = 0;
+
+    while (wrappers >= 3) {
+        const newChocolates = Math.floor(wrappers / 3); 
+        extra += newChocolates; 
+        wrappers = (wrappers % 3) + newChocolates; 
+    }
+
+    return chocolates + extra;
+}
+
+// console.log(countChocolates('I have 55 r$', '5$')); 
+
+function specialString(s) {
+    let n = s.length;
+    let count = 0;
+
+    let i = 0;
+    while (i < n) {
+        let charCount = 1; 
+
+        while (i + 1 < n && s[i] === s[i + 1]) {
+            charCount++;
+            i++;
+        }
+
+        count += (charCount * (charCount + 1)) / 2; 
+        i++;
+    }
+
+
+    for (let j = 1; j < n - 1; j++) {
+        let left = j - 1;
+        let right = j + 1;
+
+        while (
+            left >= 0 &&
+            right < n &&
+            s[left] === s[right] && 
+            s[left] === s[j - 1] && 
+            s[j] !== s[left] 
+        ) {
+            count++;
+            left--;
+            right++;
+        }
+    }
+
+    return count; 
+}
+
+// console.log(specialString("mnonopoo"))
+// console.log(specialString("asasd"))
+// console.log(specialString("aaaa"))
+

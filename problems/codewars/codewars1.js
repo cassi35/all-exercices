@@ -848,4 +848,41 @@ function mutations(word) {
 
 // console.log(mutations('rend'));
 console.clear()
+function canalMania(lowQueue, highQueue, lockLength) {
+    let totalTime = 0;
 
+    // Processa uma fila
+    function processQueue(queue) {
+        let currentLength = 0;
+        let boatsProcessed = 0;
+
+        // Preenche a comporta com os barcos da fila
+        while (queue.length > 0 && currentLength + queue[0] <= lockLength) {
+            currentLength += queue.shift(); // Adiciona o barco à comporta
+            boatsProcessed++;
+        }
+
+        // Se algum barco foi adicionado, conta o tempo
+        if (boatsProcessed > 0) {
+            totalTime += 2; // Tempo para encher a comporta
+            totalTime += 2; // Tempo para esvaziar a comporta
+        }
+
+        return boatsProcessed > 0;
+    }
+
+    // Alterna entre as filas até que ambas estejam vazias
+    while (lowQueue.length > 0 || highQueue.length > 0) {
+        // Processa a fila da parte baixa
+        if (lowQueue.length > 0) {
+            processQueue(lowQueue);
+        }
+
+        // Processa a fila da parte alta
+        if (highQueue.length > 0) {
+            processQueue(highQueue);
+        }
+    }
+
+    return totalTime;
+}

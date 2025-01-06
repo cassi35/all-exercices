@@ -648,11 +648,11 @@ function binaryTreeProblems(){
         bstdeep.insert(12)
         bstdeep.insert(4)
         let identical = isidentical(bstdeep.root,bstdeep2.root)
-        console.log(identical)
+        // console.log(identical)
     }
     // heightBT()
 }
-binaryTreeProblems()
+// binaryTreeProblems()
 function linkedListProblems(){
     function findMiddle(){
         class Node{
@@ -793,10 +793,12 @@ function linkedListProblems(){
             }
         }
     }
+
+
+
 }
 
-linkedListProblems()
-console.clear()
+// linkedListProblems()
 
 
 function arrays_exercices(){
@@ -876,4 +878,4 @@ function arrays_exercices(){
     
     
 }
-arrays_exercices()
+// arrays_exercices()
