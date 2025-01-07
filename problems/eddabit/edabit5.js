@@ -757,3 +757,35 @@ function specialString(s) {
 // console.log(specialString("asasd"))
 // console.log(specialString("aaaa"))
 
+function fiscalCodeCIN(code) {
+    const conversionTable = {
+      '0': [1, 0], '1': [0, 1], '2': [5, 2], '3': [7, 3], '4': [9, 4],
+      '5': [13, 5], '6': [15, 6], '7': [17, 7], '8': [19, 8], '9': [21, 9],
+      'A': [1, 0], 'B': [0, 1], 'C': [5, 2], 'D': [7, 3], 'E': [9, 4],
+      'F': [13, 5], 'G': [15, 6], 'H': [17, 7], 'I': [19, 8], 'J': [21, 9],
+      'K': [2, 10], 'L': [4, 11], 'M': [18, 12], 'N': [20, 13], 'O': [11, 14],
+      'P': [3, 15], 'Q': [6, 16], 'R': [8, 17], 'S': [12, 18], 'T': [14, 19],
+      'U': [16, 20], 'V': [10, 21], 'W': [22, 22], 'X': [25, 23], 'Y': [24, 24],
+      'Z': [23, 25]
+    };
+  
+    let oddSum = 0
+    let evenSum = 0
+  
+    for (let i = 0; i < code.length; i++) {
+      const char = code[i]
+      if ((i + 1) % 2 === 1) { 
+        oddSum += conversionTable[char][0]
+      } else { // Posição par
+        evenSum += conversionTable[char][1]
+      }
+    }
+    const total = oddSum + evenSum;
+    const remainder = total % 26;
+    const cin = String.fromCharCode(65 + remainder)
+    return cin
+  }
+  
+  // Teste
+  console.log(fiscalCodeCIN("MRTMTT25D09F205"))
+  
