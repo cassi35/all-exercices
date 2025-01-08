@@ -787,5 +787,271 @@ function fiscalCodeCIN(code) {
   }
   
   // Teste
-  console.log(fiscalCodeCIN("MRTMTT25D09F205"))
-  
+//   console.log(fiscalCodeCIN("MRTMTT25D09F205"))
+
+  //Shortest Subarray Whose Sum Exceeds N
+
+  function minLength(arr,n){
+    if(arr.reduce((a,b)=>a+b) == n){
+        return -1
+    }else{
+        let sum_elements = 0
+        let index = 0
+        let output = 0
+        let exceeds = false
+        while(!exceeds && index < arr.length){
+            sum_elements = sum_elements + arr[index]
+            if(sum_elements > n){
+                exceeds = true
+                output++
+            }else{
+                index = index + 1 
+                output++
+            }
+        }
+        return output
+    }
+  }
+//   console.log(minLength([3, -1, 4, -2, -7, 2], 4)) //3
+
+
+//Stack Calculator
+function stack_calators() {
+
+    class Node {
+        constructor(value) {
+            this.value = value;
+            this.next = null;
+        }
+    }
+
+    class LinkedList {
+        constructor() {
+            this.head = null;
+            this.size = 0;
+            this.tail = null;
+        }
+
+        isEmpty() {
+            return this.head == null;
+        }
+
+        append(value) {
+            let new_node = new Node(value);
+            if (this.isEmpty()) {
+                this.head = new_node;
+                this.tail = new_node;
+                this.size++;
+                return;
+            } else {
+                let current_node = this.head;
+                while (current_node.next) {
+                    current_node = current_node.next;
+                }
+                current_node.next = new_node;
+                this.tail = new_node;
+                this.size++;
+                return;
+            }
+        }
+
+        remove() {
+            if (this.isEmpty()) {
+                return null;
+            } else {
+                var value = this.tail.value;
+                if (this.size == 1) {
+                    this.head = null;
+                    this.tail = null;
+                    this.size--;
+                    return value;
+                } else {
+                    let prev = this.head;
+                    while (prev.next != this.tail) {
+                        prev = prev.next;
+                    }
+                    prev.next = null;
+                    this.tail = prev;
+                    this.size--;
+                    return value;
+                }
+            }
+        }
+
+        print() {
+            let current_node = this.head;
+            let output = '';
+            while (current_node) {
+                output += `${current_node.value} `;
+                current_node = current_node.next;
+            }
+            return console.log(output.trim());
+        }
+    }
+
+    class StackCalc {
+        constructor() {
+            this.stack = new LinkedList();
+        }
+
+        insert(value) {
+            return this.stack.append(value);
+        }
+
+        run(instructions) {
+            let arr_instructions = instructions.split(' ');
+            arr_instructions.forEach(element => {
+                if (['+', '-', '*', '/'].includes(element)) {
+                    let n2 = this.stack.remove();
+                    let n1 = this.stack.remove();
+                    let result;
+                    switch (element) {
+                        case '+':
+                            result = n1 + n2;
+                            break;
+                        case '-':
+                            result = n1 - n2;
+                            break;
+                        case '*':
+                            result = n1 * n2;
+                            break;
+                        case '/':
+                            result = n1 / n2;
+                            break;
+                    }
+                    this.stack.append(result);
+                } else if (element === 'DUP') {
+                    let top = this.stack.tail.value;
+                    this.stack.append(top);
+                } else if (element === 'POP') {
+                    this.stack.remove();
+                } else if (!isNaN(element)) {
+                    this.stack.append(Number(element));
+                }
+            });
+            this.stack.print();
+        }
+
+        display() {
+            return this.stack.print();
+        }
+    }
+
+    var stack_calculator = new StackCalc();
+    stack_calculator.run("x y +");
+}
+
+// stack_calators();
+
+//Searching Two Objects at Once
+function acceptsLateWork(person){
+    class Node{
+        constructor(value,accept){
+            this.value = value
+            this.next = null 
+            this.accept = accept
+        }
+    }
+    class LinkedList{
+        constructor(){
+            this.head = null 
+            this.tail = null 
+            this.size = 0
+        }
+        isEmpty(){
+            return this.head == null
+        }
+        prepend(value,accept){
+            let node = new Node(value,accept)
+            if(this.isEmpty()){
+                this.head = node
+                this.tail = node
+                this.size+=1
+                return
+            }else{
+                if(value == undefined){
+                    return null
+                }else{
+                    let temp_list = this.head
+                    while(temp_list){
+                        if(temp_list.value == value){
+                            return null
+                        }
+                    temp_list = temp_list.next
+                    }
+                    node.next = this.head
+                    this.head = node
+                    this.size++
+                    return
+                }
+            }
+        }
+        removeFromFront(){
+            if(this.isEmpty()){
+                return null
+            }          
+        
+            let  value = this.head.value
+            this.head = this.head.next
+            this.size--
+            return value
+        }
+        print(){
+            let output = ''
+            let temp = this.head
+            while(temp){
+                output+=` ${temp.value}:${temp.accept} `
+                temp = temp.next
+            }
+            return console.log(output)
+        }
+    }
+    class Queue{
+        constructor(){
+            this.queue = new LinkedList()
+        }
+        enqueue(professor,accept){
+            return this.queue.prepend(professor,accept)
+        }
+        dequeue(){
+            return this.queue.removeFromFront()
+        }
+        display(){
+            return this.queue.print()
+        }
+        isEmpty(){
+            return this.isEmpty()
+        }
+        search(pessoa){
+            if(this.queue.isEmpty()){
+                return null
+            }else{
+                let atual_professor = this.queue.head
+                while(atual_professor){
+                    if(atual_professor.value == pessoa){
+
+                        switch(atual_professor.accept){
+                            case true:
+                                return console.log("THE PROFESSOR ACCEPT YOUR WORK")
+                            case false:
+                                return console.log("THE PROFESSOR DO NOT ACCET YOUT WORK")
+                        }
+                    }
+                    atual_professor = atual_professor.next
+                }
+                return console.log("THIS PERSON DOES'T EXISTS")
+            }
+        }
+    }
+    let professores = new Queue()
+    let teachers = ["Mr. Citrano","Mr. ","Mr. Maria","Mr. Pedro"]
+    for(let professor of teachers){
+        let escolha = [true,false]
+        professores.enqueue(professor,escolha[Math.floor(Math.random()*2)])
+    }
+    return professores.search(person)
+
+}
+
+console.log(acceptsLateWork("Mr. Citrano"))
+
