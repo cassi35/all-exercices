@@ -92,4 +92,35 @@ function special_primes(number) {
     ];
 }
 
-console.log(special_primes(457));
+// console.log(special_primes(457));
+
+//magic music box
+function magicMusicBox(words) {
+    const notes = ["DO", "RE", "MI", "FA", "SOL", "LA", "SI"]
+    const storedWords = []
+    let noteIndex = 0
+
+    while (true) {
+        let addedWord = false;
+
+        for (let i = 0; i < words.length; i++) {
+            const word = words[i];
+            if (word.includes(notes[noteIndex]) && !storedWords.includes(word)) {
+                storedWords.push(word);
+                addedWord = true;
+                noteIndex = (noteIndex + 1) % notes.length 
+                break;
+            }
+        }
+
+        if (!addedWord) {
+            break;
+        }
+    }
+
+    return storedWords
+}
+
+const inputWords = ["DOWN", "PLANE", "AMIDST", "REPTILE", "SOFA", "SOLAR", "SILENCE", "DOWN", "MARKDOWN"]
+const result = magicMusicBox(inputWords)
+// console.log(result); 
