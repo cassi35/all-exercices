@@ -254,6 +254,8 @@ function linkedListExec(){
     }
     // calc(num1,num2)
     }
-    sumlist()
+    // sumlist()
+
+    
 }
 linkedListExec()

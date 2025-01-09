@@ -124,3 +124,71 @@ function magicMusicBox(words) {
 const inputWords = ["DOWN", "PLANE", "AMIDST", "REPTILE", "SOFA", "SOLAR", "SILENCE", "DOWN", "MARKDOWN"]
 const result = magicMusicBox(inputWords)
 // console.log(result); 
+// Wimbledon Scoreboard - Game
+function calculateScoreboard(balls) {
+    // Variáveis de estado
+    let p1Games = 0, p2Games = 0;
+    let p1Points = 0, p2Points = 0;
+    let server = 1; 
+    let fault = false; 
+    const points = [0, 15, 30, 40];
+    for (let i = 0; i < balls.length; i++) {
+      const ball = balls[i];
+      if (server === 1) {
+        if (!ball) {
+          if (fault) {
+            p2Points = updatePoints(p2Points, p1Points, () => p2Games++);
+            fault = false; 
+          } else {
+            fault = true; 
+          }
+        } else {
+          fault = false;
+          p1Points = updatePoints(p1Points, p2Points, () => p1Games++);
+        }
+      } else {
+        if (!ball) {
+          if (fault) {
+            p1Points = updatePoints(p1Points, p2Points, () => p1Games++);
+            fault = false;
+          } else {
+            fault = true; 
+          }
+        } else {
+          fault = false;
+          p2Points = updatePoints(p2Points, p1Points, () => p2Games++);
+        }
+      }
+    }
+  
+    return [
+      `${p1Games} games, ${formatPoints(p1Points)}`,
+      `${p2Games} games, ${formatPoints(p2Points)}`
+    ];
+  }
+  function updatePoints(playerPoints, opponentPoints, winGameCallback) {
+    if (playerPoints === 40 && opponentPoints !== 40) {
+      winGameCallback();
+      return 0;
+    } else if (playerPoints === 40 && opponentPoints === 40) {
+      // Vantagem
+      return "AD";
+    } else if (playerPoints === "AD") {
+      winGameCallback();
+      return 0;
+    } else if (opponentPoints === "AD") {
+      return 40;
+    } else {
+      return playerPoints === 30 ? 40 : playerPoints + 15;
+    }
+  }
+  function formatPoints(points) {
+    if (points === 0) return "0";
+    if (points === 15) return "15";
+    if (points === 30) return "30";
+    if (points === 40) return "40";
+    return points; 
+  }
+  console.log(calculateScoreboard([true, false])); 
+
+console.log(calculateScoreboard([true, false, true, false, true, false, true, false, true, false, false, false, false, false])); 
