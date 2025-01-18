@@ -273,4 +273,145 @@ let count = ()=>{
     let legenda = "what's your name? i'm sorry i'm cassiano"
     word_count(legenda)
 }
-count()
+// count()
+function bank_account() {
+    class Pessoa {
+        constructor(name) {
+            this.name = name;
+            this.dinheiro = 0;
+            this.proximo = null;
+        }
+        adicionar(valor) {
+            this.dinheiro += valor;
+        }
+    }
+
+    class ListaPessoas {
+        constructor() {
+            this.head = null;
+            this.size = 0;
+        }
+
+        isEmpty() {
+            return this.head == null;
+        }
+
+        search(lista_nome, pessoa) {
+            if (!lista_nome) return null;
+            if (lista_nome.name === pessoa) return lista_nome;
+            return this.search(lista_nome.proximo, pessoa);
+        }
+
+        adicionarDinheiro(nome, dinheiro) {
+            if (this.isEmpty()) {
+                console.log("Nenhuma conta encontrada.");
+                return;
+            }
+
+            let conta = this.search(this.head, nome);
+            if (conta) {
+                let saldoAtual = conta.dinheiro;
+                conta.adicionar(dinheiro);
+                console.log(
+                    `${conta.name} tinha saldo de ${saldoAtual}. Adicionando ${dinheiro}, agora tem ${conta.dinheiro}.`
+                );
+            } else {
+                console.log(`Conta de ${nome} não encontrada.`);
+            }
+        }
+
+        sacar(nome, dinheiro) {
+            if (this.isEmpty()) {
+                console.log("Nenhuma conta encontrada.");
+                return;
+            }
+
+            let conta = this.search(this.head, nome);
+            if (conta) {
+                if (conta.dinheiro >= dinheiro) {
+                    conta.dinheiro -= dinheiro;
+                    console.log(
+                        `Sr(a). ${conta.name}, você sacou ${dinheiro}R$. Saldo atual: ${conta.dinheiro}R$.`
+                    );
+                } else {
+                    console.log(
+                        `Saldo insuficiente. Saldo atual: ${conta.dinheiro}R$.`
+                    );
+                }
+            } else {
+                console.log(`Conta de ${nome} não encontrada.`);
+            }
+        }
+
+        fecharConta(nome) {
+            if (this.isEmpty()) {
+                console.log("Nenhuma conta encontrada.");
+                return;
+            }
+
+            if (this.head.name === nome) {
+                this.head = this.head.proximo;
+                console.log("Conta fechada com sucesso.");
+                this.size--;
+                return;
+            }
+
+            let atual = this.head;
+            while (atual.proximo && atual.proximo.name !== nome) {
+                atual = atual.proximo;
+            }
+
+            if (atual.proximo) {
+                atual.proximo = atual.proximo.proximo;
+                console.log("Conta fechada com sucesso.");
+                this.size--;
+            } else {
+                console.log(`Conta de ${nome} não encontrada.`);
+            }
+        }
+
+        append(name, dinheiro) {
+            let novaConta = new Pessoa(name);
+            novaConta.adicionar(dinheiro);
+
+            if (this.isEmpty()) {
+                this.head = novaConta;
+            } else {
+                let atual = this.head;
+                while (atual.proximo) {
+                    atual = atual.proximo;
+                }
+                atual.proximo = novaConta;
+            }
+            this.size++;
+            console.log(`Conta de ${name} criada com saldo de ${dinheiro}R$.`);
+        }
+
+        printarPessoas() {
+            if (this.isEmpty()) {
+                console.log("Nenhuma pessoa cadastrada.");
+                return;
+            }
+
+            let atual = this.head;
+            let nomes = [];
+            while (atual) {
+                nomes.push(atual.name);
+                atual = atual.proximo;
+            }
+            console.log("Contas no banco: " + nomes.join(", "));
+        }
+    }
+
+    // Teste
+    let banco = new ListaPessoas();
+    banco.append("cassiano", 0);
+    banco.append("maria", 12);
+    banco.printarPessoas();
+    banco.adicionarDinheiro("cassiano", 50);
+    banco.sacar("maria", 5);
+    banco.fecharConta("cassiano");
+    banco.printarPessoas();
+}
+// bank_account();
+// Tournament 
