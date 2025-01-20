@@ -259,3 +259,23 @@ function linkedListExec(){
     
 }
 linkedListExec()
+
+function rotate_arr(arr,d){
+    if(arr.length == 0){
+        return undefined
+    }else{
+        if(d == 0){
+            return arr 
+        }else{
+            let remove = arr.shift()
+            arr.push(remove)
+            return rotate_arr(arr,d-1)
+        }
+    }
+}
+let rotate_entrada = ()=>{
+    let arr = [7, 3, 9, 1]
+    let d = 9
+    console.log(rotate_arr(arr,d))
+}
+rotate_entrada()
