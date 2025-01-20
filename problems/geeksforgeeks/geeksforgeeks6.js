@@ -279,3 +279,4 @@ let rotate_entrada = ()=>{
     console.log(rotate_arr(arr,d))
 }
 rotate_entrada()
+
