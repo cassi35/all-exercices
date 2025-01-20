@@ -415,3 +415,117 @@ function bank_account() {
 }
 // bank_account();
 // Tournament 
+// Scale Generator 
+function generate_scale(nota_inicial){
+    if(nota_inicial == ''){
+        return null
+    }
+    let sustenidos = ['a','a#','b','c','c#','d','d#','e','f','f#','g','g#']
+    let bemois = ['A','Bb','C','Db','D','Eb','E','F','Gb','G','Ab']
+    if(sustenidos.includes(nota_inicial)){
+        let index = bemois.findIndex((l)=>l == nota_inicial)
+        let escala_cromatica = [bemois.slice(index),bemois.slice(0,index+1)].flat()
+        let escala_diatonicas = []
+        for(let i = 0;i < escala_cromatica.length ;i+=1){
+            if(escala_diatonicas.length == 7){
+                break
+            }else{
+                if(escala_cromatica[i].toLocaleLowerCase() == escala_cromatica[i]){
+                    i++
+                }else{
+                    escala_diatonicas.push(escala_cromatica[i])
+                }
+            }
+        }
+        return escala_diatonicas
+    }else{
+        let index = sustenidos.findIndex((l)=>l == nota_inicial)
+        let escala_cromatica = [sustenidos.slice(index),bemois.slice(0,index+1)].flat()
+        let escala_diatonicas = []
+        for(let i = 0;i < escala_cromatica.length;i+=1){
+            if(escala_cromatica.length == 7){
+                break
+            }else{
+                if(escala_cromatica[i].toUpperCase() == escala_cromatica[i]){
+                    i++
+                }else{
+                    escala_diatonicas.push(escala_cromatica[i])
+                }
+            }
+        }
+        return escala_diatonicas
+    }
+}
+let entreada_scale  = ()=>{
+    let generate = generate_scale('E')
+    console.log(generate)
+}
+// entreada_scale()
+// Transpose
+
+function transpose(texto){
+    if(texto.length == '' || texto == undefined){
+        return null
+    }
+    let transform = ''
+    let arr_texto = texto.split('\n').map((element)=> element.split(''))
+    let teste = 0 
+    while(teste < arr_texto.length){
+        let conj = ''
+        for(let i in arr_texto){
+            let removido  = arr_texto[i].shift()
+            if(!removido){
+                teste++
+            }else{
+                let new_conj = conj.concat(removido)
+                conj = new_conj
+            }
+        }
+        transform = transform.concat(conj).concat('\n')
+    }
+    return transform
+   
+}
+let entrada_transpose = ()=>{
+    let texto = 'abc\ndef'
+   console.log( transpose(texto))
+}
+// entrada_transpose()
+
+
+//Largest Series Product 
+function largest_product(digitos,intervalo){
+//   produto maior serie  
+    let series = [] // sequencia de digitos adjasentes
+    let span = [] //quantos digitos cada serie tem
+    let produto = [] // quando multiplica numeros
+    let maior_produto = 0
+    for(let i = 0;i < digitos.length;i++){
+        let serie = digitos.slice(i,intervalo+i)
+        if(serie.length < intervalo){
+            break
+        }else{
+            series.push(serie.join(''))
+            let mult = 1
+            span.push(serie.length)
+            for(let s in serie){
+                mult = mult * serie[s]
+            }
+            if(mult > maior_produto){
+                maior_produto = mult
+            }
+            produto.push(mult)
+        }
+       
+    }
+
+    return console.log(maior_produto)
+}   
+
+let entrada_series_largest = ()=>{
+    let digitos = [6,3,9,1,5]
+    let intervalo = 3
+    largest_product(digitos,intervalo)
+}
+// entrada_series_largest()
+
