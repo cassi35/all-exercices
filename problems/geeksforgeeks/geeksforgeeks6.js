@@ -1,3 +1,4 @@
+
 console.clear()
 //Count Inversions
 function inversionCount(arr) {
@@ -278,5 +279,143 @@ let rotate_entrada = ()=>{
     let d = 9
     console.log(rotate_arr(arr,d))
 }
-rotate_entrada()
+// rotate_entrada()
 
+// Remove loop in Linked List
+function remove_loop() {
+    class Node {
+        constructor(value) {
+            this.value = value;
+            this.next = null;
+        }
+    }
+
+    class LinkedList {
+        constructor() {
+            this.head = null;
+            this.tail = null;
+        }
+
+        isEmpty() {
+            return this.head === null;
+        }
+
+        append(value) {
+            let node = new Node(value);
+            if (this.isEmpty()) {
+                this.head = node;
+                this.tail = node;
+            } else {
+                this.tail.next = node;
+                this.tail = node;
+            }
+        }
+
+        createLoop() {
+            if (!this.isEmpty() && this.tail) {
+                this.tail.next = this.head.next; // Cria um loop
+            }
+        }
+
+        print() {
+            let temp = this.head;
+            let values = [];
+            let count = 0; // Evita loop infinito na impressão
+            while (temp && count < 20) {
+                values.push(temp.value);
+                temp = temp.next;
+                count++;
+            }
+            console.log(values.join(" -> "));
+        }
+    }
+
+    function detectAndRemoveLoop(head) {
+        let slow = head;
+        let fast = head;
+
+        // Passo 1: Detectar o loop
+        while (fast && fast.next) {
+            slow = slow.next;        // Move 1 passo
+            fast = fast.next.next;   // Move 2 passos
+
+            if (slow === fast) { // Loop detectado
+                break;
+            }
+        }
+
+        // Se nenhum loop foi detectado
+        if (slow !== fast) {
+            console.log("Nenhum loop encontrado.");
+            return false;
+        }
+
+        // Passo 2: Encontrar o início do loop
+        slow = head;
+        while (slow !== fast) {
+            slow = slow.next;
+            fast = fast.next;
+        }
+
+        // Passo 3: Remover o loop
+        let loopNode = slow;
+        let temp = loopNode;
+        while (temp.next !== loopNode) {
+            temp = temp.next;
+        }
+        temp.next = null; // Remove o loop
+
+        console.log("Loop removido.");
+        return true;
+    }
+
+    // Teste
+    let list = new LinkedList();
+    list.append(1);
+    list.append(2);
+    list.append(3);
+    list.append(4);
+    list.append(5);
+
+    list.createLoop(); // Cria um loop na lista
+    console.log("Antes de remover o loop:");
+    list.print();
+
+    detectAndRemoveLoop(list.head);
+
+    console.log("Depois de remover o loop:");
+    list.print();
+}
+
+// remove_loop();
+function perfectSum(arr, target) {
+    let n = arr.length;
+
+    // Criar a matriz dp com valores iniciais como 0
+    let dp = Array(n + 1).fill().map(() => Array(target + 1).fill(0));
+
+    // Para soma 0, existe exatamente 1 subconjunto: o conjunto vazio
+    for (let i = 0; i <= n; i++) {
+        dp[i][0] = 1;
+    }
+    // Preenchendo a tabela dp
+    for (let i = 1; i <= n; i++) {
+        for (let j = 0; j <= target; j++) {
+            if (arr[i - 1] <= j) {
+                // Soma sem incluir o elemento atual + soma incluindo o elemento atual
+                dp[i][j] = dp[i - 1][j] + dp[i - 1][j - arr[i - 1]];
+            } else {
+                // Soma sem incluir o elemento atual
+                dp[i][j] = dp[i - 1][j];
+            }
+        }
+    }
+
+    return dp[n][target];
+}
+
+// Testando a função
+console.log(perfectSum([5, 2, 3, 10, 6, 8], 10)); // Saída: 3
+// console.log(perfectSum([2, 5, 1, 4, 3], 10));     // Saída: 3
+// console.log(perfectSum([5, 7, 8], 3));            // Saída: 0
+// console.log(perfectSum([35, 2, 8, 22], 0));       // Saída: 1
