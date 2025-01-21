@@ -529,3 +529,227 @@ let entrada_series_largest = ()=>{
 }
 // entrada_series_largest()
 
+// Resistor Color Trio 
+function help_resistor(colors,sequence_colors){
+    let sequence = sequence_colors.split('-')
+    let values = ''
+    let ultimo = sequence[sequence.length-1]
+    for(let [key,...value] of colors){
+        if(sequence.includes(key)){
+            if(key != ultimo){
+                let vezes = sequence.filter(color => color == key).length 
+                while(vezes > 0){
+                    values = String(value).concat(values)
+                    vezes--
+                }
+            }else{
+                let vezes = value
+                while(vezes > 0){
+                    values = values.concat(String(0))
+                    vezes--
+                }
+            }
+        }
+    }
+    values = values.concat('ohms')
+    return values
+}
+let entrada_resistor = ()=>{
+    let colors = new Map()
+    colors.set("black",0)
+    colors.set("brown",1)
+    colors.set("red",2)
+    colors.set("orange",3)
+    colors.set("green",5)
+    colors.set("blue",6)
+    colors.set("violet",7)
+    colors.set("grey",8)
+    colors.set("white",9)
+    let sequence_color = 'orange-orange-red'
+    let resistor = help_resistor(colors,sequence_color)
+    console.log(resistor)
+}
+// entrada_resistor()
+
+
+// Dominoes
+function canFormChain(dominoes) {
+    // Função para verificar se uma sequência de dominós forma uma cadeia válida
+    function isValidChain(chain) {
+        for (let i = 0; i < chain.length - 1; i++) {
+            // Verifica se o número do final de uma peça combina com o início da próxima
+            if (chain[i][1] !== chain[i + 1][0]) {
+                return false;
+            }
+        }
+        // Verifica se o primeiro e o último número combinam
+        return chain[0][0] === chain[chain.length - 1][1];
+    }
+
+    // Função para gerar todas as permutações possíveis das peças de dominó
+    function permute(array, startIndex = 0, results = []) {
+        if (startIndex === array.length) {
+            results.push([...array]);
+            return results;
+        }
+        for (let i = startIndex; i < array.length; i++) {
+            [array[startIndex], array[i]] = [array[i], array[startIndex]]; // Swap
+            permute(array, startIndex + 1, results);
+            [array[startIndex], array[i]] = [array[i], array[startIndex]]; // Undo swap
+        }
+        return results;
+    }
+
+    // Gera todas as permutações e verifica se alguma delas forma uma cadeia válida
+    const allPermutations = permute(dominoes);
+    for (let chain of allPermutations) {
+        if (isValidChain(chain)) {
+            return chain; // Retorna a cadeia válida encontrada
+        }
+    }
+
+    return null; // Retorna null se nenhuma cadeia válida for encontrada
+}
+
+// Testes
+function testDomino() {
+
+    let test3 = [[1, 2], [2, 3], [3, 1]];
+    
+    console.log(canFormChain(test3)); // Exemplo válido, deve retornar uma cadeia válida
+}
+
+// testDomino();
+
+
+// Say
+import { exec } from "child_process";
+
+// Verificar o sistema operacional
+// const command = process.platform === "darwin" ? "say 'Hello, world!'" : "espeak 'hello cassiano how are you?'";
+
+// exec(command, (error, stdout, stderr) => {
+//   if (error) {
+//     console.error(`Erro ao executar: ${error.message}`);
+//     return;
+//   }
+//   if (stderr) {
+//     console.error(`Erro: ${stderr}`);
+//     return;
+//   }
+//   console.log(`Resultado: ${stdout}`);
+// });
+//Sublist
+function sublist(){
+    class MySet {
+        constructor() {
+          this.set = [];
+        }
+      
+        add(element) {
+          if (!this.set.includes(element)) {
+            this.set.push(element);
+          }
+        }
+      
+        clear() {
+          this.set = [];
+        }
+      
+        copy() {
+          return new MySet().fromArray([...this.set]);
+        }
+      
+        difference(otherSet) {
+          return new MySet().fromArray(this.set.filter(item => !otherSet.has(item)));
+        }
+      
+        differenceUpdate(otherSet) {
+          this.set = this.set.filter(item => !otherSet.has(item));
+        }
+      
+        discard(element) {
+          this.set = this.set.filter(item => item !== element);
+        }
+      
+        intersection(otherSet) {
+          return new MySet().fromArray(this.set.filter(item => otherSet.has(item)));
+        }
+      
+        intersectionUpdate(otherSet) {
+          this.set = this.set.filter(item => otherSet.has(item));
+        }
+      
+        isDisjoint(otherSet) {
+          return this.set.every(item => !otherSet.has(item));
+        }
+      
+        isSubset(otherSet) {
+          return this.set.every(item => otherSet.has(item));
+        }
+      
+        isSuperset(otherSet) {
+          return otherSet.set.every(item => this.has(item));
+        }
+      
+        pop() {
+          return this.set.pop();
+        }
+      
+        remove(element) {
+          if (this.has(element)) {
+            this.set = this.set.filter(item => item !== element);
+          }
+        }
+      
+        symmetricDifference(otherSet) {
+          const diff1 = this.difference(otherSet);
+          const diff2 = otherSet.difference(this);
+          return diff1.union(diff2);
+        }
+      
+        symmetricDifferenceUpdate(otherSet) {
+          const diff = this.symmetricDifference(otherSet);
+          this.set = diff.set;
+        }
+      
+        union(otherSet) {
+          return new MySet().fromArray([...this.set, ...otherSet.set]);
+        }
+      
+        update(otherSet) {
+          this.set = [...new Set([...this.set, ...otherSet.set])];
+        }
+      
+        has(element) {
+          return this.set.includes(element);
+        }
+      
+        fromArray(arr) {
+          this.set = arr;
+          return this;
+        }
+      
+        // Métodos auxiliares para imprimir o conjunto
+        toString() {
+          return `{${this.set.join(", ")}}`;
+        }
+      }
+      
+      // Testando a classe
+      const setA = new MySet();
+      setA.add(1);
+      setA.add(2);
+      setA.add(3);
+      
+      const setB = new MySet();
+      setB.add(2);
+      setB.add(3);
+      setB.add(4);
+      
+     
+      
+}
+sublist()
+
+

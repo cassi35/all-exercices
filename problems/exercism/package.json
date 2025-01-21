@@ -1,0 +1,17 @@
+{
+  "name": "exercism",
+  "version": "1.0.0",
+  "main": "exercism1.js",
+  "type": "module",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "dependencies": {
+    "chalk": "^5.4.1",
+    "figlet": "^1.8.0"
+  }
+}

@@ -1,0 +1,69 @@
+Operações de Conjunto:
+
+    add()
+        Adiciona um elemento ao conjunto.
+        Exemplo: set.add(3)
+
+    clear()
+        Remove todos os elementos do conjunto.
+        Exemplo: set.clear()
+
+    copy()
+        Retorna uma cópia do conjunto.
+        Exemplo: new_set = set.copy()
+
+    difference()
+        Retorna a diferença entre dois ou mais conjuntos, ou seja, os elementos que estão no primeiro conjunto, mas não nos outros.
+        Exemplo: set.difference(other_set)
+
+    difference_update()
+        Remove os elementos deste conjunto que também estão em outro conjunto especificado.
+        Exemplo: set.difference_update(other_set)
+
+    discard()
+        Remove um item especificado do conjunto. Se o item não existir, não causa erro.
+        Exemplo: set.discard(3)
+
+    intersection()
+        Retorna um conjunto que é a interseção entre dois conjuntos (itens comuns).
+        Exemplo: set.intersection(other_set)
+
+    intersection_update()
+        Remove os itens deste conjunto que não estão presentes no outro conjunto ou conjuntos especificados.
+        Exemplo: set.intersection_update(other_set)
+
+    isdisjoint()
+        Retorna True se os dois conjuntos não têm itens em comum (não há interseção).
+        Exemplo: set.isdisjoint(other_set)
+
+    issubset()
+        Retorna True se todos os elementos deste conjunto estão presentes em outro conjunto.
+        Exemplo: set.issubset(other_set)
+
+    issuperset()
+        Retorna True se todos os elementos de outro conjunto estão presentes neste conjunto.
+        Exemplo: set.issuperset(other_set)
+
+    pop()
+        Remove e retorna um item aleatório do conjunto (não garante a ordem).
+        Exemplo: item = set.pop()
+
+    remove()
+        Remove um item especificado do conjunto. Lança um erro se o item não existir.
+        Exemplo: set.remove(3)
+
+    symmetric_difference()
+        Retorna um conjunto contendo os itens que estão em um dos dois conjuntos, mas não em ambos (diferença simétrica).
+        Exemplo: set.symmetric_difference(other_set)
+
+    symmetric_difference_update()
+        Atualiza o conjunto com a diferença simétrica entre ele e outro conjunto.
+        Exemplo: set.symmetric_difference_update(other_set)
+
+    union()
+        Retorna um conjunto contendo todos os elementos de dois ou mais conjuntos.
+        Exemplo: set.union(other_set)
+
+    update()
+        Atualiza o conjunto com a união de outro(s) conjunto(s).
+        Exemplo: set.update(other_set)
