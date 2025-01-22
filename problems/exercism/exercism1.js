@@ -624,6 +624,7 @@ function testDomino() {
 
 // Say
 import { exec } from "child_process";
+import { clear } from "console"
 
 // Verificar o sistema operacional
 // const command = process.platform === "darwin" ? "say 'Hello, world!'" : "espeak 'hello cassiano how are you?'";
@@ -753,3 +754,198 @@ function sublist(){
 sublist()
 
 
+// Protein Translation 
+function tranlation_protein(rna){
+    let table = [
+        {sequence:['AUG'],result:'Methionine'},
+        {sequence:['UUU', 'UUC'],result:'Phenylalanine'},
+        {sequence:['UUA', 'UUG'],result:'Leucine'},
+        {sequence:['UCU', 'UCC', 'UCA', 'UCG'],result:'Serine'},
+        {sequence:['UAU', 'UAC'],result:'Tyrosine'},
+        {sequence:['UGU', 'UGC'],result:'Cysteine'},
+        {sequence:['UGG'],result:'Tryptophan'},
+        {sequence:['UAA', 'UAG', 'UGA'],result:'STOP'},
+    ]
+
+    let condons = []
+    for(let i = 0;i < rna.length;i+=0){
+        let count = 0
+        let rna_actual =''
+        while(count < 3){
+            rna_actual = rna_actual.concat(rna[i])
+            i++
+            count++
+        }
+        condons.push(rna_actual)
+    }
+    let res = []
+    for(let i in table){
+        let arr = table[i].sequence
+        if(condons.includes(arr[0])){
+            let compare = condons.findIndex((protein)=> protein == arr[0])
+            compare = condons.slice(compare,arr.length)
+            let identical = true 
+            for(let c of compare){
+                if(compare[c] != arr[c]){
+                    identical = false
+                }
+            }
+            if(identical){
+                res.push(table[i].result)
+            }
+        }
+    }
+    return res
+}
+function entrada_translation(){
+    let rna = 'AUGUUUUCUUAAAUG'
+    let tranlation = tranlation_protein(rna)
+    console.log(tranlation)
+}
+entrada_translation()
+// D&D Character 
+function game_dungeons_dragons(contagem,result,rodada){
+    if(contagem == rodada){
+        return result 
+    }else{
+        let gamer = []
+        for(let i = 0;i < 4;i++){
+            let random_number = Math.floor(Math.random()*6)
+            gamer.push(random_number)
+        }
+        let menor = gamer[0]
+        let index 
+        for(let i in gamer){
+            if(menor > gamer[i]){
+                menor = gamer[i]
+                index = i
+            }
+        }
+        let novo_gamer = []
+        for(let i in gamer){
+            if(i != index){
+                novo_gamer.push(gamer[i])
+            }
+        }
+        gamer = novo_gamer
+        gamer = gamer.reduce((a,b)=>a+b)
+        result.push(gamer)
+        return game_dungeons_dragons(contagem+1,result,rodada)
+    }
+
+}
+function game_dragon_entrada(){
+    let rodadas = 5
+    let generate = game_dungeons_dragons(0,[],rodadas)
+    
+    console.log(generate)
+}
+// game_dragon_entrada()
+
+// Darts
+function darts_game(x,y){
+    if(x < 0 || x > 8 || y < 0 || y > 8){
+        return undefined
+    }   
+    let matrix = [
+    ]
+    let pontos = [0,1,5,10]
+    for(let i = 0;i < pontos.length * 2;i++){
+        let linha = Array(pontos.length*2).fill(null)
+
+        matrix.push(linha)
+    }
+    // Preencher a matriz
+    let index_x = 0; // Começa do topo (camada externa)
+    let index_y = matrix.length - 1; // Última linha (inferior)
+    let length_ponto = 0; // Índice do valor em "pontos"
+
+    while (index_x <= index_y) {
+        // Preenche as bordas horizontais (topo e base da camada atual)
+        for (let i = index_x; i <= index_y; i++) {
+            matrix[index_x][i] = pontos[length_ponto]; // Linha de cima
+            matrix[index_y][i] = pontos[length_ponto]; // Linha de baixo
+        }
+
+        // Preenche as bordas verticais (esquerda e direita da camada atual)
+        for (let i = index_x; i <= index_y; i++) {
+            matrix[i][index_x] = pontos[length_ponto]; // Coluna da esquerda
+            matrix[i][index_y] = pontos[length_ponto]; // Coluna da direita
+        }
+
+        // Avança para a próxima camada
+        length_ponto++;
+        index_x++;
+        index_y--;
+    }
+    let print = ()=>{
+        for(let i in matrix){
+            let linha = ''
+            for(let x_1 in matrix[i]){
+                if(i == y && x_1 == x){
+                    linha = linha.concat('  ').concat('STRIKE').concat('  ')
+                }
+                if(matrix[i][x_1] != 10){
+    
+                    linha = linha.concat('  ').concat(String(matrix[i][x_1])).concat('  ')
+                }else{
+                    linha = linha.concat(' ').concat(String(matrix[i][x_1])).concat(' ')
+    
+                }
+            }
+            console.log(linha)
+        }
+    }
+    print()
+    function reproduzao_a_voz(ponto_feito){
+        // "espeak 'hello cassiano how are you?'"
+        let mensagem_gamer 
+        switch(ponto_feito){
+            case 10:
+                mensagem_gamer = 'strike win'
+                break
+            case 5:
+                mensagem_gamer = 'strike ok'
+                break
+            case 1:
+                mensagem_gamer = 'strike bad'
+                break
+            case 0:
+                mensagem_gamer = 'strike realy bad'
+
+        }
+        let mensagem = [mensagem_gamer,`${ponto_feito} points`]
+        function executar_reproducao(msg){
+            const command = process.platform === "darwin" ? "say 'Hello, world!'" : `espeak '${msg}'`;
+            exec(command, (error, stdout, stderr) => {
+              if (error) {
+                console.error(`Erro ao executar: ${error.message}`);
+                return;
+              }
+              if (stderr) {
+                console.error(`Erro: ${stderr}`);
+                return;
+              }
+            });
+        }
+        let time = 2000
+        for(let i in mensagem){
+            setTimeout(()=>{
+                executar_reproducao(mensagem[i])
+            },time)
+            time+=1500
+        }
+    }
+    let ponto = matrix[x][y]
+    return reproduzao_a_voz(ponto)
+
+    
+}
+function entrada_darts_game(){
+    let x = 0
+    let y = 0
+    let pontos = darts_game(x,y)
+    console.log(pontos)
+}
+entrada_darts_game()
+// import {Configuration} from "openai"
