@@ -802,7 +802,7 @@ function entrada_translation(){
     let tranlation = tranlation_protein(rna)
     console.log(tranlation)
 }
-entrada_translation()
+// entrada_translation()
 // D&D Character 
 function game_dungeons_dragons(contagem,result,rodada){
     if(contagem == rodada){
@@ -942,10 +942,27 @@ function darts_game(x,y){
     
 }
 function entrada_darts_game(){
-    let x = 0
-    let y = 0
+    let x = 3
+    let y = 3
     let pontos = darts_game(x,y)
     console.log(pontos)
 }
-entrada_darts_game()
+// entrada_darts_game()
 // import {Configuration} from "openai"
+
+// Sum of Multiples 
+
+/* 
+amanha:
+https://exercism.org/tracks/javascript/exercises/sieve
+https://exercism.org/tracks/javascript/exercises/atbash-cipher
+https://exercism.org/tracks/javascript/exercises/robot-simulator
+https://exercism.org/tracks/javascript/exercises/sum-of-multiples
+*/
+function sum_of_multiples(){ 
+
+}
+function entrada_sum_of_multiples(){
+
+}
+entrada_sum_of_multiples()
