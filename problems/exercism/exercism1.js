@@ -625,6 +625,7 @@ function testDomino() {
 // Say
 import { exec } from "child_process";
 import { clear } from "console"
+import { resourceUsage } from "process"
 
 // Verificar o sistema operacional
 // const command = process.platform === "darwin" ? "say 'Hello, world!'" : "espeak 'hello cassiano how are you?'";
@@ -952,17 +953,154 @@ function entrada_darts_game(){
 
 // Sum of Multiples 
 
-/* 
-amanha:
-https://exercism.org/tracks/javascript/exercises/sieve
-https://exercism.org/tracks/javascript/exercises/atbash-cipher
-https://exercism.org/tracks/javascript/exercises/robot-simulator
-https://exercism.org/tracks/javascript/exercises/sum-of-multiples
-*/
-function sum_of_multiples(){ 
 
+
+
+//Sieve
+function sieve(num){
+    let generator = []
+    for(let i = 2 ;i <= num;i++){
+        generator.push(i)
+    }
+    for(let i in generator){
+        if(generator[i] != null){
+           let number = generator[i]
+           let marcado = false
+           for(let e in generator){
+            if(generator[i] != generator[e] && generator[e] % number == 0 && generator[e] != null){
+                marcado = true
+                generator[e] = null 
+            }
+           }
+           if(marcado){
+            generator[i] = null
+           }
+        }
+    }
+    return generator.filter((numbers)=> numbers != null)
+}
+function entrada_sieve(){
+    let number = 10
+    let sieve_algortimn = sieve(number)
+    console.log(sieve_algortimn)
+}
+// entrada_sieve()
+// Atbash Cipher 
+function atbash_cipher(string){
+    let start = 0
+    let end = string.length
+    string = string.split('')
+    while(start != end){
+        [string[start],string[end]] = [string[end],string[start]]
+        start++
+        end--
+    }
+    return string.join('')
+}
+function entrada_atbash_cipher(){
+    let string_cripher = 'abcdefghijklmnopqrstuvwxyz'
+    let criptograph = atbash_cipher(string_cripher)
+    console.log(criptograph)
+}
+// entrada_atbash_cipher()
+
+// / Sum of Multiples 
+function sum_of_multiples(number){ 
+    let set_3 = new Set()
+    let set_5 = new Set()
+    for(let i = 3;i < number;i+=3){
+        set_3.add(i)
+    }
+    for(let i = 5;i < number;i+=5){
+        set_5.add(i)
+    }
+    for(let value of set_5.values()){
+        if(!set_3.has(value)){
+            set_3.add(value)
+        }
+    }
+    let sum = 0
+    for(let value of set_3.values()){
+        sum+=value
+    }
+    return sum
 }
 function entrada_sum_of_multiples(){
+    let number = 20
+    let sum = sum_of_multiples(number)
+    console.log(sum)
+}
+// entrada_sum_of_multiples()
+// Saddle Points  
+function perfect_tree(matrix){
+    let column = 0
+    while(column < matrix.length){
+        for(let i in matrix[column]){
+            let number = matrix[column][i]
+            let linha = matrix[column]
+            let coluna = []
+            for(let e in matrix){
+                coluna.push(matrix[e][i])
+            }
+            let min = Math.min(...coluna)
+            let max = Math.max(...linha)
+            if(min == number && max == number){
+                return number
+            }
+
+        }
+        column++
+    }
+}
+function entrada_perfect_tree(){
+    let matrix = [
+        [9,8,7,8],
+        [5,3,2,4],
+        [6,6,7,1]
+
+    ]
+    let perfect = perfect_tree(matrix)
+    console.log(perfect)
+}
+// entrada_perfect_tree()
+//http://goclasses.sh.utfpr.edu.br/wp-content/uploads/2021/06/LPE-Exercicios-4-Matrizes.pdf
+function exercicios_matrizes(){
+    function ler_matrix(){
+        let matrix = Array(3).fill(Array(3).fill(null))
+        console.log(matrix)
+    }
+    // ler_matrix()
+    function calcular_media(){
+       let matrix = []
+       let matrix_print = ''
+       let sum = 0
+       let sum_elements = 0
+       for(let i = 0;i < 5;i++){
+        let linha = []
+        for(let e = 0;e < 2;e++){
+            let num = Math.floor(Math.random()*10) 
+            sum+=num
+            sum_elements++
+            linha.push(num)
+        }
+        
+        matrix.push(linha)
+        matrix_print = matrix_print.concat(linha.join('')).concat('\n')
+       }
+       return sum / sum_elements
+    }
+    // calcular_media()
 
 }
-entrada_sum_of_multiples()
+// exercicios_matrizes()
+
+
+/* 
+amanha:
+https://exercism.org/tracks/javascript/exercises/affine-cipher
+https://exercism.org/tracks/javascript/exercises/all-your-base
+https://exercism.org/tracks/javascript/exercises/minesweeper
+https://exercism.org/tracks/javascript/exercises/satellite
+https://exercism.org/tracks/javascript/exercises/luhn
+https://exercism.org/tracks/javascript/exercises/grains
+*/
