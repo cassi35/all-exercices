@@ -189,6 +189,77 @@ function calculateScoreboard(balls) {
     if (points === 40) return "40";
     return points; 
   }
-  console.log(calculateScoreboard([true, false])); 
+  // console.log(calculateScoreboard([true, false])); 
 
-console.log(calculateScoreboard([true, false, true, false, true, false, true, false, true, false, false, false, false, false])); 
+// console.log(calculateScoreboard([true, false, true, false, true, false, true, false, true, false, false, false, false, false])); 
+
+
+
+//Number Shortening Filter
+function shorten_number(arr,num){
+  return (number)=>{
+    if(typeof number == 'object' || isNaN(number)){
+      return typeof number == 'object'? String(`[${number}]`):number
+    }else if(String(number).length < 4){
+      return String(number)
+    }else{
+
+      let n = Number(number)
+      let short = Math.floor(n / num)
+      while(true){
+          let temp_short = Math.floor(short / num)
+          if(temp_short == 0){
+            let length = String(n).length 
+            let index 
+            if(length >=4 && length <= 6){
+              index = arr.findIndex((value)=>value == 'k')
+            }else{
+              index = arr.findIndex((value)=>value == 'm')
+            }
+            return String(short).concat(arr[Number(index)])
+          }else{
+            short = Math.floor(short / num)
+          }
+      }
+
+    }
+
+  }
+}
+function entrada_shorteing_num(){
+  let filter1 = shorten_number(['','k','m'],1000)
+  console.log(filter1('2100'))
+}
+// entrada_shorteing_num()
+// Number Format
+function number_format(num){
+ if(String(num).length < 6){
+  return null 
+ }else {
+    let arr_num = num.split('')
+    let output = ''
+    while(arr_num.length >=3){
+      let res = ''
+      res = res.concat(arr_num.pop())
+      res = res.concat(arr_num.pop())
+      res  = res.concat(arr_num.pop())
+      output = ','+res.split('').reverse().join('') + output 
+    }
+   arr_num =  arr_num.join('') 
+   if(arr_num.length >= 1 || arr_num == '-'){
+    return arr_num == '-' ?arr_num+output.slice(1):arr_num+output
+   }else{
+    return output.slice(1)
+   }
+ }
+}
+function entrada_num_format(){
+  let format = number_format('-12678545')
+  console.log(format)
+}
+// entrada_num_format()
+
+
+
+
+
