@@ -1193,3 +1193,27 @@ function entrada_chess_grains(){
 
 
 
+//Knapsack
+function guide_Knapsack(items){
+    for(let backpack of items){
+        let perpute = items.filter((mochila)=> mochila != backpack)
+        for(let another_backpack of perpute){
+            if(another_backpack.value + backpack.value == 90){
+                return `maximum weight is : ${another_backpack.weight + backpack.weight}`
+            }
+        }
+    }
+}
+function entrada_guide_Knapsack(){
+    let items =  [
+        { "weight": 5, "value": 10 },
+        { "weight": 4, "value": 40 },
+        { "weight": 6, "value": 30 },
+        { "weight": 4, "value": 50 }
+      ]
+      let limit = 90
+    let guide = guide_Knapsack(items,limit)
+    console.log(guide)
+}
+entrada_guide_Knapsack()
+
