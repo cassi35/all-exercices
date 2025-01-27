@@ -1097,10 +1097,99 @@ function exercicios_matrizes(){
 
 /* 
 amanha:
-https://exercism.org/tracks/javascript/exercises/affine-cipher
-https://exercism.org/tracks/javascript/exercises/all-your-base
-https://exercism.org/tracks/javascript/exercises/minesweeper
-https://exercism.org/tracks/javascript/exercises/satellite
-https://exercism.org/tracks/javascript/exercises/luhn
-https://exercism.org/tracks/javascript/exercises/grains
+
 */
+// All Your Base 
+function base_problem(number,base){
+    let num = number
+    number = String(number).split('').map((number)=> Number(number))
+    let output = 0
+    let j = 0
+    let i = number.length -1
+    while(i >= 0){
+        let calc = number[j] * base**i
+        output+=calc
+        j++
+        i--
+    }
+    switch(output){
+        case output == num:
+            return 'congratulations'
+        default:
+            return 'err'
+    }
+}
+function entrada_base_problem(){
+    let number = 42
+    let base = 11
+    let correct = base_problem(number,base)
+    console.log(correct)
+}
+// entrada_base_problem()
+
+
+//Luhn
+function Luhn_algorithm (strings_arr){
+    if(strings_arr.length == 0){
+        return 'invalid'
+    }
+    let nums = []
+    for(let string of strings_arr){
+        if(string.length > 1){
+            let arr = string.split('').map((value,index)=>{
+                if(index == 0 || index == 2){
+                    let sum = Number(value)+Number(value)
+                    if(sum > 9){
+                        if(sum % 9 == 0){
+                            return Number(value)
+                        }else{
+                            return Number(value) / 2
+                        }
+                    }else{
+                        return sum
+                    }
+                }else{
+                    return Number(value)
+                }
+            })
+            nums.push(...arr)
+        }
+    }
+    return  nums.reduce((a,b)=>a+b) % 10 == 0 ?'valid number card':'invalid number card'
+    
+}
+function entrada_lLuhn_algorithm(){
+    let arr_string = ['7253', '2262' ,'5312', '0539']
+    let alg = Luhn_algorithm(arr_string)
+    console.log(alg)
+} 
+// entrada_lLuhn_algorithm()
+
+//Grains
+
+function chess_grains(number){
+    if(number > 13 || number == undefined){
+        return null 
+    }
+    let casas = []
+    let quadrado = []
+    let total = 0
+    for(let i = 0;i <= 64;i+=1){
+        if(quadrado.length < 4){
+            total+=i 
+            quadrado.push(i)
+        }else{
+            casas.push(quadrado)
+            quadrado = []
+        }
+    }
+    return [total,casas[number].reduce((a,b)=>a+b)]
+}
+function entrada_chess_grains(){
+   let quadrado =  chess_grains(3)
+   console.log(quadrado)
+}
+// entrada_chess_grains()
+
+
+
