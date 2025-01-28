@@ -259,7 +259,75 @@ function entrada_num_format(){
 }
 // entrada_num_format()
 
+function findDuplicate(prhase){
+  prhase = prhase.split('.')
+  prhase = prhase.map((arr)=> arr.split(' ')).flat()
+  let used = []
+  while(prhase.length != 0){
+    let remove = prhase.shift()
+    if(prhase.includes(remove) && !used.includes(remove) && remove != ''){
+      used.push(remove)
+    }
+  }
+  return used
+}
+function entrada_findDuplicate(){
+  let msg = 'this is a test with. test is this.'
+  let find = findDuplicate(msg)
+  console.log(find)
+}
+// entrada_findDuplicate()
 
 
 
 
+//The latest clock
+
+function latest_clock(digits){
+  digits = digits.split(',').map(num => Number(num))
+  let valid 
+  function permute(start,permutations){
+    if(start.length === 0){
+      let arr = permutations.flat()
+      let hour = Number(arr.slice(0,2).join(''))
+      let minute = Number(arr.slice(2).join(''))
+      if(hour < 23  && hour > 18 && minute  <= 59){
+        valid = [hour,minute]
+      }
+      console.log(hour,minute)
+    }else{
+      for(let i = 0;i < start.length;i++){
+        let dupe = [...start]
+        let removed = dupe.splice(i,1)
+        permutations.push(removed)
+        permute(dupe,permutations)
+        permutations.pop()
+      }
+    }
+  }
+
+   permute(digits,[])
+   return valid
+}
+function entrada_latest_clock(){
+  let digits = '1,9,8,3'
+  let clock = latest_clock(digits)
+  console.log(clock)
+}
+// entrada_latest_clock()
+function permute_real(start,permutations){
+  if(start.length == 0){
+    console.log(permutations.flat())
+  }else{
+    for(let i = 0;i < start.length;i++){
+      let dope = [...start]
+      let removed = dope.splice(i,1)
+      permutations.push(removed)
+      permute_real(dope,permutations)
+      permutations.pop()
+
+    }
+  }
+}
+// permute_real(['a','b','c','d'],[])
+// Pattern Generator
