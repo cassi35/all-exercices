@@ -331,3 +331,146 @@ function permute_real(start,permutations){
 }
 // permute_real(['a','b','c','d'],[])
 // Pattern Generator
+//QR-Code Message Encoding
+function qr_code_mensage(msg){
+  if(msg == undefined ){
+    return -1
+  }
+  let gruous = []
+  let arr 
+  if(typeof msg == 'number' || typeof msg == 'bigint'){
+    arr = String(msg).split('').map(n => Number(n)).filter((n)=> n != 0)
+    while(arr.length != 0){
+      if(arr.length >= 3){
+        let count = 0
+        let  gruoup = []
+        while(count < 3){
+          gruoup.push(arr.shift())
+          count++
+        }
+        gruous.push(Number(gruoup.join('')))
+      }else{
+        let gruoup = []
+        while(arr.length != 0){
+          gruoup.push(arr.shift())
+        }
+        gruous.push(Number(gruoup.join('')))
+      }
+    }
+    return gruous[0]
+  }else if(typeof msg == 'string'){
+    arr =  msg.split(' ').map(str => str.split(''))
+    for(let i in arr){
+      while(arr[i].length != 0){
+        if(arr[i].length >= 2){
+          let count = 0
+          let  gruoup = []
+          while(count < 2){
+            gruoup.push(arr[i].shift())
+            count++
+          }
+          gruous.push(gruoup)
+        }else{
+          let gruoup = []
+          while(arr[i].length != 0){
+            gruoup.push(arr[i].shift())
+          }
+          gruous.push(gruoup)
+        }
+      }
+    }
+   let binary = ''
+   for(let i in gruous){
+    let char = gruous[i].map((c)=>c.charCodeAt(0)).toString(2).padStart(8,'0')
+    binary = binary.concat(' ').concat(char)
+   }
+   return binary
+
+  }else{
+    return -1
+  }
+}
+function entrada_qr_code(){
+  let msg = 'hello world'
+  let msg2 = 219201
+  let encoding = qr_code_mensage(msg)
+  console.log(encoding)
+}
+// entrada_qr_code()
+//The Hunger Games - Foxes and Chickens
+function hunger_games(arr){
+  let valid = (arr_t)=>{
+    return true 
+  }
+  if(valid(arr)){
+    for(let i in arr){
+      if(typeof arr[i] == 'string'){
+        let new_str = arr[i].split('').map((n)=>{
+          if(n == 'f'){
+            return n 
+          }else{
+            return '.'
+          }
+        })
+        arr[i] = new_str.join('')
+      }else if(typeof arr[i] == 'object' && arr[i][0].includes('f')){
+        let new_str = arr[i][0].split('').map(n =>{
+          if(n == 'f'){
+            return n 
+          }else{
+            return '.'
+          }
+        })
+        arr[i] = new_str
+  
+      }
+    }
+    return arr
+  }else{
+    return null
+  }
+
+}
+function entrada_hunger_games(){
+  let hunger = ['ccc',['ccc'],'fcc',['ccfcc'],'cffff','ffff',['ccc'],'fff']
+  let game = hunger_games(hunger)
+  console.log(game)
+}
+entrada_hunger_games()
+
+//What doesn't belong to these?
+function not_belong(arr){
+  if(arr.some(element => element == undefined || element == 0) || arr.length < 2){
+    return null 
+  }else{
+    let par = 0
+    let impar = 0
+    for(let i in arr){
+      if(arr[i] % 2 == 0){
+        par++
+      }else{
+        impar++
+      }
+    }
+    if(par > impar){
+      for(let i in arr){
+        if(arr[i] % 2 != 0 && arr.filter(element => element == arr[i]).length == 1){
+          return arr[i]
+        }
+      }
+      return -1
+    }else{
+      for(let i in arr){
+        if(arr[i] % 2 == 0 && arr.filter(element => element == arr[i].length) == 1){
+          return arr[i]
+        }
+      }
+      return -1
+    }
+  }
+}
+function entrada_not_belong(){
+  let arr = [2,4,3,8]
+  console.log(not_belong(arr))
+}
+entrada_not_belong()
