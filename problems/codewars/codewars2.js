@@ -473,4 +473,162 @@ function entrada_not_belong(){
   let arr = [2,4,3,8]
   console.log(not_belong(arr))
 }
-entrada_not_belong()
+// entrada_not_belong()
+
+//Collatz sequence 
+function collatz(n){
+ try{
+  if(n == undefined){
+    return null
+  }
+  let numbers = [n]
+  while(n > 1){
+    if(n % 2 == 0){
+      n = n / 2
+      numbers.push(n)
+    }else if(n % 2 != 0){
+      n = (n * 3) + 1
+      numbers.push(n)
+    }
+  }
+  return numbers
+ }catch(err){
+  console.log(err)
+ } 
+}
+function entrada_collatz(){
+  let sequence = collatz(3)
+  console.log(sequence)
+} 
+entrada_collatz()
+//Next smaller number with the same digits
+
+function next_smaller(number,verified){
+  try{
+    if(verified(number)){
+      return -1
+    }else{
+      let arr_num = String(number).split('').map(n => Number(n))
+      if(arr_num.length == 2){
+        return Number(arr_num.reverse().join(''))
+      }else{
+        let ultimo = arr_num.pop()
+        let penultimo = arr_num.pop()
+        arr_num.push(ultimo)
+        arr_num.push(penultimo)
+        return arr_num
+      }
+    }
+  }catch(err){
+    if(verified == undefined){
+      console.log('you forgot to add a callback add one')
+     return console.log(`
+        (n)=>{
+    let arr_num = String(n).split('').map(n => Number(n))
+    if(arr_num.length == 1){
+      return true
+    }else if(arr_num.filter(num => num == arr_num[0]).length == arr_num.length ){
+      return true
+    }else{
+      let menor = true 
+      for(let i = 1;i < arr_num.length;i++){
+        if(arr_num[i] > arr_num[i-1]){
+          menor = false
+        }
+      }
+      if(menor){
+        return true
+      }else{
+        return false
+      }
+    }
+  }
+        `)
+    }
+  }
+ 
+}
+function entrada_next_smaller(){
+  let next = next_smaller(531,(n)=>{
+    let arr_num = String(n).split('').map(n => Number(n))
+    if(arr_num.length == 1){
+      return true
+    }else if(arr_num.filter(num => num == arr_num[0]).length == arr_num.length ){
+      return true
+    }else{
+      let menor = true 
+      for(let i = 1;i < arr_num.length;i++){
+        if(arr_num[i] > arr_num[i-1]){
+          menor = false
+        }
+      }
+      if(menor){
+        return true
+      }else{
+        return false
+      }
+    }
+  })
+  console.log(next)
+}
+// entrada_next_smaller() //errado 
+
+
+
+//How many numbers III?
+function find_all(sum, count) {
+  let results = []
+
+  function generate(current, start, remainingSum, remainingCount) {
+      if (remainingCount === 0) {
+          if (remainingSum === 0) {
+              results.push(parseInt(current.join('')))
+          }
+          return
+      }
+
+      for (let digit = start; digit <= 9; digit++) {
+          if (digit > remainingSum) break 
+          generate([...current, digit], digit, remainingSum - digit, remainingCount - 1)
+      }
+  }
+
+  generate([], 1, sum, count)
+
+  if (results.length === 0) {
+      return []
+  } else {
+      return [results.length, results[0], results[results.length - 1]]
+  }
+}
+
+console.log(find_all(10, 3))
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
