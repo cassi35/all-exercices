@@ -1215,5 +1215,6 @@ function entrada_guide_Knapsack(){
     let guide = guide_Knapsack(items,limit)
     console.log(guide)
 }
-entrada_guide_Knapsack()
+// entrada_guide_Knapsack()
 
+//Ledger
