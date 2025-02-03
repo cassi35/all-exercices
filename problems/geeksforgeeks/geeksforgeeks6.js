@@ -581,7 +581,7 @@ function entrada_smallest_positive(){
     console.log(smallest_positive(arr))
 }
 
-entrada_smallest_positive()
+// entrada_smallest_positive()
 
 
 
