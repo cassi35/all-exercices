@@ -605,14 +605,61 @@ function find_all(sum, count) {
 console.log(find_all(10, 3))
 
 
+//Beeramid 5kyu
+function beeramid(bonus,custo){
+let nivel = 1
+while(bonus > nivel * nivel * custo){
+  bonus -=nivel * nivel * custo
+  nivel++
+  }
+  return nivel -1
+}
+function entrada_beeramid(){
+  let bonus = 1500
+  let custo = 2
+  console.log(beeramid(bonus,custo))
+}
+entrada_beeramid()
 
 
+//Pete, the baker 5kyu
+function cakes(recipe, available) {
+  let quantidade_bolo = Infinity
+  for (let ingrediente in recipe) {
+    if (!available[ingrediente]) {
+      return 0;
+    }
+    let bolosPossiveis = Math.floor(available[ingrediente] / recipe[ingrediente])
+    quantidade_bolo = Math.min(quantidade_bolo, bolosPossiveis)
+  }
+  return quantidade_bolo
+}
+function entrada_cakes() {
+  console.log(cakes({ flour: 500, sugar: 200, eggs: 1 }, { flour: 1200, sugar: 1200, eggs: 5, milk: 200 }))
+}
+
+entrada_cakes()
 
 
-
-
-
-
+function generatePossibilities(str) {
+  let results = []
+  function backtrack(current, index) {
+    if (index === str.length) {
+      results.push(current)
+      return
+    }
+    if (str[index] === '?') {
+      backtrack(current + '0', index + 1)
+      backtrack(current + '1', index + 1)
+    } else {
+      backtrack(current + str[index], index + 1)
+    }
+  }
+  backtrack('', 0)
+  return results
+}
+console.log(generatePossibilities('101?'))  
+console.log(generatePossibilities('1?1?'))
 
 
 
