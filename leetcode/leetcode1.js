@@ -90,4 +90,47 @@ function entrada_isValid() {
     let parenteses = '(()[])';
     console.log(isValid(parenteses))
 }
-entrada_isValid();
+// entrada_isValid();
+
+//length of last word
+function lengthOfLastWord(string){
+    let last =  string.split(' ').filter((word)=>word != '')
+    return last[last.length-1].length
+}
+function entrada_lengthOfLastWord(){
+    let s = 'luffy is still joyboy'
+    console.log(lengthOfLastWord(s))
+}   
+// entrada_lengthOfLastWord()
+//search insert position
+function searchInsert(nums,target){
+    let position = 0
+    let index = 0
+    while(index < nums.length){
+        let diferenca =  target - nums[index]
+        if(diferenca == 1 || diferenca == 0){
+            return diferenca == 1?position+1:position
+        }
+        index+=1
+        position++
+    }
+    return -1
+}
+function entrada_searchInsert(){
+    let nums = [1,3,5,6]
+    let target = 5
+    console.log(searchInsert(nums,target))
+}
+// entrada_searchInsert()
+
+//plus one 
+function plusOne(digits){
+    let str_digits = String(Number(digits.join('')) +1).split('').map((n)=> Number(n))
+    return str_digits
+}
+function entrada_plusOne(){
+    let digits = [4,3,2,1]
+    console.log(plusOne(digits))
+}
+// entrada_plusOne()
+
