@@ -436,7 +436,7 @@ function entrada_hunger_games(){
   let game = hunger_games(hunger)
   console.log(game)
 }
-entrada_hunger_games()
+// entrada_hunger_games()
 
 //What doesn't belong to these?
 function not_belong(arr){
@@ -500,7 +500,7 @@ function entrada_collatz(){
   let sequence = collatz(3)
   console.log(sequence)
 } 
-entrada_collatz()
+// entrada_collatz()
 //Next smaller number with the same digits
 
 function next_smaller(number,verified){
@@ -602,7 +602,7 @@ function find_all(sum, count) {
   }
 }
 
-console.log(find_all(10, 3))
+// console.log(find_all(10, 3))
 
 
 //Beeramid 5kyu
@@ -619,7 +619,7 @@ function entrada_beeramid(){
   let custo = 2
   console.log(beeramid(bonus,custo))
 }
-entrada_beeramid()
+// entrada_beeramid()
 
 
 //Pete, the baker 5kyu
@@ -638,7 +638,7 @@ function entrada_cakes() {
   console.log(cakes({ flour: 500, sugar: 200, eggs: 1 }, { flour: 1200, sugar: 1200, eggs: 5, milk: 200 }))
 }
 
-entrada_cakes()
+// entrada_cakes()
 
 
 function generatePossibilities(str) {
@@ -658,23 +658,120 @@ function generatePossibilities(str) {
   backtrack('', 0)
   return results
 }
-console.log(generatePossibilities('101?'))  
-console.log(generatePossibilities('1?1?'))
+// console.log(generatePossibilities('101?'))  
+// console.log(generatePossibilities('1?1?'))
+
+
+
+//Numberpad cipher
+function Encrypt(digits) {
+  const teclado = [
+    ['7', '8', '9'],
+    ['4', '5', '6'],
+    ['1', '2', '3'],
+  ];
+
+  const movimentos = {
+    '-1,0': '8', 
+    '1,0': '2', 
+    '0,-1': '4',
+    '0,1': '6',  
+    '-1,-1': '7',
+    '-1,1': '9', 
+    '1,-1': '1', 
+    '1,1': '3',   
+    '0,0': '5'   
+  };
+  const findPosition = (num) => {
+    for (let i = 0; i < teclado.length; i++) {
+      for (let j = 0; j < teclado[i].length; j++) {
+        if (teclado[i][j] === num) return [i, j]
+      }
+    }
+  };
+
+  digits = '1' + digits
+  let encrypted = ''
+
+  for (let i = 0; i < digits.length - 1; i++) {
+    const [x1, y1] = findPosition(digits[i])
+    const [x2, y2] = findPosition(digits[i + 1])
+    let dx = x2 - x1;
+    let dy = y2 - y1;
+    if (dx === -2) dx = 1;
+    if (dx === 2) dx = -1;
+    if (dy === -2) dy = 1;
+    if (dy === 2) dy = -1;
+    encrypted += movimentos[`${dx},${dy}`];
+  }
+  return encrypted;
+}
+function Decrypt(digits) {
+  const teclado = [
+    ['7', '8', '9'],
+    ['4', '5', '6'],
+    ['1', '2', '3'],
+  ];
+
+  const direcoes = {
+    '8': [-1, 0], 
+    '2': [1, 0],   
+    '4': [0, -1],  
+    '6': [0, 1],   
+    '7': [-1, -1],
+    '9': [-1, 1], 
+    '1': [1, -1],  
+    '3': [1, 1],  
+    '5': [0, 0]    
+  };
+
+  const findPosition = (num) => {
+    for (let i = 0; i < teclado.length; i++) {
+      for (let j = 0; j < teclado[i].length; j++) {
+        if (teclado[i][j] === num) return [i, j]
+      }
+    }
+  };
+
+  let decrypted = '1'
+  let [x, y] = findPosition('1')
+
+  for (let d of digits) {
+    const [dx, dy] = direcoes[d]
+    x = (x + dx + 3) % 3
+    y = (y + dy + 3) % 3
+    decrypted += teclado[x][y]
+  }
+  return decrypted.slice(1)
+}
+function entrada_numberpad() {
+  console.log("Encrypt:", Encrypt('2583'))
+  console.log("Decrypt:", Decrypt('6889'))
+}
+// entrada_numberpad()
 
 
 
 
+//Find four numbers
 
-
-
-
-
-
-
-
-
-
-
+function find4Number(n) {
+  for (let a = Math.floor(Math.sqrt(n)); a > 0; a--) {
+    let restA = n - a * a
+    for (let b = Math.min(a, Math.floor(Math.sqrt(restA))); b > 0; b--) {
+      let restB = restA - b * b
+      for (let c = Math.min(b, Math.floor(Math.sqrt(restB))); c > 0; c--) {
+        let restC = restB - c * c
+        let d = Math.floor(Math.sqrt(restC));
+        if (d > 0 && d <= c && (a * a + b * b + c * c + d * d === n)) {
+          return [a, b, c, d]
+        }
+      }
+    }
+  }
+  return []
+}
+console.log(find4Number(99))
 
 
 
