@@ -39,7 +39,7 @@ function entrada_twosum() {
     let target = 9
     console.log(twoSum(nums,target))
 }
-entrada_twosum()
+// entrada_twosum()
 
 //Roman to Integer
 function romanToInt(roman) {
@@ -134,3 +134,4 @@ function entrada_plusOne(){
 }
 // entrada_plusOne()
 
+//remove duplicates from sorted linkedlist

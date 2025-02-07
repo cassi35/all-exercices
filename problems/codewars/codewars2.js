@@ -771,8 +771,123 @@ function find4Number(n) {
   }
   return []
 }
-console.log(find4Number(99))
+// console.log(find4Number(99))
 
 
+//Josephus Permutation
 
 
+function Josephus_Permutation(arr, k) {
+  let sequence = []
+  let index = 0
+  function permutation(array) {
+    if (array.length === 0) return
+    index = (index + k - 1) % array.length
+    sequence.push(array[index])
+    array.splice(index, 1)
+    permutation(array);
+  }
+  permutation(arr);
+  return sequence;
+}
+
+function entrada_Josephus_Permutation() {
+  let arr = [1, 2, 3, 4, 5, 6, 7]
+  let k = 3
+  console.log(Josephus_Permutation(arr, k))
+}
+
+// entrada_Josephus_Permutation()
+// What's a Perfect Power anyway?
+function unionJack(size) {
+  if (typeof size !== "number" || isNaN(size)) return false;
+  size = Math.max(7, Math.ceil(size))
+  let flag = Array.from({ length: size }, () => Array(size).fill('-'))
+  let mid = Math.floor(size / 2)
+  for (let i = 0; i < size; i++) {
+      flag[i][i] = 'X'
+      flag[i][size - 1 - i] = 'X'
+      flag[i][mid] = 'X'
+      flag[mid][i] = 'X'
+      if ( size % 2 === 0) {
+          flag[i][mid - 1] = 'X'
+          flag[mid - 1][i] = 'X'
+      }
+      console.log(flag.map((row)=>row.join()))
+  }
+
+
+  return flag.map(row => row.join('')).join('\n')
+}
+// console.log(unionJack(10))
+//Sum of many ints
+function f(n,m){
+  if(n == 0){
+    return 0
+  }else{
+    let add = n % m
+    return add + f(n-1,m)
+  }
+}
+// console.log(f(10,5))
+//String average
+function average(str_initial){
+  try{
+    let tranlate = new Map()
+    let str_nums = ['zero','one','two','three','four','five','six','seven','eight','nine']
+    for(let i in str_nums){
+      tranlate.set(str_nums[i],Number(i))
+    }
+    if(typeof str_initial != 'string'){
+      return false
+    }
+    let nums = str_initial.split(' ')
+    for(let num of nums){
+      if(!str_nums.includes(num)){
+        return false
+      }
+    }
+    let length = nums.length
+    function sum_nums(numbers){
+      if(numbers.length == 0){
+        return 0
+      }else{
+        let remove = numbers.pop()
+        let add = tranlate.get(remove)
+        return add + sum_nums(numbers)
+      }
+    }
+    return Math.floor( sum_nums(nums) /length)
+  }catch(err){
+    console.log(err)
+  }
+}
+
+
+// console.log(average('zero nine five two'))
+
+//Is Integer Array?
+function is_int_array(arr){
+  for(let num of arr){
+    if(Math.floor(num) < num){
+      return false
+    }
+  }
+  return true 
+}
+// console.log(is_int_array([1,2,3,4,5,2]))
+//Count the number of Duplicates
+function count_duplicates(str){
+  let count = 0
+  str = str.toLowerCase()
+  str = str.split('')
+  while(str.length != 0)  {
+    let remove = str.pop()
+    if(str.includes(remove)){
+      str = str.filter((s)=>s != remove)
+      count++
+    }
+  }
+  return count
+}
+// console.log(count_duplicates('abcab11122c'))
