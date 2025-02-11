@@ -891,3 +891,50 @@ function count_duplicates(str){
   return count
 }
 // console.log(count_duplicates('abcab11122c'))
+function maximum_subarray(array){
+  let inicial_max = 0
+  let sequence = []
+  for(let i = 0;i < array.length;i++){
+    let stack = array.slice(i,array.length)
+    while(stack.length != 0){
+      let soma = stack.reduce((a,b)=>a+b)
+      if(soma > inicial_max){
+        inicial_max = soma
+        sequence = stack
+      }
+      stack = stack.slice(0,stack.length-1)
+    }
+  }
+  return sequence
+}
+let entrada_max_sum = () =>{
+  let sequence = [-2, 1, -3, 4, -1, 2, 1, -5, 4]
+  console.log(maximum_subarray(sequence))
+}
+// entrada_max_sum()
+
+//What doesn't belong to these?
+
+function findOutlierElement(arr) {
+  const countMap = arr.reduce((acc, el) => {
+      acc[el] = (acc[el] || 0) + 1
+      return acc
+  }, {})
+  return arr.find(el => countMap[el] === 1)
+}
+console.log(findOutlierElement([1, 2, 2, 2, 2]))
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
