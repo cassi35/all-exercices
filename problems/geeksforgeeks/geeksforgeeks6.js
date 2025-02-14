@@ -585,6 +585,25 @@ function entrada_smallest_positive(){
 
 
 
+//Triplet Sum in Array
+function triple_sum(arr,target){
+  for(let i = 0;i < arr.length;i++){
+    for(let j = i+1;j < arr.length;j++){
+        for(let a = j+1;a < arr.length;a++){
+        if(arr[i]+arr[j]+arr[a] == target){
+            return true 
+        }
+        }
+    }
+}
+return false
+}
+function entrada_triple_sum(){
+    let arr = [1, 4, 45, 6, 10, 8]
+    console.log(triple_sum(arr,13))
+}
+entrada_triple_sum()
+
 
 
 
