@@ -1053,5 +1053,56 @@ function acceptsLateWork(person){
 
 }
 
-console.log(acceptsLateWork("Mr. Citrano"))
+// console.log(acceptsLateWork("Mr. Citrano"))
 
+// Consecutive Ascending Numbers
+function consecutive_ascending(str){
+    let mid = Math.floor(str.length / 2)
+    let sequence = 1
+    while(sequence <= mid){
+        let arr = []
+        let temp_arr = str.split('')
+        while(temp_arr.length > 0){
+            let number = ''
+            let index = 0
+            while(index < sequence){
+                number = number.concat(temp_arr.shift())
+                index++
+            }
+            arr.push(Number(number))
+        }
+        if(arr.includes(NaN)){
+            sequence++
+            continue
+        }else{
+            let test_sequence = true
+            for(let i = 1;i < arr.length;i++){
+                let resto = arr[i] - arr[i-1]
+                if(resto != 1){
+                    test_sequence = false
+                }
+            }
+            if(test_sequence){
+                return true
+            }
+            sequence++
+        }
+
+    }   
+    return false
+}
+function entrada_consecutive_ascending(){
+    let str = '666667'
+    console.log(consecutive_ascending(str))
+}
+// entrada_consecutive_ascending()
+//2048 Tiles Slide
+//syllabification
+function syllabification(word) {
+    return word.match(/[^aeiouAEIOU]?[aeiouAEIOU][^aeiouAEIOU]{0,2}/g).join(".")
+}
+function entrada_syllabification(){
+    let str = 'Kar'
+    console.log(syllabification(str))
+}
+entrada_syllabification()

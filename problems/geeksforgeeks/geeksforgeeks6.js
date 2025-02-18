@@ -602,7 +602,7 @@ function entrada_triple_sum(){
     let arr = [1, 4, 45, 6, 10, 8]
     console.log(triple_sum(arr,13))
 }
-entrada_triple_sum()
+// entrada_triple_sum()
 
 
 
