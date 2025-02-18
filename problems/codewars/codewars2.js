@@ -924,8 +924,39 @@ function findOutlierElement(arr) {
 }
 console.log(findOutlierElement([1, 2, 2, 2, 2]))
 
+//Taxi Station
+function taxiStation(distances, speeds) {
+  let numTaxis = speeds.length
+  let availability = new Array(numTaxis).fill(0)
+  let trips = new Array(numTaxis).fill(0)
 
+  for (let distance of distances) {
+      let bestTaxi = -1
+      for (let i = 0; i < numTaxis; i++) {
+          if (speeds[i] === 0) continue
+          let timeAvailable = availability[i]
+          let travelTime = distance / speeds[i]
+          let returnTime = travelTime
+          let totalTime = timeAvailable + travelTime + returnTime
+          if (
+              bestTaxi === -1 || 
+              totalTime < availability[bestTaxi] || 
+              (totalTime === availability[bestTaxi] && speeds[i] > speeds[bestTaxi]) || 
+              (totalTime === availability[bestTaxi] && speeds[i] === speeds[bestTaxi] && i < bestTaxi)
+          ) {
+              bestTaxi = i
+          }
+      }
 
+      if (bestTaxi !== -1) {
+          let travelTime = distance / speeds[bestTaxi]
+          availability[bestTaxi] += 2 * travelTime
+          trips[bestTaxi]++
+      }
+  }
+  return trips
+}
+console.log(taxiStation([40, 80, 40, 80], [20, 40]))
 
 
 
