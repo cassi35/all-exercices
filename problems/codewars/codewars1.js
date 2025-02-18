@@ -772,40 +772,32 @@ let calc = one(plus(tree()))
 // Land perimeter
 // int32 to IPv4
 function intToIPv4(num) {
-    // Obtenha cada octeto usando deslocamentos de bits e máscaras
-    const octet1 = (num >> 24) & 255; // Extrai os 8 bits mais significativos
-    const octet2 = (num >> 16) & 255; // Próximos 8 bits
-    const octet3 = (num >> 8) & 255;  // Próximos 8 bits
-    const octet4 = num & 255;         // Últimos 8 bits
+    const octet1 = (num >> 24) & 255
+    const octet2 = (num >> 16) & 255
+    const octet3 = (num >> 8) & 255
+    const octet4 = num & 255
 
-    // Combine os octetos em uma string no formato IPv4
-    return `${octet1}.${octet2}.${octet3}.${octet4}`;
+    return `${octet1}.${octet2}.${octet3}.${octet4}`
 }
-
-// Exemplo de uso
-const num = 2149583361;
+const num = 2149583361
 // console.log(intToIPv4(num)); // Saída: "128.32.10.1"
-
 //jogo da velha 3
-
-
-
 //Four Letter Words ~ Mutations
 //5hku
 function mutations(word) {
-    let length_palavras_bob = ['boar', 'clap', 'farm', 'lend', 'near', 'peat', 'pure', 'more', 'plan', 'soap'];
-    let length_palavras_alice = ['plat', 'rend', 'bear', 'soar', 'mare', 'pare', 'flap', 'neat', 'clan', 'pore'];
+    let length_palavras_bob = ['boar', 'clap', 'farm', 'lend', 'near', 'peat', 'pure', 'more', 'plan', 'soap']
+    let length_palavras_alice = ['plat', 'rend', 'bear', 'soar', 'mare', 'pare', 'flap', 'neat', 'clan', 'pore']
 
     function isValidMutation(word1, word2) {
         if (word1.length !== 4 || word2.length !== 4) return false;
 
-        let diffCount = 0;
+        let diffCount = 0
         for (let i = 0; i < 4; i++) {
             if (word1[i] !== word2[i]) {
-                diffCount++;
+                diffCount++
             }
         }
-        return diffCount === 1;
+        return diffCount === 1
     }
 
     function jogo(initial_word, vez) {
@@ -816,73 +808,62 @@ function mutations(word) {
                     if (length_palavras_bob[i] && isValidMutation(initial_word, length_palavras_bob[i])) {
                         initial_word = length_palavras_bob[i];
                         length_palavras_bob[i] = null;
-                        vez = 'alice';
-                        jogou = true;
+                        vez = 'alice'
+                        jogou = true
                         break;
                     }
                 }
-                if (!jogou) return 'alice ganhou o jogo';
+                if (!jogou) return 'alice ganhou o jogo'
             } else {
-                let jogou = false;
+                let jogou = false
                 for (let i in length_palavras_alice) {
                     if (length_palavras_alice[i] && isValidMutation(initial_word, length_palavras_alice[i])) {
-                        initial_word = length_palavras_alice[i];
-                        length_palavras_alice[i] = null;
-                        vez = 'bob';
-                        jogou = true;
-                        break;
+                        initial_word = length_palavras_alice[i]
+                        length_palavras_alice[i] = null
+                        vez = 'bob'
+                        jogou = true
+                        break
                     }
                 }
-                if (!jogou) return 'bob ganhou o jogo';
+                if (!jogou) return 'bob ganhou o jogo'
             }
         }
     }
 
     if (length_palavras_alice.length > 2000 || length_palavras_bob.length > 2000) {
-        return false;
+        return false
     } else {
-        let start = Math.floor(Math.random() * 2);
-        return start === 1 ? jogo(word, 'bob') : jogo(word, 'alice');
+        let start = Math.floor(Math.random() * 2)
+        return start === 1 ? jogo(word, 'bob') : jogo(word, 'alice')
     }
 }
 
 // console.log(mutations('rend'));
 console.clear()
 function canalMania(lowQueue, highQueue, lockLength) {
-    let totalTime = 0;
-
-    // Processa uma fila
+    let totalTime = 0
     function processQueue(queue) {
         let currentLength = 0;
         let boatsProcessed = 0;
-
-        // Preenche a comporta com os barcos da fila
         while (queue.length > 0 && currentLength + queue[0] <= lockLength) {
-            currentLength += queue.shift(); // Adiciona o barco à comporta
-            boatsProcessed++;
+            currentLength += queue.shift()
+            boatsProcessed++
         }
-
-        // Se algum barco foi adicionado, conta o tempo
         if (boatsProcessed > 0) {
-            totalTime += 2; // Tempo para encher a comporta
-            totalTime += 2; // Tempo para esvaziar a comporta
+            totalTime += 2
+            totalTime += 2
         }
 
         return boatsProcessed > 0;
     }
-
-    // Alterna entre as filas até que ambas estejam vazias
     while (lowQueue.length > 0 || highQueue.length > 0) {
-        // Processa a fila da parte baixa
         if (lowQueue.length > 0) {
             processQueue(lowQueue);
         }
-
-        // Processa a fila da parte alta
         if (highQueue.length > 0) {
             processQueue(highQueue);
         }
     }
 
-    return totalTime;
+    return totalTime
 }
