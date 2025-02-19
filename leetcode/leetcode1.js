@@ -365,3 +365,115 @@ function threeSum(nums ){
     return arrs
 }
 // console.log(threeSum([-1,0,1,2,-1,-4])) //de prima coisa linda
+
+//best time to buy and sell stock 
+function maxProfit(prices){
+   let minPrice = Infinity
+   let maxProfit = 0
+   for(let i = 0;i < prices.length;i++){
+    if(prices[i] < minPrice){
+        minPrice = prices[i]
+    }else{
+        let profit = prices[i] - minPrice
+        maxProfit = Math.max(maxProfit,profit)
+    }
+   }
+    return maxProfit
+}
+// console.log(maxProfit([7,1,5,3,6,4]))
+function singleNumber(nums){
+    if(nums.length == 0){
+        return 
+    }
+    for(let i = 0;i < nums.length;i++){
+        let soma = 1
+        for(let j = 0;j < nums.length;j++){
+            if(nums[j] == nums[i] && i != j){
+                soma++
+            }
+        }
+        if(soma == 1){
+            return nums[i]
+        }
+    }
+}
+// console.log(singleNumber([4,1,2,1,2]))
+//majory element
+function majorityElement(nums) {
+    let candidate = null
+    let count = 0
+    for (let num of nums) {
+        if (count === 0) {
+            candidate = num
+        }
+        count += (num === candidate) ? 1 : -1
+    }
+    return candidate
+}
+
+// console.log(majorityElement([2,2,1,1,1,2,2]))
+//valid phone numbers
+function validPHone(file){
+    if(file.length == 0){
+        return -1
+    }
+    let valid = ''
+    for(let number of file){
+        let rule = /^(\+1\s?)?(\(\d{3}\)|\d{3})[-.\s]?\d{3}[-.\s]?\d{4}$/g
+        if(rule.test(number)){
+            valid = valid.concat(number).concat('\n')
+        }
+    }
+    return valid
+}
+var listPhones = [
+'987-123-4567',
+'123 456 7890',
+'(123) 456-7890'
+
+]
+// console.log(validPHone(listPhones))
+//happy number
+function isHappy(num) {
+    let seen = new Set()
+    while (num !== 1 && !seen.has(num)) {
+        seen.add(num)
+        num = String(num)
+            .split('')
+            .map(n => Number(n) ** 2)
+            .reduce((a, b) => a + b, 0)
+    }
+    return num === 1
+}
+// console.log(isHappy(19))
+function reverseString(s){
+    let start = 0
+    let end = s.length-1
+    while(start <= end){
+        [s[start],s[end]] = [s[end],s[start]]
+        end--
+        start++
+    }
+    return s
+}
+// console.log(reverseString(["h","e","l","l","o"]))
+
+
+//ransom note
+function canConstruct(ransomNote, magazine) {
+    let magazineCount = {}
+    for (let char of magazine) {
+        magazineCount[char] = (magazineCount[char] || 0) + 1
+    }
+    console.log(magazineCount)
+    for (let char of ransomNote) {
+        if (!magazineCount[char] || magazineCount[char] === 0) {
+            return false
+        }
+        magazineCount[char]--
+    }
+
+    return true
+}
+
+// console.log(canConstruct('aa', 'aab'))
