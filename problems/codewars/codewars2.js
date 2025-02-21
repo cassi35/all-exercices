@@ -922,7 +922,7 @@ function findOutlierElement(arr) {
   }, {})
   return arr.find(el => countMap[el] === 1)
 }
-console.log(findOutlierElement([1, 2, 2, 2, 2]))
+// console.log(findOutlierElement([1, 2, 2, 2, 2]))
 
 //Taxi Station
 function taxiStation(distances, speeds) {
@@ -956,13 +956,80 @@ function taxiStation(distances, speeds) {
   }
   return trips
 }
-console.log(taxiStation([40, 80, 40, 80], [20, 40]))
-//https://www.codewars.com/kata/5512ec4bbe2074421d00028c
-//https://www.codewars.com/kata/58738d518ec3b4bf95000192
+// console.log(taxiStation([40, 80, 40, 80], [20, 40]))
 
+//First non-repeating character
+function first_non_repeating_letter(str){
+  if(str == ""){
+    return null
+  }
+  str = str.split('')
+  function search(letter,string){
+    for(let i in string){
+      if(string[i].toLowerCase() == letter || string[i].toUpperCase() == letter){
+        return false 
+      }
+    }
+    return true 
+  }
+  let length = str.length
+  let index= 0
+  let used = []
+  while(index < length){
+    let letter = str.shift()
+    if(search(letter,str) && !used.includes(letter)){
+      return letter
+    }
+    used.push(letter)
+    index++
+  }
+  return `""`
+}
+let entrada_first_non_repeating_letter = ()=>{
+  let string = 'stress'
+  console.log(first_non_repeating_letter(string))
+}
+// entrada_first_non_repeating_letter()
+//Not very secure
+function isAlphanumeric(str) {
+  return /^[a-zA-Z0-9]+$/.test(str)
+}
+// console.log(isAlphanumeric("abc123"))
+//Subsequence Sums
+function isAlphanumeric(str) {
+  return /^[a-zA-Z0-9]+$/.test(str)
+}
+// console.log(isAlphanumeric("abc123"))
+function countSubarraysWithSum(arr, s) {
+  let prefixSum = 0
+  let count = 0
+  let sumMap = new Map()
+  sumMap.set(0, 1)
+  for (let num of arr) {
+    prefixSum += num
+    if (sumMap.has(prefixSum - s)){
+      count += sumMap.get(prefixSum - s)
+    }
+    sumMap.set(prefixSum, (sumMap.get(prefixSum) || 0) + 1)
+  }
+  return count
+}
+// console.log(countSubarraysWithSum([1, 1, 1], 2))
 
-
-
+function scramble(str1, str2) {
+  let letterCount = {};
+  for (let char of str1) {
+    letterCount[char] = (letterCount[char] || 0) + 1
+  }
+  for (let char of str2) {
+    if (!letterCount[char]) {
+      return false;
+    }
+    letterCount[char]--
+  }
+  return true
+}
+console.log(scramble('rkqodlw', 'world'))
 
 
 
