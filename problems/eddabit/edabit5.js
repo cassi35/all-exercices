@@ -1105,4 +1105,31 @@ function entrada_syllabification(){
     let str = 'Kar'
     console.log(syllabification(str))
 }
-entrada_syllabification()
+// entrada_syllabification()
+
+//Fit the Pattern
+function checkPattern(arr, string) {
+    let sub_arr_to_char = new Map()
+    let char_to_sub_arr = new Map()
+    for (let i = 0; i < arr.length; i++) {
+        let sub_arr = arr[i];
+        let char = string[i];
+        if (sub_arr_to_char.has(sub_arr)) {
+            if (sub_arr_to_char.get(sub_arr) !== char) {
+                return false
+            }
+        } else {
+            sub_arr_to_char.set(sub_arr, char)
+        }
+        if (char_to_sub_arr.has(char)) {
+            if (char_to_sub_arr.get(char) !== sub_arr) {
+                return false
+            }
+        } else {
+            char_to_sub_arr.set(char, sub_arr)
+        }
+    }
+
+    return true
+}
+console.log(checkPattern([[1, 1], [2, 2], [1, 1], [2, 2]], "ABAB"))
