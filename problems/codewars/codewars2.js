@@ -957,7 +957,6 @@ function taxiStation(distances, speeds) {
   return trips
 }
 console.log(taxiStation([40, 80, 40, 80], [20, 40]))
-//https://www.codewars.com/kata/5578a806350dae5b05000021
 //https://www.codewars.com/kata/5512ec4bbe2074421d00028c
 //https://www.codewars.com/kata/58738d518ec3b4bf95000192
 
