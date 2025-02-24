@@ -604,12 +604,76 @@ function entrada_triple_sum(){
 }
 // entrada_triple_sum()
 
+//Middle of a Linked List
+//Longest Common Prefix of Strings
+function longestCommonPrefix(arr){
+    let prefex = ""
+    let index = 0
+    while(true){
+        let caracter = []
+        for(let word of arr){
+            caracter.push(word[index])
+        }
+        let car = caracter[0][0]
+        for(let i in caracter){
+            if(car != caracter[i]){
+                return prefex
+            }
+        }
+      prefex = prefex.concat(car)
+      index++
+    }
+}
+// console.log(longestCommonPrefix(["geeksforgeeks", "geeks", "geek", "geezer"]))
+//Number of occurrence
+function countFreq(arr,target){
+    let begin = arr.findIndex((e)=>e==target)
+    let sequence = 0
+    let index = begin
+    while(index <= arr.length){
+        if(arr[index] == target){
+            sequence++
+        }
+        index++
+    }
+    return sequence
+}   
+// console.log(countFreq([1, 1, 2, 2, 2, 2, 3],2))
 
+//Union of 2 Sorted with Duplicates
+function findUnion(a,b){
+    let conj = new Set()
+    let arr = a.concat(b)
+    arr.forEach((element)=>{
+        conj.add(element)
+    })
+    let new_conj =  Array.from(conj)
+    let swaped
+    do{
+        swaped = false
+        for(var i = 0;i < new_conj.length -1;i++){
+            if(new_conj[i] > new_conj[i + 1]){
+                let temp = new_conj[i]
+                new_conj[i] = new_conj[i+1]
+                new_conj[i+1] = temp
+                swaped = true
+            }
+        } 
+    }while(swaped)
+    return new_conj
+}
+// console.log(findUnion([1, 2, 3, 4, 5],[1, 2, 3, 6, 7]))
 
-
-
-
-
+//K Sized Subarray Maximum
+function maxOfSubarrays(arr,k){
+    let subarr_max = []
+    do{
+        subarr_max.push(Math.max(...arr.slice(0,k)))
+        arr.shift()
+    }while(arr.length >= k)
+    return subarr_max
+}
+// console.log(maxOfSubarrays([1, 2, 3, 1, 4, 5, 2, 3, 6],3))
 
 
 
