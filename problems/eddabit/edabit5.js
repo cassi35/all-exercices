@@ -1132,4 +1132,97 @@ function checkPattern(arr, string) {
 
     return true
 }
-console.log(checkPattern([[1, 1], [2, 2], [1, 1], [2, 2]], "ABAB"))
+// console.log(checkPattern([[1, 1], [2, 2], [1, 1], [2, 2]], "ABAB"))
+// /smallFavor
+function smallFavor(sentence) {
+    const datePattern1 = /\b(\d{2})([./])(\d{2})\2(\d{2})\b/g;
+    const datePattern2 = /\b(January|February|March|April|May|June|July|August|September|October|November|December), (\d{2})\. (\d{2})\.\b/g;
+    sentence = sentence.replace(datePattern1, (_, day, sep, month, year) => {
+        let fullYear = parseInt(year) < 25 ? `20${year}` : `19${year}`;
+        return `${day}${sep}${month}${sep}${fullYear}`;
+    })
+    sentence = sentence.replace(datePattern2, (_, monthName, day, year) => {
+        let fullYear = parseInt(year) < 25 ? `20${year}` : `19${year}`;
+        return `${monthName}, ${day}. ${fullYear}.`;
+    });
+
+    return sentence
+}
+// console.log(smallFavor("I was born on 11/02/98"));
+//Capitalization Families
+function grouping(words){
+    let set_words = new Map()
+    for(let word of words){
+        let char = word.split('').filter((l)=>l.toUpperCase() == l).length
+        set_words.get(char)?set_words.set(char,[...set_words.get(char),word]):set_words.set(char,[word])       
+    }
+    set_words = new Map([...set_words.entries()].sort())
+    return set_words
+}
+// console.log(grouping(["HaPPy", "mOOdy", "yummy", "mayBE"]))
+
+
+//An OSHA Approved Ladder?
+function isLadderSafe(ldr){
+    let contagem = 0
+   for(let i = 0;i < ldr.length;i++){
+
+    let quantidade = ldr[i].split('').filter((c)=>c=="#").length
+    let espaco = ldr[i].length
+    if(quantidade > 2 && quantidade < 5 || espaco < 5){
+        return false
+    }
+    if(contagem == 2){
+        if(i != ldr.length-1){
+            if(quantidade == 5 || ldr[i+1] != ldr[i]){
+                return false
+            }
+        }
+        contagem = 0
+    }else{
+        contagem++
+    }
+   }    
+   return true
+}
+
+/* console.log(isLadderSafe([
+    "#   #",
+    "#####",
+    "#   #",
+    "#   #",
+    "#####",
+    "#   #",
+    "#   #",
+    "#####",
+    "#   #"
+  ])) */
+//Conversion of Units of Temperature
+function temperature(scale, value) {
+    const round = (num) => num.toFixed(2)
+    let celsius
+    switch (scale) {
+        case "cel": celsius = value; break
+        case "fah": celsius = (value - 32) * 5 / 9; break
+        case "kel": celsius = value - 273.15; break
+        case "ran": celsius = (value - 491.67) * 5 / 9; break
+        case "del": celsius = 100 - (value * 2 / 3); break
+        case "new": celsius = value * 100 / 33; break
+        case "rea": celsius = value * 5 / 4; break
+        case "rom": celsius = (value - 7.5) * 40 / 21; break
+        default: throw new Error("Invalid scale")
+    }
+    const results = [
+        `${round(celsius)} degC`,              
+        `${round(celsius * 9 / 5 + 32)} degF`,    
+        `${round(celsius + 273.15)} K`,             
+        `${round((celsius + 273.15) * 9 / 5)} degR`,
+        `${round((100 - celsius) * 3 / 2)} degDe`,   
+        `${round(celsius * 33 / 100)} degN`,        
+        `${round(celsius * 4 / 5)} degRe`,           
+        `${round(celsius * 21 / 40 + 7.5)} degRo`    
+    ];
+
+    return results;
+}
+console.log(temperature("kel", 0))
