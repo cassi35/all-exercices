@@ -675,19 +675,237 @@ function maxOfSubarrays(arr,k){
 }
 // console.log(maxOfSubarrays([1, 2, 3, 1, 4, 5, 2, 3, 6],3))
 
+//Find triplets with zero sum
+function findTriplets(arr){
+    for(let i = 0;i < arr.length;i++){
+        for(let j = 0;j < arr.length;j++){
+            for(let a = 0;a < arr.length;a++){
+                if(arr[i]+arr[j]+arr[a] == 0 && i != j && i != a && j != a){
+                    return true
+                }
+            }
+        }
+    }   
+    return false
+}
+// console.log(findTriplets([1, 2, 3]))
 
+function isSubsetSum(arr, target, index = 0, memo = {}) {
+    let key = `${index}-${target}`
+    if (target === 0) return true
+    if (index >= arr.length || target < 0) return false
+    if (key in memo) return memo[key]
+    let include = isSubsetSum(arr, target - arr[index], index + 1, memo)
+    let exclude = isSubsetSum(arr, target, index + 1, memo)
 
+    memo[key] = include || exclude
+    return memo[key];
+}
+// console.log(isSubsetSum([3, 34, 4, 12, 5, 2], 9))
 
+//Find all pairs with a given sum
 
+function allPairs(target, arr1, arr2) {
+    let pairs = []
+    for(let num of arr1){
+        for(let num2 of arr2){
+            if(num2+num == target){
+                pairs.push([num,num2])
+            }
+        }
+    }
+    return pairs
+}
+// console.log(allPairs(9,[1, 2, 4, 5, 7],[5, 6, 3, 4, 8]))
+//Delete Mid of a Stack
 
+//Third largest element
+function  thirdLargest(arr) {
+    if(arr.length < 3){
+        return -1
+    }
+   function insertion_sort(arr){
+    for(let i = 1;i < arr.length;i++){
+        let num_insert = arr[i]
+        let j = i -1 
+        while(j >= 0 && arr[j] > num_insert){
+            arr[j+1] = arr[j]
+            j = j -1
+        }
+        arr[j+1] = num_insert
+    }
+   }
+   insertion_sort(arr)
+   return arr[arr.length -3]
+}
+// console.log(thirdLargest([5, 5, 5]))
+//Remove Duplicates
+function removeDups(s){
+    let set = new Set()
+    s = s.split('')
+    for(let i in s){
+        set.add(s[i])
+    }
+    return set
+}
+// console.log(removeDups("zvvo"))
 
+//Insert in a Sorted List
+function sortedInsert(){
+    class Node {
+        constructor(data) {
+            this.data = data;
+            this.next = null;
+        }
+    }
+    
+    class SinglyLinkedList {
+        constructor() {
+            this.head = null;
+        }
+    
+        // Adicionar um nó no final
+        append(data) {
+            const newNode = new Node(data);
+            if (!this.head) {
+                this.head = newNode;
+            } else {
+                let current = this.head;
+                while (current.next) {
+                    current = current.next;
+                }
+                current.next = newNode;
+            }
+        }
+    
+        // Adicionar um nó no início
+        prepend(data) {
+            const newNode = new Node(data);
+            newNode.next = this.head;
+            this.head = newNode;
+        }
+    
+        // Remover um nó do início
+        removeFromFront() {
+            if (!this.head) return;
+            this.head = this.head.next;
+        }
+    
+        // Remover um nó do final
+        removeFromEnd() {
+            if (!this.head) return;
+            if (!this.head.next) {
+                this.head = null;
+                return;
+            }
+            let current = this.head;
+            while (current.next.next) {
+                current = current.next;
+            }
+            current.next = null;
+        }
+    
+        // Remover um nó com base em um valor
+        remove(data) {
+            if (!this.head) return;
+    
+            if (this.head.data === data) {
+                this.head = this.head.next;
+                return;
+            }
+    
+            let current = this.head;
+            while (current.next) {
+                if (current.next.data === data) {
+                    current.next = current.next.next;
+                    return;
+                }
+                current = current.next;
+            }
+        }
+    
+        // Obter o tamanho da lista
+        getSize() {
+            let count = 0;
+            let current = this.head;
+            while (current) {
+                count++;
+                current = current.next;
+            }
+            return count;
+        }
+    
+        // Verificar se a lista está vazia
+        isEmpty() {
+            return this.head === null;
+        }
+    
+        // Exibir a lista
+        display() {
+            let current = this.head;
+            while (current) {
+                console.log(current.data);
+                current = current.next;
+            }
+        }
+        insert_sorted(node,key){
+           let new_node =  new Node(key)
+           if(this.isEmpty() || this.head.data >= key){
+            new_node.next = this.head
+            this.head = new_node
+            return this.display()
+           }
+           let prev = null 
+           let current = this.head
+           while(current && current.data < key){
+            prev = current
+            current = current.next 
+           }
+           prev.next = new_node
+           new_node.next = current
+           return this.display()
+        }   
+    }
+    let list = new SinglyLinkedList()
+    list.prepend(100)
+    list.prepend(50)
+    list.insert_sorted(list.head,75)
+   
+}
+// sortedInsert()
+//Element with left side smaller and right side greater
+function  findElement(arr) {
+   for(let i = 1 ;i < arr.length-1;i++){
+    let left = arr.slice(0,i).some((num)=>num > arr[i])
+    let right = arr.slice(i).some((num)=>num < arr[i])
+    if(!left && !right){
+        return arr[i]
+    }
+   }
+   return -1
+}
+// console.log(findElement( [11,9,12]))
+function firstNonRepeating(arr) {
+    let count = {};
+    for (let num of arr) {
+        count[num] = (count[num] || 0) + 1
+    }
+    for (let num of arr) {
+        if (count[num] === 1) {
+            return num;
+        }
+    }
+    return 0
+}
 
-
-
-
-
-
-
-
-
-
+console.log(firstNonRepeating([-1, 2, -1, 3, 2]))
+//Transpose of Matrix
+function  transpose(mat, n) {
+   for(let i = 0;i < mat.length;i++){
+    for(let j = i+1;j < mat[0].length;j++){
+        [mat[i][j],mat[j][i]] = [mat[j][i],mat[i][j]]
+    }
+   }
+   return mat
+}
+console.log(transpose([[1, 2],[9, -2]],4))
