@@ -186,3 +186,28 @@ class LinkedList{
     }
 
 }
+/* 
+SOBRE O OBJETO QUANDO ARMAZENA EM UMA OUTRA VARIAVEL 
+ELAS DUAS OU TRES E ETC.. FICAM IGUAIS ENTAI SIGNIFICA
+QUE SE EU MUDAR O VALOR DE ALGUMA VAI MUDAR OS DAS OUTRAS TAMBEM 
+
+VAR OBJ1 = {NOME:'CASSIANO'}
+VAR OBJ2 = OBJ1
+OBJ2.NOME = 'MARIA'
+RETORNA 
+(MARIA E MARIA )OBJ1 E OBJ2
+*/
+const list = new LinkedList()
+list.append(1)
+list.append(2)
+list.append(3)
+list.append(4)
+list.insert(10,4)
+list.removeFrom(9)
+console.log(list.size)
+console.log(list.isempty())
+list.print()
+list.reverse()
+//console.log(list.removeValue(3))
+list.print()
+console.log(list.search(1))
