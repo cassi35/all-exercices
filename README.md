@@ -27,3 +27,8 @@ To run any of the solutions, you can use Node.js. For example, to run a solution
 
 ```sh
 node leetcode/leetcode1.js
+
+## Contribute 🚀
+Feel free to open issues with any questions, improvements, or suggestions!  
+If you'd like to contribute, feel free to submit a pull request and let's learn together.  
+Let me know on LinkedIn if this repository helped you! 😊
