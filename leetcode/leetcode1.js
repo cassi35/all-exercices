@@ -477,3 +477,56 @@ function canConstruct(ransomNote, magazine) {
 }
 
 // console.log(canConstruct('aa', 'aab'))
+
+//multiply string
+function multiplyStrings(num1, num2) {
+    let len1 = num1.length, len2 = num2.length
+    let res = new Array(len1 + len2).fill(0)
+    for (let i = len1 - 1; i >= 0; i--) {
+        for (let j = len2 - 1; j >= 0; j--) {
+            let mul = (num1[i] - '0') * (num2[j] - '0')
+            let sum = mul + res[i + j + 1]
+            res[i + j + 1] = sum % 10
+            res[i + j] += Math.floor(sum / 10)
+        }
+    }
+    while (res.length > 1 && res[0] === 0) {
+        res.shift()
+    }
+    return res.join('')
+}
+// console.log(multiplyStrings("123", "456"))
+//find common characters
+function commonChars(words) {
+    let common = []
+    let word = words[0].split('')
+    for (let letter of word) {
+        if (words.every(wrd => wrd.includes(letter))) { 
+            common.push(letter)
+            words = words.map(wrd => wrd.replace(letter, ''))
+        }
+    }
+    return common
+}
+
+// Teste
+// console.log(commonChars(["bella", "label", "roller"]))
+//Maximize Sum Of Array After K Negations
+function largestSumAfterKNegations(nums, k) {
+    let index = 0
+    let max_soma = 0
+    for(let i = 0;i < k;i++){
+        let temp = nums[index]
+        nums[index] = temp * -1
+        let sum = nums.reduce((a,b)=>a+b)
+        max_soma = Math.max(sum,max_soma)
+        nums[index] = temp
+        if(index == nums.length){
+            index = 0
+        }else{
+            index++
+        }
+    }
+    return max_soma
+}
+// console.log(largestSumAfterKNegations([4,2,3],3))
