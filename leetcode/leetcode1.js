@@ -607,7 +607,6 @@ var getSum = function(a, b) {
         arr.push(i)
     }
     let begin = 1
-
     while(arr.length > 1){
         let arr_new = []
         if(begin ==1){
@@ -615,11 +614,13 @@ var getSum = function(a, b) {
                 arr_new.push(arr[i])
             }
         }else{
-            for(let i = arr.length-2;i){
-
+            for(let i = arr.length-2;i>=0;i-=2){
+                arr_new.push(arr[i])
             }
         }
+        arr = arr_new
+        begin = 1 - begin
     }
     return arr[0]
   }
-  console.log(lastRemaining(9))
+//   console.log(lastRemaining(9))
