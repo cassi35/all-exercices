@@ -600,27 +600,3 @@ var getSum = function(a, b) {
     return parcial
   }
 //   console.log(getSum(5, 3))
-  // Elimination Game
-  var lastRemaining = function(n) {
-    let arr = []
-    for(let i = 1;i <= n;i++){
-        arr.push(i)
-    }
-    let begin = 1
-    while(arr.length > 1){
-        let arr_new = []
-        if(begin ==1){
-            for(let i = 1;i < arr.length;i+=2){
-                arr_new.push(arr[i])
-            }
-        }else{
-            for(let i = arr.length-2;i>=0;i-=2){
-                arr_new.push(arr[i])
-            }
-        }
-        arr = arr_new
-        begin = 1 - begin
-    }
-    return arr[0]
-  }
-//   console.log(lastRemaining(9))
