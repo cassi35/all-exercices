@@ -530,3 +530,96 @@ function largestSumAfterKNegations(nums, k) {
     return max_soma
 }
 // console.log(largestSumAfterKNegations([4,2,3],3))
+var findDuplicate = function(nums) {
+    for(let i = 0;i < nums.length;i++){
+        if(nums.slice(i+1).includes(nums[i])){
+            return nums[i]
+        }
+    }
+};
+// console.log(findDuplicate([1,3,4,2,2]))
+var getHint = function(secret, guess) {
+    secret = secret.split('')
+    guess = guess.split('')
+    let a = 0
+    let b = 0
+    for(let i in secret){
+        if(secret[i] == guess[i]){
+            a++
+        }else{
+            if(guess.includes(secret[i])){
+                b++
+            }
+
+        }
+       
+    }
+    return `${a}A${b}B`
+}
+// console.log(getHint("1123","0111"))
+//Bulb Switcher
+
+var bulbSwitch = function(n) {
+   return Math.floor(Math.sqrt(n))
+
+};
+// console.log(bulbSwitch(3))
+//super ugly number
+function nthSuperUglyNumber(n, primes) {
+    let heap = [1]
+    let seen = new Set([1])
+    let uglyNumber = 1;
+    for (let i = 0; i < n; i++) {
+        uglyNumber = heap.shift()
+
+        for (let prime of primes) {
+            let newNum = uglyNumber * prime
+
+            if (!seen.has(newNum)) {
+                heap.push(newNum)
+                seen.add(newNum)
+            }
+        }
+        heap.sort((a, b) => a - b)
+    }
+    return uglyNumber;
+}
+
+// console.log(nthSuperUglyNumber(12, [2, 7, 13, 19]))
+
+//Sum of Two Integers
+
+var getSum = function(a, b) {
+    let parcial = a ^ b; 
+    let carry = (a & b) << 1
+    while (carry != 0) {
+      let temp = parcial
+      parcial = parcial ^ carry
+      carry = (temp & carry) << 1
+    }
+    return parcial
+  }
+//   console.log(getSum(5, 3))
+  // Elimination Game
+  var lastRemaining = function(n) {
+    let arr = []
+    for(let i = 1;i <= n;i++){
+        arr.push(i)
+    }
+    let begin = 1
+
+    while(arr.length > 1){
+        let arr_new = []
+        if(begin ==1){
+            for(let i = 1;i < arr.length;i+=2){
+                arr_new.push(arr[i])
+            }
+        }else{
+            for(let i = arr.length-2;i){
+
+            }
+        }
+    }
+    return arr[0]
+  }
+  console.log(lastRemaining(9))
