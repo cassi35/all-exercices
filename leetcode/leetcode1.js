@@ -600,3 +600,173 @@ var getSum = function(a, b) {
     return parcial
   }
 //   console.log(getSum(5, 3))
+
+//degree of an array
+var findShortestSubArray = function(nums) {
+    if(nums.some((n)=>n < 0)){
+        return -1
+    }
+    let frequence = new Map();
+    let firstIndex = new Map()
+    let maxDegree = 0
+    let lastIndex = new Map()
+    for (let i = 0;i < nums.length;i++) {
+        let num = nums[i]
+        frequence.set(num, (frequence.get(num) || 0) + 1);
+        maxDegree = Math.max(maxDegree,frequence.get(num))
+        if(!firstIndex.has(num)){
+            firstIndex.set(num,i)
+        }
+        lastIndex.set(num,i)
+    }
+    let minLength = Infinity
+    for(let [num,count] of frequence){
+        if(count == maxDegree){
+            let length = lastIndex.get(num) - firstIndex.get(num)+1
+            minLength = Math.min(minLength,length)
+        }
+    }
+    return minLength
+};
+// console.log(findShortestSubArray([1,2,2,3,1]))
+
+var checkRecord = function(s) {
+    let ausente = 0
+    let atraso = 0
+    for(let i = 0;i < s.length;i++){
+        switch(s[i]){
+            case 'A':
+                ausente++
+                break
+            case 'L':
+                atraso++
+                break
+        }
+    }
+    if(ausente < 2 && atraso < 3){
+        return true 
+    }else{
+        return false
+    }
+
+};
+// console.log(checkRecord("PPALLL"))
+
+// Robot Return to Origin
+var judgeCircle = function(moves) {
+    let cordinates = [0,0]
+    for(let move of moves){
+        switch(move){
+             case 'L':
+                cordinates[0]--
+                break
+            case 'R':
+                cordinates[0]++
+                break
+            case 'U':
+                cordinates[1]--
+                break
+            case 'D':
+                cordinates[1]++
+        }
+    }
+    return cordinates[0] == 0 && cordinates[1] == 0
+};
+// console.log(judgeCircle("UL"))
+
+//Find Smallest Letter Greater Than Target
+var nextGreatestLetter = function(letters, target) {
+  
+    let left = 0 
+    let right = letters.length 
+    while(left < right){
+        let mid = Math.floor((left+right)/2)
+        if(letters[mid] > target){
+            right = mid 
+        }else{
+            left = mid +1 
+        }
+    }
+    return letters[left % letters.length]
+};
+console.log(nextGreatestLetter( ["x","x","y","y"],'z'))
+
+
+// Toeplitz Matrix
+var isToeplitzMatrix = function(matrix) {
+   for(let i = 0;i < matrix.length-1;i++){
+    for(let j = 0;j < matrix[0].length -1;j++){
+        if(matrix[i][j] != matrix[i+1][j+1]){
+            return false
+        }
+    }
+   }
+   return true
+
+};
+// console.log(isToeplitzMatrix([[1,2,3,4],[5,1,2,3],[9,5,1,2]]))
+var lemonadeChange = function(bills) {
+    let fiveCount = 0
+    let tenCOunt = 0
+    for(let bill of bills){
+           switch(bill){
+            case 5:
+                fiveCount++
+                break
+            case 10:
+                if(fiveCount > 0){
+                    fiveCount++
+                    tenCOunt--
+                }else{
+                    return false 
+                }
+                break
+            default:
+                if(tenCOunt > 0 && fiveCount > 0){
+                    tenCOunt--
+                    fiveCount--
+                }else if(fiveCount >= 3){
+                    fiveCount-=3
+                }else{
+                    return false 
+                }
+           }
+    }
+    return true 
+};
+// console.log(lemonadeChange([5,5,5,10,20]))
+var isMonotonic = function(nums) {
+    let isIncreasing = true
+    let isDecreasing = true
+    for (let i = 1; i < nums.length; i++) {
+        if (nums[i] > nums[i - 1]) {
+            isDecreasing = false
+        }
+        if (nums[i] < nums[i - 1]) {
+            isIncreasing = false
+        }
+    }
+    return isIncreasing || isDecreasing
+}
+// console.log(isMonotonic([1,2,2,3]))
+var reverseOnlyLetters = function(s) {
+    let left = Math.floor(s.length/2)
+    let right = s.length -1
+    const alphabet = [...'abcdefghijklmnopqrstuvwxyz']
+    while(left < right){
+        if(alphabet.includes(s[left].toLowerCase()) && alphabet.includes(s[right].toLowerCase())){
+            let temp = s[left]
+            s[left] = s[right]
+            s[right] = temp
+            left++
+            right--
+        }
+        if(alphabet.includes(s[left]) && !alphabet.includes(s[right])){
+            right--
+        }else if(!alphabet.includes(s[left].toLowerCase()) && alphabet.includes(s[right].toLowerCase())){
+            left++
+        }
+    }   
+    return s
+}
+// console.log(reverseOnlyLetters("Test1ng-Leet=code-Q!"))
