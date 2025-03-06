@@ -770,3 +770,111 @@ var reverseOnlyLetters = function(s) {
     return s
 }
 // console.log(reverseOnlyLetters("Test1ng-Leet=code-Q!"))
+// Container With Most Water
+console.clear()
+var maxArea = function(height) {
+  let area = 0
+ let left = 0
+ let right = height.length -1 
+ while(left < right){
+    let value = (right - left)* Math.min(height[left],height[right])
+    if(value > area){
+        area = value
+    }
+    if(height[left] < height[right]){
+        left++
+    }else{
+        right--
+    }
+ }
+
+ return area
+};
+// console.log(maxArea([1,8,6,2,5,4,8,3,7]))
+var letterCombinations = function(digits) {
+    if(!digits){
+        return []
+    }
+    const numbers = new Map([
+        ['2', 'abc'], ['3', 'def'], ['4', 'ghi'], ['5', 'jkl'],
+        ['6', 'mno'], ['7', 'pqrs'], ['8', 'tuv'], ['9', 'wxyz']
+    ]);
+
+    let combinations = [];
+   function backtrack(index,current){
+    if(index == digits.length){
+        combinations.push(current)
+        return
+    }
+    let letters = numbers.get(digits[index])
+    for(let letter of letters){
+        backtrack(index+1,current+letter)
+    }
+   }
+   backtrack(0,"")
+   return combinations
+};
+// console.log(letterCombinations("23"))
+
+//Generate Parentheses
+var generateParenthesis = function(n) {
+    let result = [];
+    function backtrack(current, open, close) {
+        if (current.length === n * 2) {
+            result.push(current);
+            return;
+        }
+        if (open < n) {
+            backtrack(current + "(", open + 1, close)
+        }
+        if (close < open) {
+            backtrack(current + ")", open, close + 1)
+        }
+    }
+    backtrack("", 0, 0)
+    return result
+};
+// console.log(generateParenthesis(3))
+
+var combinationSum = function(candidates, target) {
+    let result = []
+    function backtrack(start,combination , total){
+        if(total == target){
+            result.push([...combination])
+        }
+        if(total > target){
+            return 
+        }
+        for(let  i = start;i < candidates.length;i++){
+            combination.push(candidates[i])
+            backtrack(i,combination,total+candidates[i])
+            combination.pop()
+        }
+    }
+    backtrack(0,[],0)
+    return result
+};
+// console.log(combinationSum([2,3,6,7],7))
+//Edit Distance
+var minDistance = function(word1, word2) {
+    let m = word1.length
+    let n = word2.length
+    let dp = Array(m+1).fill(null).map(()=>Array(n+1).fill(0))
+   for(let i = 0;i <= m;i++){
+    dp[i][0] = i
+   }
+   for(let j = 0;j<= m;j++){
+    dp[0][j] = j
+   }
+   for(let i = 1;i <=m;i++){
+    for(let j = 1;j <= n;j++){
+        if(word1[i-1] == word2[j-1]){
+            dp[i][j] = dp[i-1][j-1]
+        }else{
+            dp[i][j] = Math.min(dp[i-1][j]+1,dp[i][j-1]+1,dp[i-1][j-1],+1)
+        }
+    }
+   }
+   return dp[m][n]
+};
+
