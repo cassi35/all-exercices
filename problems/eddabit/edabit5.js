@@ -1225,4 +1225,43 @@ function temperature(scale, value) {
 
     return results;
 }
-console.log(temperature("kel", 0))
+// console.log(temperature("kel", 0))
+
+
+// persistense 
+
+function additivePersistence(numbers) {
+    let sum = numbers
+    let persistence = 0
+    while (sum >= 10) {
+        sum = String(sum)
+               .split('')   
+               .map(Number) 
+               .reduce((a, b) => a + b)
+        persistence++;
+    }
+    return persistence;
+}
+// console.log(additivePersistence(123456))
+//Playing with Nested Objects
+function getObject(objects) {
+    let marks = new Set(); // Usado para armazenar valores únicos de "marks"
+    let result = {}; // Um novo objeto para armazenar resultados únicos
+    let index = 0;
+    while (objects[index] !== undefined) {
+        if (marks.has(objects[index].marks)) {
+        } else {
+            // Caso contrário, adicionamos ao Set e ao objeto de resultado
+            marks.add(objects[index].marks);
+            result[index] = objects[index];
+        }
+        index++;
+    }
+    return result;
+}
+// console.log(getObject({
+//     "0": { age: 18, name: "john", marks: "400" },
+//     "1": { age: 17, name: "julie", marks: "400" },
+//     "2": { age: 16, name: "Robin", marks: "200" },
+//     "3": { age: 16, name: "Bella", marks: "300" }
+// }));
