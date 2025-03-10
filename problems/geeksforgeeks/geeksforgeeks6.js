@@ -898,7 +898,7 @@ function firstNonRepeating(arr) {
     return 0
 }
 
-console.log(firstNonRepeating([-1, 2, -1, 3, 2]))
+// console.log(firstNonRepeating([-1, 2, -1, 3, 2]))
 //Transpose of Matrix
 function  transpose(mat, n) {
    for(let i = 0;i < mat.length;i++){
@@ -908,4 +908,85 @@ function  transpose(mat, n) {
    }
    return mat
 }
-console.log(transpose([[1, 2],[9, -2]],4))
+// console.log(transpose([[1, 2],[9, -2]],4))
+
+//Rearrange Array Alternately
+function rearrange(arr) {
+   let max_index = arr.length-1,min_index = 0
+   let max_elements = arr[max_index]+1
+   for(let i = 0;i < arr.length;i++){
+    if(i % 2 == 0){
+        arr[i] +=(arr[max_index]%max_elements)*max_elements
+        max_index--
+    }else{
+        arr[i]+=(arr[min_index]%max_elements)*max_elements
+        min_index++
+    }
+   }
+   for(let i = 0;i < arr.length;i++){
+    arr[i] = Math.floor(arr[i]/max_elements)
+   }
+   return arr
+}
+// console.log(rearrange([1, 2, 3, 4, 5, 6]))
+
+
+//Search in Rotated Sorted Array
+function search(arr,key){
+    let left = 0, right = arr.length - 1;
+    while (left <= right) {
+        let mid = Math.floor((left + right) / 2);
+        if (arr[mid] === key) return mid;
+        if (arr[left] <= arr[mid]) { 
+            if (key >= arr[left] && key < arr[mid]) {
+                right = mid - 1; 
+            } else {
+                left = mid + 1; 
+            }
+        }
+        else { 
+            if (key > arr[mid] && key <= arr[right]) {
+                left = mid + 1; 
+            } else {
+                right = mid - 1; 
+            }
+        }
+    }
+    return -1;
+}
+// console.log(search([5, 6, 7, 8, 9, 10, 1, 2, 3],3))
+function equalPartition(arr) {
+    let total = arr.reduce((a,b)=>a+b) 
+    if(total % 2 != 0){
+        return false
+    }else{
+       let target = total /2 
+       let dp = new Array(target+1).fill(false)
+       dp[0] = true 
+       for(let num of arr){
+        for(let j = target;j>= num;j--){
+            dp[j] = dp[j] || dp[j-num]
+        }
+       }
+       return dp[target]
+    }
+}
+// console.log(equalPartition([1, 5, 11, 5]))
+
+// k largest elements
+function  kLargest(arr, k) {
+    if(arr.some((e)=>e < 0)){
+        return -1
+    }
+    for(let i = 1;i < arr.length;i++){
+        let num = arr[i]
+        let j = i-1
+        while(j >= 0 && arr[j] < num){
+            arr[j+1] = arr[j]
+            j = j-1
+        }
+        arr[j+1] = num
+    }
+    return arr.slice(0,k)
+}
+// console.log(kLargest( [12, 5, 787, 1, 23],2))
