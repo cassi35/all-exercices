@@ -1029,11 +1029,125 @@ function scramble(str1, str2) {
   }
   return true
 }
-console.log(scramble('rkqodlw', 'world'))
+// console.log(scramble('rkqodlw', 'world'))
 
+function count_new_friends(n) {
+  let count_friends = 0
+  if (n == 1) return 0
+  function mdc(a, b) {
+      while (b != 0) {
+          let temp = b
+          b = a % b
+          a = temp
+      }
+      return a
+  }
+  for (let i = 2; i < n; i++) { 
+      if (mdc(n, i) == 1) { 
+          count_friends++;
+      }
+  }
+  return count_friends
+}
+// console.log(count_new_friends(8))
 
+function remove_number_game(n, d) {
+  let turn = 0
+  let currentNumber = n
+  while (d > 0) {
+    let found = false
+    for (let i = 0; i < currentNumber.length; i++) {
+      let newNumber = currentNumber.slice(0, i) + currentNumber.slice(i + 1);
+      if (newNumber.length > 0 && Number(newNumber) % d === 0) {
+        currentNumber = newNumber
+        d--
+        turn++
+        found = true
+        break
+      }
+    }
+    if (!found) {
+      break;
+    }
+  }
 
+  return turn
+}
+// console.log(remove_number_game("102045", 4))
+//Weird prime generator
+function weird_prime() {
+  function an(n) {
+    let a = [7]
+    for (let i = 2; i <= n; i++) {
+      const gcdValue = gcd(i, a[i - 2])
+      a.push(a[i - 2] + gcdValue)
+    }
+    return a
+  }
+  function gn(n) {
+    const aSeq = an(n)
+    let g = [1]
+    for (let i = 1; i < aSeq.length; i++) {
+      g.push(aSeq[i] - aSeq[i - 1])
+    }
+    return g
+  }
+  function count_ones(n) {
+    const gSeq = gn(n)
+    let count = 0
+    for (let i = 0; i < gSeq.length; i++) {
+      if (gSeq[i] === 1) {
+        count++
+      }
+    }
+    return count
+  }
+  function p(n) {
+    const gSeq = gn(n)
+    let primes = []
+    for (let i = 0; i < gSeq.length; i++) {
+      if (isPrime(gSeq[i])) {
+        primes.push(gSeq[i])
+      }
+      if (primes.length >= n) break
+    }
+    return primes
+  }
+  function max_pn(n) {
+    const primes = p(n)
+    return Math.max(...primes)
+  }
+  function andOver(n) {
+    const aSeq = an(n)
+    const gSeq = gn(n)
+    let result = [];
+    for (let i = 0; i < n; i++) {
+      if (gSeq[i] !== 1) {
+        result.push(aSeq[i] / (i + 1))
+      }
+    }
+    return result;
+  }
+  function an_over_average(n) {
+    const values = andOver(n)
+    const sum = values.reduce((acc, val) => acc + val, 0)
+    return Math.round(sum / values.length)
+  }
+  function gcd(a, b) {
+    while (b !== 0) {
+      let temp = b
+      b = a % b
+      a = temp
+    }
+    return a
+  }
+  function isPrime(num) {
+    if (num <= 1) return false
+    for (let i = 2; i <= Math.sqrt(num); i++) {
+      if (num % i === 0) return false
+    }
+    return true
+  }
 
-
-
-
+}
+// weird_prime()
