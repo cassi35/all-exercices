@@ -878,3 +878,79 @@ var minDistance = function(word1, word2) {
    return dp[m][n]
 };
 
+//Rotate Image
+var rotate = function(matrix) {
+  for(let i = 0;i < matrix.length;i++){
+    for(let j = i+1;j < matrix.length;j++){
+        [matrix[i][j] , matrix[j][i]] = [matrix[j][i],matrix[i][j]]
+    }
+  } 
+  for(let i in matrix){
+    matrix[i] = matrix[i].reverse()
+  }
+  return matrix
+};
+// console.log(rotate([[1,2,3],[4,5,6],[7,8,9]]))
+
+var maxSubArray = function(nums) {
+    let maxSum = nums[0]
+    let currentSum = 0
+    for (let num of nums) {
+        if (currentSum < 0) {
+            currentSum = 0
+        }
+        currentSum += num;
+        maxSum = Math.max(maxSum, currentSum)
+    }
+    return maxSum;
+}
+// console.log(maxSubArray([-2,1,-3,4,-1,2,1,-5,4]))
+//Spiral Matrix
+var spiralOrder = function(matrix) {
+  let lado = 'left'
+  let count = 0
+  let nums = []
+  let up = matrix.length-2
+  let teste = true 
+  while(true){
+    if(count > 2){
+        let arr = matrix.flat()
+        if(arr.length == nums.length){
+            return nums 
+        }else{
+           if(teste){
+                let add = matrix[up].slice(0,matrix[up].length-2)
+                nums.push(...add)
+               teste = false
+           }else{
+            let add = matrix[up].slice(0,matrix[up].length-2).reverse()
+            nums.push(...add)
+            teste = true 
+           }
+           up--
+        }
+    }else{
+        switch(lado){
+            case 'left':
+            for(let num of matrix[0]){
+                nums.push(num)
+            }
+            lado = 'right'
+            break
+            case 'right':
+                for(let i = 1;i < matrix.length;i++){
+                    nums.push(matrix[i][matrix.length-1])
+                }
+                lado = 'down'
+                break
+            case 'down':
+                for(let i = matrix[matrix.length-1].length-2;i >= 0;i--){
+                    nums.push(matrix[matrix.length-1][i])
+                }
+                break
+        }
+        count++
+    }
+  }  
+};
+// console.log(spiralOrder([[1,2,3],[4,5,6],[7,8,9]]))
