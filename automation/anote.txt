@@ -1,2 +1,5 @@
 npm install puppeteer
 npm install playwright
+-------
+email:
+npm install nodemailer node-cron
