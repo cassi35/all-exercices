@@ -1265,3 +1265,99 @@ function getObject(objects) {
 //     "2": { age: 16, name: "Robin", marks: "200" },
 //     "3": { age: 16, name: "Bella", marks: "300" }
 // }));
+function orderBy(collection, iteratees, orders) {
+    return collection.sort((a, b) => {
+      for (let i = 0; i < iteratees.length; i++) {
+        let key = iteratees[i];
+        let order = orders?.[i] || "asc"; 
+  
+        if (a[key] > b[key]) return order === "asc" ? 1 : -1;
+        if (a[key] < b[key]) return order === "asc" ? -1 : 1;
+      }
+      return 0;
+    });
+  }
+  
+  // Exemplo de uso:
+  let users = [
+    { user: "fred", age: 48 },
+    { user: "barney", age: 34 },
+    { user: "fred", age: 40 },
+    { user: "barney", age: 36 }
+  ];
+  
+//   console.log(orderBy(users, ["user", "age"], ["asc", "desc"]));
+function funnyNumbers(n, p) {
+    let digits = String(n).split('').map(Number)
+    let sum = digits.reduce((acc, digit, index) => acc + Math.pow(digit, p + index), 0)
+    
+    let k = sum / n;
+    return Number.isInteger(k) ? k : null
+  }
+  console.log(funnyNumbers(89, 1))
+  function charCount(text) {
+    let conjunto = new Map()
+    text = text
+        .split('')
+        .filter(c => !['$', '@', '*', '!', '&', ' '].includes(c))
+        .map(c => c.toLowerCase())
+    for (let char of text) {
+        conjunto.set(char, (conjunto.get(char) || 0) + 1)
+    }
+    let arr = Array.from(conjunto, ([key, value]) => ({ key, value }))
+    arr.sort((a, b) => a.value - b.value || a.key.localeCompare(b.key))
+    return arr.map(obj => `${obj.key}:${obj.value}`).join(' ').trim()
+}
+// console.log(charCount("Hello world!"))
+function sameLetterPattern(str1, str2) {
+    if (str1.length !== str2.length) {
+        return false
+    }
+    let map1 = new Map()
+    let map2 = new Map()
+    for (let i = 0; i < str1.length; i++) {
+        if (!map1.has(str1[i])) {
+            map1.set(str1[i], i);
+        }
+        if (!map2.has(str2[i])) {
+            map2.set(str2[i], i);
+        }
+        if (map1.get(str1[i]) !== map2.get(str2[i])) {
+            return false
+        }
+    }
+
+    return true
+}
+// console.log(sameLetterPattern("ABAB", "CDCD"))
+console.clear()
+// /Shadow Sentences
+function shadowSentence(a,b){
+    let setA = a.replace(/\s+/g, '').split('')
+    let setB =b.split(' ')
+    let include = false
+    for(let c of setA){
+        for(let word of setB){
+            if(word.includes(c)){
+                include = true
+                break
+            }
+        }
+        if(include){
+            break
+        }
+    }
+    if(!include){
+        return false
+    }
+    let lengthA = a.split(' ').map(c => c.length)
+    let lengthB = b.split(' ').map(c => c.length)
+    let len = lengthA.length
+    for(let i = 0;i < len;i++){
+        if(lengthA[i] != lengthB[i]){
+            return false
+        }
+    }
+    return true
+}
+// console.log(shadowSentence("they are round", "fold two times"))
