@@ -1151,3 +1151,93 @@ function weird_prime() {
 
 }
 // weird_prime()
+//Coding with Squared Strings
+function code(st) {
+  let len = st.length;
+  let n = Math.ceil(Math.sqrt(len))
+  st = st.padEnd(n * n, "\v")
+  let matrix = []
+  for (let i = 0; i < n * n; i += n) {
+    matrix.push(st.slice(i, i + n).split(""))
+  }
+  let rotatedMatrix = []
+  for (let i = 0; i < n; i++) {
+    let newRow = []
+    for (let j = n - 1; j >= 0; j--) {
+      newRow.push(matrix[j][i])
+    }
+    rotatedMatrix.push(newRow.join(""))
+  }
+  return rotatedMatrix.join("\n")
+}
+function decode(st){
+  let matrix = st.split('\n').map((row)=>row.split(""))
+  let n = matrix.length 
+  let originalMatrix = []
+  for(let i = n-1;i >= 0;i--){
+    let new_row = []
+    for(let j = 0;j < n;j++){
+      new_row.push(matrix[j][i])
+    }
+    originalMatrix.push(new_row.join(""))
+  }
+  return originalMatrix.join("").replace(/v/g,"")
+}
+let encodeText = code("hello world!")
+// console.log(decode(encodeText))
+
+//Closest and Smallest
+function closest(string) {
+  if (!string) return []; // Caso a string seja vazia
+  let numeros = string.split(' ').map(n => Number(n));
+  let pesos = numeros.map(n => String(n).split('').map(Number).reduce((a, b) => a + b));
+  if (numeros.length < 2) return [];
+  let minDiff = Infinity;
+  let result = [];
+  for (let i = 0; i < pesos.length; i++) {
+    for (let j = i + 1; j < pesos.length; j++) {
+      let diff = Math.abs(pesos[i] - pesos[j]);
+      if (diff < minDiff) {
+        minDiff = diff;
+        result = [
+          [pesos[i], i, numeros[i]],
+          [pesos[j], j, numeros[j]]
+        ];
+      } else if (diff === minDiff) {
+        let currentSum = pesos[i] + pesos[j];
+        let resultSum = result[0][0] + result[1][0];
+        if (currentSum < resultSum || (currentSum === resultSum && i < result[0][1])) {
+          result = [
+            [pesos[i], i, numeros[i]],
+            [pesos[j], j, numeros[j]]
+          ]
+        }
+      }
+    }
+  }
+  result.sort((a, b) => a[0] - b[0] || a[1] - b[1])
+  return result
+}
+
+// Testes
+// console.log(closest("103 123 4444 99 2000"))
+//Reversed Self Power
+function min_length_num(num_dig, ord_max){
+  function s(n,count){
+    let digit = 0
+    let num = n
+    for(let i = 0;i < n;i++){
+      digit+=i**num 
+      num--
+    }
+    digit+=n 
+    let len_digit = String(digit).length 
+    if(count == ord_max){
+      return len_digit == num_dig?[true,n]:[false,-1]
+    }else{
+      return s(n+1,count+1)
+    }
+  }
+  return s(2,2)
+}
+// console.log(min_length_num(7,11))
