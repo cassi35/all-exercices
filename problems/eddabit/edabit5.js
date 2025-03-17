@@ -1361,3 +1361,149 @@ function shadowSentence(a,b){
     return true
 }
 // console.log(shadowSentence("they are round", "fold two times"))
+function flatten(mat) {
+    return mat.reduce((acc, item) => {
+        return acc.concat(Array.isArray(item) ? flatten(item) : item);
+    }, []);
+}
+
+// console.log(flatten([[4666], [5394], [466], [[["Saskia", [[[[["DXTD"]], "Lexi"]]]]]]]));
+//Spoonerisms
+function spoonerise(phrase) {
+    phrase = phrase.split('')
+    let temp = phrase[0]
+    let index = phrase.findIndex(l => l == ' ')+1
+    phrase[0] = phrase[index]
+    phrase[index] = temp
+    return phrase.join('') 
+}
+// console.log(spoonerise("chow mein"))
+
+//Maximum and Minimum Product Triplets
+function maxProduct(arr) {
+    let max = 0
+	for(let i = 0;i < arr.length;i++){
+        for(let j = 0;j < arr.length;j++){
+            for(let a = 0;a < arr.length ;a++){
+                if(a != j && a != i && i != j){
+                    let result = arr[i] * arr[j] * arr[a]
+                    max = Math.max(result,max)
+                }
+            }
+        }
+    }
+    return max
+}
+
+function minProduct(arr) {
+    let min = 0
+	for(let i = 0;i < arr.length;i++){
+        for(let j = 0;j < arr.length;j++){
+            for(let a = 0;a < arr.length ;a++){
+                if(a != j && a != i && i != j){
+                    let result = arr[i] * arr[j] * arr[a]
+                    min = Math.min(result,max)
+                }
+            }
+        }
+    }
+    return min
+}     
+// console.log(maxProduct([-8, -9, 1, 2, 7]))
+
+// Dead End Number Sequence
+function deadEnd(n) {
+    let seen = new Set()
+    let length = 0
+    while (!seen.has(n)) { 
+        seen.add(n)
+        length++
+        let s = n.toString().split('').reduce((sum, digit) => sum + Number(digit), 0)
+        n = (n % s === 0) ? n / s : n * s
+    }
+    return [length, n]
+}
+// console.log(deadEnd(5))
+//Crop Fields
+function cropHydrated(field) {
+    for (let i = 0; i < field.length; i++) {
+        for (let j = 0; j < field[i].length; j++) { 
+            if (field[i][j] === "c") { 
+                let hydrated = false
+                for (let x = -1; x <= 1; x++) {
+                    for (let y = -1; y <= 1; y++) {
+                        if (x === 0 && y === 0) continue
+                        let newI = i + x
+                        let newJ = j + y
+                        if (newI >= 0 && newI < field.length && newJ >= 0 && newJ < field[i].length) {
+                            if (field[newI][newJ] === "w") {
+                                hydrated = true
+                                break
+                            }
+                        }
+                    }
+                    if (hydrated) break
+                }
+                if (!hydrated) {
+                    return false
+                }
+            }
+        }
+    }
+    return true
+}
+// console.log(cropHydrated([
+//   [ "w", "c" ],
+//   [ "w", "c" ],
+//   [ "c", "c" ]
+// ]))
+//Most Common Last Vowel
+function commonLastVowel(word){
+    let vowels = ['a','e','i','o','u']
+    for(let i = word.length-1;i >= 0;i--){
+        if(vowels.includes(word[i].toLowerCase())){
+            if(word.slice(0,i-1).includes(word[i])){
+                return word[i]
+            }
+        }
+    }
+}
+// console.log(commonLastVowel("Watch the characters dance!"))
+
+// Hashtag Generator
+function generateHashtag(str){
+    if(str.length == 1 || str.length == 0){
+        return false
+    }
+    let hashtag = '#'
+    for(let i = 0;i < str.length;i++){
+        if(str[i] != " "){
+            hashtag = hashtag.concat(str[i])
+        }
+    }
+    return hashtag
+}
+// console.log(generateHashtag("Edabit Is Great"))
+//Free Range
+
+function numbersToRanges(nums) {
+    let index = 0
+    let range = []
+    while (index < nums.length) {
+        let sequence = [nums[index]]
+        let num = nums[index]
+        while (nums[index + 1] === num + 1) {
+            sequence.push(nums[index + 1])
+            num = nums[index + 1]
+            index++
+        }
+        if (sequence.length > 1) {
+            range.push(`${sequence[0]}-${sequence[sequence.length - 1]}`)
+        } else {
+            range.push(`${sequence[0]}`)
+        }
+        index++
+    }
+    return range
+}
+// console.log(numbersToRanges([3, 4, 5, 10, 11, 12]))
