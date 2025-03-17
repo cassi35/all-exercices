@@ -1033,5 +1033,40 @@ function integerBreak(n){
     product*=n 
     return product
 }
-
 // console.log(integerBreak(10))
+var restoreIpAddresses = function(s) {
+    let ip_valido = []
+    if (s.length < 4 || s.length > 12) return ip_valido;
+    const isValid = (part) => {
+        if (part.length > 1 && part[0] === '0') return false
+        let num = Number(part);
+        return num >= 0 && num <= 255
+    }
+    for (let i = 1; i < s.length && i < 4; i++) {
+        for (let j = i + 1; j < s.length && j < i + 4; j++) {
+            for (let k = j + 1; k < s.length && k < j + 4; k++) {
+                let part1 = s.slice(0, i)
+                let part2 = s.slice(i, j)
+                let part3 = s.slice(j, k)
+                let part4 = s.slice(k)
+                if (isValid(part1) && isValid(part2) && isValid(part3) && isValid(part4)) {
+                    ip_valido.push(part1 + '.' + part2 + '.' + part3 + '.' + part4)
+                }
+            }
+        }
+    }
+    return ip_valido
+};
+// console.log(restoreIpAddresses("25525511135"))
+//Product of Array Except Self
+
+var productExceptSelf = function(nums) {
+    let answer = new Array(nums.length).fill(1)
+    for(let i = 0;i < nums.length;i++){
+        answer[i] = nums.filter(n => n != nums[i]).reduce((a,b)=> a* b)
+    }
+    return answer
+};
+// console.log(productExceptSelf([1,2,3,4]))
+
+// Best Time to Buy and Sell Stock with Cooldown
