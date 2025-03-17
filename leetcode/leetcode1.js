@@ -1034,4 +1034,4 @@ function integerBreak(n){
     return product
 }
 
-console.log(integerBreak(10))
+// console.log(integerBreak(10))
