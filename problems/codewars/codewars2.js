@@ -1241,3 +1241,137 @@ function min_length_num(num_dig, ord_max){
   return s(2,2)
 }
 // console.log(min_length_num(7,11))
+
+//Sums of Perfect Squares
+function sum_of_squares(n){
+  if (n == 0){
+    return 0 
+  }
+  let min_count = Infinity
+  for(let i = 1;i < Math.sqrt(n)+1;i++){
+    min_count = Math.min(min_count,1+sum_of_squares(n-i*i))
+  }
+  return min_count
+}
+// console.log(sum_of_squares(17))
+function find_word(board, word) {
+  let rows = board.length;
+  let cols = board[0].length;
+  function dfs(r, c, index, visited) {
+    if (index === word.length) return true;
+    if (r < 0 || c < 0 || r >= rows || c >= cols || visited.has(`${r},${c}`) || board[r][c] !== word[index]) {
+      return false;
+    }
+    visited.add(`${r},${c}`);
+    let directions = [
+      [-1, -1], [-1, 0], [-1, 1],
+      [0, -1],          [0, 1],
+      [1, -1], [1, 0], [1, 1]
+    ];
+    for (let [dr, dc] of directions) {
+      if (dfs(r + dr, c + dc, index + 1, visited)) return true;
+    }
+    visited.delete(`${r},${c}`);
+    return false;
+  }
+  for (let r = 0; r < rows; r++) {
+    for (let c = 0; c < cols; c++) {
+      if (board[r][c] === word[0] && dfs(r, c, 0, new Set())) {
+        return true;
+      }
+    }
+  }
+
+  return false;
+}
+
+// console.log(
+//   find_word([
+//     ["I", "L", "A", "W"],
+//     ["B", "N", "G", "E"],
+//     ["I", "U", "A", "O"],
+//     ["A", "S", "R", "L"]
+//   ], "BINGO")
+// );
+//Befunge-93
+class BefungeInterpreter {
+  interpret(code) {
+    let grid = code.split("\n").map(row => row.split(""));
+    let rows = grid.length;
+    let cols = Math.max(...grid.map(row => row.length));
+    let stack = [];
+    let output = "";
+    let x = 0, y = 0;
+    let dx = 1, dy = 0;
+    let stringMode = false;
+
+    const pop = () => stack.length ? stack.pop() : 0;
+    const push = val => stack.push(val);
+
+    while (true) {
+      let instruction = grid[y][x] || " ";
+
+      if (stringMode && instruction !== '"') {
+        push(instruction.charCodeAt(0));
+      } else {
+        switch (instruction) {
+          case "0": case "1": case "2": case "3": case "4":
+          case "5": case "6": case "7": case "8": case "9":
+            push(Number(instruction));
+            break;
+          case "+": push(pop() + pop()); break;
+          case "-": { let a = pop(), b = pop(); push(b - a); } break;
+          case "*": push(pop() * pop()); break;
+          case "/": { let a = pop(), b = pop(); push(a === 0 ? 0 : Math.floor(b / a)); } break;
+          case "%": { let a = pop(), b = pop(); push(a === 0 ? 0 : b % a); } break;
+          case "!": push(pop() ? 0 : 1); break;
+          case "`": { let a = pop(), b = pop(); push(b > a ? 1 : 0); } break;
+          case ">": dx = 1; dy = 0; break;
+          case "<": dx = -1; dy = 0; break;
+          case "^": dx = 0; dy = -1; break;
+          case "v": dx = 0; dy = 1; break;
+          case "?": {
+            let dirs = [[0, 1], [0, -1], [1, 0], [-1, 0]];
+            [dx, dy] = dirs[Math.floor(Math.random() * 4)];
+          } break;
+          case "_": dx = pop() === 0 ? 1 : -1; dy = 0; break;
+          case "|": dy = pop() === 0 ? 1 : -1; dx = 0; break;
+          case '"': stringMode = !stringMode; break;
+          case ":": push(stack.length ? stack[stack.length - 1] : 0); break;
+          case "\\": { let a = pop(), b = pop(); push(a); push(b); } break;
+          case "$": pop(); break;
+          case ".": output += pop().toString(); break;
+          case ",": output += String.fromCharCode(pop()); break;
+          case "#": x += dx; y += dy; break;
+          case "p": {
+            let yVal = pop(), xVal = pop(), v = pop();
+            if (yVal >= 0 && yVal < rows && xVal >= 0 && xVal < cols) {
+              grid[yVal][xVal] = String.fromCharCode(v);
+            }
+          } break;
+          case "g": {
+            let yVal = pop(), xVal = pop();
+            push(yVal >= 0 && yVal < rows && xVal >= 0 && xVal < cols ? grid[yVal][xVal].charCodeAt(0) : 0);
+          } break;
+          case "@": return output;
+        }
+      }
+
+      x = (x + dx + cols) % cols;
+      y = (y + dy + rows) % rows;
+    }
+  }
+}
+
+// console.log(new BefungeInterpreter().interpret(">987v>.v\nv456<  :\n>321 ^ _@"));
+function count_change(amount, coins) {
+  let dp = Array(amount + 1).fill(0)
+  dp[0] = 1
+  for (let coin of coins) {
+    for (let i = coin; i <= amount; i++) {
+      dp[i] += dp[i - coin]
+    }
+  }
+  return dp[amount]
+}
+console.log(count_change(4, [1, 2])) 
