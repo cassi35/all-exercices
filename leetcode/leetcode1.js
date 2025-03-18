@@ -1070,3 +1070,32 @@ var productExceptSelf = function(nums) {
 // console.log(productExceptSelf([1,2,3,4]))
 
 // Best Time to Buy and Sell Stock with Cooldown
+var uniqueOccurrences = function(arr) {
+    let uniques = new Set()
+    let queue = new Set()
+    for(let i in arr){
+        if(!queue.has(arr[i])){
+            let count = arr.filter(n => n == arr[i]).length
+            if(uniques.has(count)){
+                return false
+            }
+            uniques.add(count)
+            queue.add(arr[i])
+        }
+    }
+    return true
+};
+// console.log(uniqueOccurrences([1,2]))
+function balancedStringSplit(s) {
+    let count = 0
+    let balance = 0
+    for (let char of s) {
+      balance += char === 'L' ? 1 : -1
+      if (balance === 0) {
+        count++
+      }
+    }
+    return count
+  }
+//   console.log(balancedStringSplit("LLLLRRRR")) 
+  
