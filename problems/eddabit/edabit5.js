@@ -1507,3 +1507,67 @@ function numbersToRanges(nums) {
     return range
 }
 // console.log(numbersToRanges([3, 4, 5, 10, 11, 12]))
+//Index Parity of Largest Even
+function bitwiseIndex(arr) {
+    let biggest = -Infinity;
+    let index = -1;
+    for (let i = 0; i < arr.length; i++) {
+        let num = arr[i]
+        if ((num & 1) === 0) {  
+            if (num > biggest) {
+                biggest = num
+                index = i
+            }
+        }
+    }
+    if (index === -1) {
+        return "No even integer found!";
+    }
+    let parity = (index & 1) === 0 ? "even" : "odd";
+    return { [`@${parity} index ${index}`]: biggest }
+}
+
+// console.log(bitwiseIndex([107, 19, 36, -18, -78, 24, 97]))
+
+
+//Spiral Matrix Printing
+function matrix(N) {
+    let result = new Array(N).fill().map(() => new Array(N).fill(0))
+    let num = 1
+    let top = 0, bottom = N - 1, left = 0, right = N - 1
+    while (num <= N * N) {
+        for (let i = left; i <= right; i++) {
+            result[top][i] = num++;
+        }
+        top++
+        for (let i = top; i <= bottom; i++) {
+            result[i][right] = num++;
+        }
+        right--
+        if (top <= bottom) {
+            for (let i = right; i >= left; i--) {
+                result[bottom][i] = num++;
+            }
+            bottom--
+        }
+        if (left <= right) {
+            for (let i = bottom; i >= top; i--) {
+                result[i][left] = num++;
+            }
+            left++
+        }
+    }
+
+    return result
+}
+// console.log(matrix(4))
+
+// Salt Water
+function salt(t){
+    let s0 = 10
+    let rateIn = 0.1
+    let rateUout = 1/ 10
+    let s = rateIn / rateUout + (s0 - rateIn / rateUout) * Math.exp(-rateUout * t)
+    return parseFloat(s.toFixed(3))
+}
+// console.log(salt(5))
