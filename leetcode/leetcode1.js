@@ -1098,4 +1098,3 @@ function balancedStringSplit(s) {
     return count
   }
 //   console.log(balancedStringSplit("LLLLRRRR")) 
-  

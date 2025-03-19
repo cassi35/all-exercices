@@ -1374,4 +1374,31 @@ function count_change(amount, coins) {
   }
   return dp[amount]
 }
-console.log(count_change(4, [1, 2])) 
+// console.log(count_change(4, [1, 2])) 
+
+
+// ROT13
+function rot13(cifra){
+  let alphabet = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z'] 
+  alphabet = alphabet.map((a)=>a.toLocaleLowerCase())
+  let before = alphabet.slice(0,13)
+  let after = alphabet.slice(13)
+  let str = cifra.split('')
+  for(let i in str){
+    if(str[i] != '' && str[i] != ' ' && isNaN(str[i]) && str[i] != '.'){
+      if(before.includes(str[i].toLowerCase())){
+        let index = before.findIndex(l => l == str[i].toLowerCase())
+        str[i] = str[i].toLowerCase() == str[i]?after[index]:after[index].toUpperCase()
+      }else{
+        let index = after.findIndex(l => l == str[i].toLowerCase())
+        str[i] = str[i].toLowerCase() == str[i]?before[index]:before[index].toUpperCase()
+      }
+    }
+  }
+  let string = ""
+  for(let i in str){
+    string = string.concat(str[i])
+  }
+  return string
+}
+// console.log(rot13("EBG13 rknzcyr."))
