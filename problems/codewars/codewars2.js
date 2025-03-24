@@ -1218,7 +1218,6 @@ function closest(string) {
   result.sort((a, b) => a[0] - b[0] || a[1] - b[1])
   return result
 }
-
 // Testes
 // console.log(closest("103 123 4444 99 2000"))
 //Reversed Self Power
