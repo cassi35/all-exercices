@@ -990,3 +990,124 @@ function  kLargest(arr, k) {
     return arr.slice(0,k)
 }
 // console.log(kLargest( [12, 5, 787, 1, 23],2))
+class TwoStacks {
+    constructor(size) {
+        this.arr = new Array(size) 
+        this.top1 = -1 
+        this.top2 = size  
+        this.size = size 
+    }
+    push1(x) {
+        if (this.top1 < this.top2 - 1) {  
+            this.top1++  
+            this.arr[this.top1] = x
+        } else {
+            console.log("Stack Overflow para stack1")
+        }
+    }
+    push2(x) {
+        if (this.top1 < this.top2 - 1) { 
+            this.top2--
+            this.arr[this.top2] = x
+        } else {
+            console.log("Stack Overflow para stack2")
+        }
+    }
+    pop1() {
+        if (this.top1 >= 0) {
+            let poppedValue = this.arr[this.top1]
+            this.top1--
+            return poppedValue
+        } else {
+            return -1 
+        }
+    }
+    pop2() {
+        if (this.top2 < this.size) {
+            let poppedValue = this.arr[this.top2]
+            this.top2++
+            return poppedValue
+        } else {
+            return -1 
+        }
+    }
+}
+// let stack = new TwoStacks(5) 
+// stack.push1(2)
+// stack.push1(3)
+// stack.push2(4)
+function longestCommonSubstr(s1,s2){
+    function combination(arr,start= 0,path=[],result=[]){
+        result.push([...path])
+        for(let i = start;i < arr.length;i++){
+            path.push(arr[i])
+            combination(arr,i+1,path,result)
+            path.pop()            
+        }
+        return result
+    }
+    let comb1 = combination(s1.split(''))
+    let comb2 = combination(s2.split(''))
+    let max = 0
+    for(let elements1 of comb1){
+        for(let elements2 of comb2){
+            let teste = true 
+            if(elements2.length == elements1.length){
+                for(let i = 0;i < elements1.length;i++){
+                    if(elements1[i] != elements2[i]){
+                        teste = false
+                        break
+                    }
+                }   
+                let length = elements1.length -1
+                if(teste){
+                    max = Math.max(max,length)
+                }
+            }
+        }
+    }
+    return max
+}
+// console.log(longestCommonSubstr("ABCDGH", "ACDGHR"))
+//Given a string str consisting of multiple words, reverse alternate words in str. 
+function reverseAlternate(str) {
+    return str
+        .split(" ") 
+        .map((word, index) => 
+            index % 2 === 0 ? word.split("").reverse().join("") : word
+        )
+        .join(" ")
+}
+// console.log(reverseAlternate("hello world this is test"))
+function isValid(s,n){
+    let balas = n 
+    for(let i = 0;i < s.length;i++){
+        if(s[i] == 'S'){
+            if(balas == 0){
+                return false
+            }
+            balas--
+        }else if(s[i] == 'R'){
+            balas = n
+        }
+    }
+    return true
+}
+// console.log(isValid("SSSRSRSS",3))
+function moveNoiseWords(s) {
+    let words = s.match(/[a-z]+/g)
+    let nonNoise = []
+    let noise = []
+    
+    for (let word of words) {
+        if (/^ad(a)+$/.test(word)) {
+            noise.push(word)
+        } else {
+            nonNoise.push(word)
+        }
+    }
+    
+    return nonNoise.join('') + noise.join('')
+}
+
+console.log(moveNoiseWords("heyadadahiadahi"))
